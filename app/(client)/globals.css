@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-bg: #212136;
+    --secondary-bg: #171726;
+    --primary-text-color: #9596ab;
+    --header-bg: #0d0d16;
+    --text-hover: #c22ef7;
+    --text-brown: #e97688;
+    --admin-primary-bg: #007eff;
+    --button-bg: #da1c36;
+  }
+  .imageBtn {
+    transition: all 0.3s ease-in;
+  }
+  .imageBtn:hover {
+    box-shadow: 0px 0px 10px 0px
+      rgba(207.39999999999998, 193.42304347826087, 193.42304347826087, 0.5);
+    transition: all 0.3s ease-in;
+  }
+  .icon {
+    fill: #ffffff;
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+  .carousel-item:hover button {
+    background-color: #da1c36 !important;
+    border-color: #da1c36 !important;
+    color: #fff;
+    transition: all 0.3s ease-in;
+    border: 1px solid #da1c36;
+  }
+  .carousel-itembutton {
+    transition: all 0.3s ease-in;
+  }
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 210 20% 98%;
+    --primary-foreground: 220.9 39.3% 11%;
+
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 216 12.2% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

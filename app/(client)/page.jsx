@@ -1,96 +1,80 @@
 import Image from "next/image";
-import Header from "./_component/Header";
 import Hero from "./_component/Hero";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { montserrat, open_sans, syne } from "@/lib/fonts";
-import { ChevronRight, CreditCard, MapPinned, Search } from "lucide-react";
+import { open_sans, syne } from "@/lib/fonts";
+import {
+  AtSign,
+  ChevronRight,
+  CreditCard,
+  Headset,
+  MapPinned,
+  Search,
+} from "lucide-react";
 import { CarCarousa } from "./_component/carousel/carCard";
 
 export default function Home() {
   return (
     <>
       <div className="w-full">
-        <Header />
         <Hero />
         <section className="w-full ">
           <div
-            className="w-[80%] py-[40px] px-[30px] bg-white mx-auto h-[400px] -mt-[200px] relative mb-10 z-10"
+            className="w-[80%] py-[40px] px-[30px] bg-white mx-auto h-fit -mt-[50px] relative mb-10 z-10 flex gap-3 items-center"
             style={{
               boxShadow:
                 "0px 0px 10px 0px rgba(207.39999999999998, 193.42304347826087, 193.42304347826087, 0.5)",
             }}
           >
-            <div className="w-full grid grid-cols-3 gap-4">
-              <div className="">
-                <Image
-                  src="/images/1.jpg"
-                  width={500}
-                  height={100}
-                  className="w-full object-cover h-[250px]"
-                  alt="image"
-                />
-                <h1
-                  className={cn(
-                    `${montserrat.className} text-[20px] font-[500] my-2`
-                  )}
-                >
-                  Airport and port transfers .
-                </h1>
-                <Button
-                  className={cn(
-                    `${syne.className} bg-[--button-bg] font-[500] hover:scale-[1.1] hover:bg-[--button-bg] rounded-[5px] py-5 px-8 text-white transition-all delay-75`
-                  )}
-                >
-                  Book Now
-                </Button>
-              </div>
-              <div className="">
-                <Image
-                  src="/images/2.jpg"
-                  width={500}
-                  height={100}
-                  className="w-full object-cover h-[250px]"
-                  alt="image"
-                />
-                <h1
-                  className={cn(
-                    `${montserrat.className} text-[20px] font-[500] my-2`
-                  )}
-                >
-                  Airport and port transfers .
-                </h1>
-                <Button
-                  className={cn(
-                    `${syne.className} bg-[--button-bg] font-[500] hover:scale-[1.1] hover:bg-[--button-bg] rounded-[5px] py-5 px-8 text-white transition-all delay-75`
-                  )}
-                >
-                  Book Now
-                </Button>
-              </div>
-              <div className="">
-                <Image
-                  src="/images/3.jpg"
-                  width={500}
-                  height={100}
-                  className="w-full object-cover h-[250px]"
-                  alt="image"
-                />
-                <h1
-                  className={cn(
-                    `${montserrat.className} text-[20px] font-[500] my-2`
-                  )}
-                >
-                  Airport and port transfers .
-                </h1>
-                <Button
-                  className={cn(
-                    `${syne.className} bg-[--button-bg] font-[500] hover:scale-[1.1] hover:bg-[--button-bg] rounded-[5px] py-5 px-8 text-white transition-all delay-75`
-                  )}
-                >
-                  Book Now
-                </Button>
-              </div>
+            <div className="flex flex-col">
+              <label htmlFor="">Pick up date</label>
+              <input
+                type="datetime-local"
+                name=""
+                id=""
+                className="w-full p-2 h-[43px] bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="">Pick up date</label>
+              <input
+                type="datetime-local"
+                name=""
+                id=""
+                className="w-full p-2 h-[43px] bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="">Car Type</label>
+              <select
+                name=""
+                id=""
+                className="w-[200px] h-[43px] p-2 bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
+              >
+                <option value="">Toyota</option>
+                <option value="">Mercedize Benz</option>
+              </select>
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="">Destination</label>
+              <select
+                name=""
+                id=""
+                className="w-[200px] h-[43px] p-2 bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
+              >
+                <option value="">Within FCT</option>
+                <option value="">Outside FCT</option>
+              </select>
+            </div>
+            <div className="flex flex-col w-full">
+              <label htmlFor="">&nbsp;</label>
+              <Button
+                className={cn(
+                  `${syne.className} w-full bg-[--button-bg] font-[500] hover:scale-[1.1] hover:bg-[--button-bg] rounded-[5px] py-5 px-8 text-white transition-all delay-75`
+                )}
+              >
+                Book Now
+              </Button>
             </div>
           </div>
         </section>
@@ -222,8 +206,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        {/*  */}
-        <section className="w-full py-10 h-fit items-center flex">
+        <section className="w-full py-10 h-fit items-center flex z-20">
           <div className="container mx-auto flex flex-col">
             <h1
               className={cn(
@@ -234,6 +217,39 @@ export default function Home() {
             </h1>
             <div className="w-[80%] mx-auto md:w-full my-10">
               <CarCarousa />
+            </div>
+          </div>
+        </section>
+        <section
+          className="hidden md:flex w-full bg-fleets-bg bg-left-bottom bg-no-repeat bg-cover relative"
+          style={{ padding: "0px 0px 650px 0px" }}
+        >
+          <div className="w-full absolute bottom-0">
+            <div className="w-fit text-white rounded-t-[20px] bg-[--primary-bg] mx-auto p-10 flex items-center justify-center gap-[80px]">
+              <div className="flex items-center gap-5">
+                <Headset size={50} />
+                <span>
+                  <h1
+                    className={cn(`${syne.className} font-[600] text-[40px]`)}
+                  >
+                    Call Us For Booking
+                  </h1>
+                  <h1 className="-mt-2 text-sm font-bold">(258) 403 7961</h1>
+                </span>
+              </div>
+              <div className="flex items-center gap-5">
+                <AtSign size={50} />
+                <span>
+                  <h1
+                    className={cn(`${syne.className} font-[600] text-[40px]`)}
+                  >
+                    Email Support
+                  </h1>
+                  <h1 className="ml-1 -mt-2 text-sm font-bold">
+                    info@cardealer.com
+                  </h1>
+                </span>
+              </div>
             </div>
           </div>
         </section>

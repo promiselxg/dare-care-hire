@@ -65,6 +65,31 @@
     --input: 215 27.9% 16.9%;
     --ring: 216 12.2% 83.9%;
   }
+  .option {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1px;
+    padding: 8px 16px 8px 16px;
+    display: block;
+    height: 38px;
+    font-size: 13px;
+    line-height: 22px;
+    color: #222;
+    box-shadow: 0 1px 0 #ccc;
+    overflow-wrap: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-transition: 0.125s ease-out;
+    -o-transition: 0.125s ease-out;
+    transition: 0.125s ease-out;
+    cursor: pointer;
+  }
+  .option:hover {
+    -webkit-transition: 0.125s ease-out;
+    -o-transition: 0.125s ease-out;
+    transition: 0.125s ease-out;
+    background: #da1c36;
+  }
 }
 
 @layer base {

@@ -19,7 +19,7 @@ export function CarCarousa() {
       opts={{
         align: "start",
       }}
-      className="w-full  mx-auto"
+      className="w-full  mx-auto z-30"
     >
       <CarouselContent>
         <CarouselItem className="flex justify-center md:basis-1/2 lg:basis-1/4 outline-none border-0 cursor-move carousel-item transition-all delay-75">
@@ -31,14 +31,14 @@ export function CarCarousa() {
               alt="ford"
               className="object-cover w-full h-[150px] "
             />
-            <div className="w-full p-3 bg-[#ddd]">
+            <div className="w-full p-3 bg-[whitesmoke]">
               <div className="flex justify-center text-center flex-col">
                 <h1
                   className={cn(`${barlow.className} font-[600] text-[20px]`)}
                 >
                   Name of Vehicle
                 </h1>
-                <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#cccccc] gap-2 flex justify-center"></ul>
+                <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
                 <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
                   <li className="flex items-center mb-[4px] gap-1">
                     <ShieldCheck size={20} />
@@ -86,14 +86,14 @@ export function CarCarousa() {
               alt="ford"
               className="object-cover w-full h-[150px] "
             />
-            <div className="w-full p-3 bg-[#ddd]">
+            <div className="w-full p-3 bg-[whitesmoke]">
               <div className="flex justify-center text-center flex-col">
                 <h1
                   className={cn(`${barlow.className} font-[600] text-[20px]`)}
                 >
                   Name of Vehicle
                 </h1>
-                <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#cccccc] gap-2 flex justify-center"></ul>
+                <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
                 <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
                   <li className="flex items-center mb-[4px] gap-1">
                     <ShieldCheck size={20} />
@@ -143,14 +143,14 @@ export function CarCarousa() {
               alt="ford"
               className="object-cover w-full h-[150px] "
             />
-            <div className="w-full p-3 bg-[#ddd]">
+            <div className="w-full p-3 bg-[whitesmoke]">
               <div className="flex justify-center text-center flex-col">
                 <h1
                   className={cn(`${barlow.className} font-[600] text-[20px]`)}
                 >
                   Name of Vehicle
                 </h1>
-                <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#cccccc] gap-2 flex justify-center"></ul>
+                <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
                 <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
                   <li className="flex items-center mb-[4px] gap-1">
                     <ShieldCheck size={20} />
@@ -200,14 +200,14 @@ export function CarCarousa() {
               alt="ford"
               className="object-cover w-full h-[150px] "
             />
-            <div className="w-full p-3 bg-[#ddd]">
+            <div className="w-full p-3 bg-[whitesmoke]">
               <div className="flex justify-center text-center flex-col">
                 <h1
                   className={cn(`${barlow.className} font-[600] text-[20px]`)}
                 >
                   Name of Vehicle
                 </h1>
-                <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#cccccc] gap-2 flex justify-center"></ul>
+                <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
                 <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
                   <li className="flex items-center mb-[4px] gap-1">
                     <ShieldCheck size={20} />
@@ -257,14 +257,14 @@ export function CarCarousa() {
               alt="ford"
               className="object-cover w-full h-[150px] "
             />
-            <div className="w-full p-3 bg-[#ddd]">
+            <div className="w-full p-3 bg-[whitesmoke]">
               <div className="flex justify-center text-center flex-col">
                 <h1
                   className={cn(`${barlow.className} font-[600] text-[20px]`)}
                 >
                   Name of Vehicle
                 </h1>
-                <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#cccccc] gap-2 flex justify-center"></ul>
+                <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
                 <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
                   <li className="flex items-center mb-[4px] gap-1">
                     <ShieldCheck size={20} />

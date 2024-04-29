@@ -16,7 +16,7 @@ import Image from "next/image";
 
 const Page = () => {
   const [open, setOpen] = useState(false);
-  const handleSelect = () => {};
+
   return (
     <>
       <section className="w-full flex bg-[url('/images/page-img.jpg')] bg-cover pt-[100px] pb-[10px] bg-fixed bg-right-top relative">

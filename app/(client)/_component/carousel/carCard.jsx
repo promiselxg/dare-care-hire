@@ -39,7 +39,7 @@ export function CarCarousa() {
                   Name of Vehicle
                 </h1>
                 <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
-                <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
+                <ul className="w-full grid md:grid-cols-2 grid-cols-1 gap-2 text-[12px] my-5">
                   <li className="flex items-center mb-[4px] gap-1">
                     <ShieldCheck size={20} />
                     <span>Pay at Pick up</span>
@@ -66,11 +66,11 @@ export function CarCarousa() {
                   </li>
                 </ul>
               </div>
-              <div className="w-full flex justify-between items-center mt-5 mb-2">
+              <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
                 <h1 className={cn(`${syne.className} font-[600] text-[20px]`)}>
                   N10,000/day
                 </h1>
-                <Button className="bg-transparent border border-[#000] uppercase text-sm">
+                <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                   rent it
                 </Button>
               </div>
@@ -94,7 +94,7 @@ export function CarCarousa() {
                   Name of Vehicle
                 </h1>
                 <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
-                <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
+                <ul className="w-full grid md:grid-cols-2 grid-cols-1 gap-2 text-[12px] my-5">
                   <li className="flex items-center mb-[4px] gap-1">
                     <ShieldCheck size={20} />
                     <span>Pay at Pick up</span>
@@ -120,13 +120,13 @@ export function CarCarousa() {
                     <span>Free Cancellation</span>
                   </li>
                 </ul>
-                <div className="w-full flex justify-between items-center mt-5 mb-2">
+                <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
                   <h1
                     className={cn(`${syne.className} font-[600] text-[20px]`)}
                   >
                     N10,000/day
                   </h1>
-                  <Button className="bg-transparent border border-[#000] uppercase text-sm">
+                  <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                     rent it
                   </Button>
                 </div>
@@ -151,7 +151,7 @@ export function CarCarousa() {
                   Name of Vehicle
                 </h1>
                 <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
-                <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
+                <ul className="w-full grid md:grid-cols-2 grid-cols-1 gap-2 text-[12px] my-5">
                   <li className="flex items-center mb-[4px] gap-1">
                     <ShieldCheck size={20} />
                     <span>Pay at Pick up</span>
@@ -177,13 +177,13 @@ export function CarCarousa() {
                     <span>Free Cancellation</span>
                   </li>
                 </ul>
-                <div className="w-full flex justify-between items-center mt-5 mb-2">
+                <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
                   <h1
                     className={cn(`${syne.className} font-[600] text-[20px]`)}
                   >
                     N10,000/day
                   </h1>
-                  <Button className="bg-transparent border border-[#000] uppercase text-sm">
+                  <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                     rent it
                   </Button>
                 </div>
@@ -208,7 +208,7 @@ export function CarCarousa() {
                   Name of Vehicle
                 </h1>
                 <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
-                <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
+                <ul className="w-full grid md:grid-cols-2 grid-cols-1 gap-2 text-[12px] my-5">
                   <li className="flex items-center mb-[4px] gap-1">
                     <ShieldCheck size={20} />
                     <span>Pay at Pick up</span>
@@ -234,13 +234,13 @@ export function CarCarousa() {
                     <span>Free Cancellation</span>
                   </li>
                 </ul>
-                <div className="w-full flex justify-between items-center mt-5 mb-2">
+                <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
                   <h1
                     className={cn(`${syne.className} font-[600] text-[20px]`)}
                   >
                     N10,000/day
                   </h1>
-                  <Button className="bg-transparent border border-[#000] uppercase text-sm">
+                  <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                     rent it
                   </Button>
                 </div>
@@ -265,7 +265,7 @@ export function CarCarousa() {
                   Name of Vehicle
                 </h1>
                 <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
-                <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
+                <ul className="w-full grid md:grid-cols-2 grid-cols-1 gap-2 text-[12px] my-5">
                   <li className="flex items-center mb-[4px] gap-1">
                     <ShieldCheck size={20} />
                     <span>Pay at Pick up</span>
@@ -291,13 +291,13 @@ export function CarCarousa() {
                     <span>Free Cancellation</span>
                   </li>
                 </ul>
-                <div className="w-full flex justify-between items-center mt-5 mb-2">
+                <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
                   <h1
                     className={cn(`${syne.className} font-[600] text-[20px]`)}
                   >
                     N10,000/day
                   </h1>
-                  <Button className="bg-transparent border border-[#000] uppercase text-sm">
+                  <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                     rent it
                   </Button>
                 </div>

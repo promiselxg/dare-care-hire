@@ -49,7 +49,7 @@ const Page = () => {
         </div>
       </section>
       <section className="flex w-full h-fit  py-10">
-        <div className="mx-auto w-[85%]  flex ">
+        <div className="mx-auto md:w-[85%]  flex ">
           <div className="p-10 w-full  flex flex-col gap-y-3">
             {" "}
             <div className="w-full flex items-center gap-5 mb-5">
@@ -111,7 +111,7 @@ const Page = () => {
                       Name of Vehicle
                     </h1>
                     <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
-                    <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
+                    <ul className="w-full grid md:grid-cols-2 grid-cols-1 gap-2 text-[12px] my-5">
                       <li className="flex items-center mb-[4px] gap-1">
                         <ShieldCheck size={20} />
                         <span>Pay at Pick up</span>
@@ -138,13 +138,13 @@ const Page = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="w-full flex justify-between items-center mt-5 mb-2">
+                  <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
                     <h1
                       className={cn(`${syne.className} font-[600] text-[20px]`)}
                     >
                       N10,000/day
                     </h1>
-                    <Button className="bg-transparent border border-[#000] uppercase text-sm">
+                    <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                       rent it
                     </Button>
                   </div>
@@ -168,7 +168,7 @@ const Page = () => {
                       Name of Vehicle
                     </h1>
                     <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
-                    <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
+                    <ul className="w-full grid md:grid-cols-2 grid-cols-1 gap-2 text-[12px] my-5">
                       <li className="flex items-center mb-[4px] gap-1">
                         <ShieldCheck size={20} />
                         <span>Pay at Pick up</span>
@@ -195,13 +195,13 @@ const Page = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="w-full flex justify-between items-center mt-5 mb-2">
+                  <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
                     <h1
                       className={cn(`${syne.className} font-[600] text-[20px]`)}
                     >
                       N10,000/day
                     </h1>
-                    <Button className="bg-transparent border border-[#000] uppercase text-sm">
+                    <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                       rent it
                     </Button>
                   </div>
@@ -225,7 +225,7 @@ const Page = () => {
                       Name of Vehicle
                     </h1>
                     <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
-                    <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
+                    <ul className="w-full grid md:grid-cols-2 grid-cols-1 gap-2 text-[12px] my-5">
                       <li className="flex items-center mb-[4px] gap-1">
                         <ShieldCheck size={20} />
                         <span>Pay at Pick up</span>
@@ -252,13 +252,13 @@ const Page = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="w-full flex justify-between items-center mt-5 mb-2">
+                  <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
                     <h1
                       className={cn(`${syne.className} font-[600] text-[20px]`)}
                     >
                       N10,000/day
                     </h1>
-                    <Button className="bg-transparent border border-[#000] uppercase text-sm">
+                    <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                       rent it
                     </Button>
                   </div>
@@ -282,7 +282,7 @@ const Page = () => {
                       Name of Vehicle
                     </h1>
                     <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
-                    <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
+                    <ul className="w-full grid md:grid-cols-2 grid-cols-1 gap-2 text-[12px] my-5">
                       <li className="flex items-center mb-[4px] gap-1">
                         <ShieldCheck size={20} />
                         <span>Pay at Pick up</span>
@@ -309,13 +309,13 @@ const Page = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="w-full flex justify-between items-center mt-5 mb-2">
+                  <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
                     <h1
                       className={cn(`${syne.className} font-[600] text-[20px]`)}
                     >
                       N10,000/day
                     </h1>
-                    <Button className="bg-transparent border border-[#000] uppercase text-sm">
+                    <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                       rent it
                     </Button>
                   </div>
@@ -339,7 +339,7 @@ const Page = () => {
                       Name of Vehicle
                     </h1>
                     <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
-                    <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
+                    <ul className="w-full grid md:grid-cols-2 grid-cols-1 gap-2 text-[12px] my-5">
                       <li className="flex items-center mb-[4px] gap-1">
                         <ShieldCheck size={20} />
                         <span>Pay at Pick up</span>
@@ -366,13 +366,13 @@ const Page = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="w-full flex justify-between items-center mt-5 mb-2">
+                  <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
                     <h1
                       className={cn(`${syne.className} font-[600] text-[20px]`)}
                     >
                       N10,000/day
                     </h1>
-                    <Button className="bg-transparent border border-[#000] uppercase text-sm">
+                    <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                       rent it
                     </Button>
                   </div>
@@ -396,7 +396,7 @@ const Page = () => {
                       Name of Vehicle
                     </h1>
                     <ul className="w-full text-center my-3 pb-2 border-b-[1px] border-b-[#ddd] gap-2 flex justify-center"></ul>
-                    <ul className="w-full grid grid-cols-2 gap-2 text-[12px] my-5">
+                    <ul className="w-full grid md:grid-cols-2 grid-cols-1 gap-2 text-[12px] my-5">
                       <li className="flex items-center mb-[4px] gap-1">
                         <ShieldCheck size={20} />
                         <span>Pay at Pick up</span>
@@ -423,13 +423,13 @@ const Page = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="w-full flex justify-between items-center mt-5 mb-2">
+                  <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
                     <h1
                       className={cn(`${syne.className} font-[600] text-[20px]`)}
                     >
                       N10,000/day
                     </h1>
-                    <Button className="bg-transparent border border-[#000] uppercase text-sm">
+                    <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                       rent it
                     </Button>
                   </div>

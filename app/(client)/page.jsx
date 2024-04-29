@@ -18,9 +18,9 @@ export default function Home() {
     <>
       <div className="w-full">
         <Hero />
-        <section className="w-full ">
+        <section className="w-full">
           <div
-            className="w-[80%] py-[40px] px-[30px] bg-white mx-auto h-fit -mt-[50px] relative mb-10 z-10 flex gap-3 items-center"
+            className="w-[80%] py-[40px] px-[30px] bg-white mx-auto h-fit -mt-[50px] relative mb-10 z-10 flex gap-3 items-center flex-col md:flex-row"
             style={{
               boxShadow:
                 "0px 0px 10px 0px rgba(207.39999999999998, 193.42304347826087, 193.42304347826087, 0.5)",
@@ -44,23 +44,23 @@ export default function Home() {
                 className="w-full p-2 h-[43px] bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
               />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <label htmlFor="">Car Type</label>
               <select
                 name=""
                 id=""
-                className="w-[200px] h-[43px] p-2 bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
+                className="w-full md:w-[200px] h-[43px] p-2 bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
               >
                 <option value="">Toyota</option>
                 <option value="">Mercedize Benz</option>
               </select>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <label htmlFor="">Destination</label>
               <select
                 name=""
                 id=""
-                className="w-[200px] h-[43px] p-2 bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
+                className="w-full md:w-[200px] h-[43px] p-2 bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
               >
                 <option value="">Within FCT</option>
                 <option value="">Outside FCT</option>
@@ -79,11 +79,11 @@ export default function Home() {
           </div>
         </section>
         <section className="w-full py-20">
-          <div className="container w-[1100px] mx-auto  h-fit pb-10 ">
+          <div className="container w-full md:w-[1100px] mx-auto  h-fit pb-10 ">
             <div className="w-full justify-center flex flex-col text-center">
               <h1
                 className={cn(
-                  `${syne.className} font-[600] text-[30px] mt-4 uppercase`
+                  `${syne.className} font-[600] text-[15px] md:text-[30px] mt-4 uppercase`
                 )}
               >
                 OUR PREMIUM BRANDS
@@ -91,7 +91,7 @@ export default function Home() {
               <p className={cn(`${syne.className} text-sm`)}>
                 Luxury Rental Services
               </p>
-              <div className="w-full grid grid-cols-5 gap-5 my-8">
+              <div className="w-full grid md:grid-cols-5 grid-cols-2 gap-5 my-8">
                 <div className="border border-[rgba(0,0,0,0.1)] p-5 rounded-[4px] hover:cursor-pointer imageBtn">
                   <Image
                     src="/images/audi.jpg"
@@ -138,22 +138,20 @@ export default function Home() {
         </section>
         <section
           id="how-it-works"
-          className="w-full h-[500px] bg-how-it-works flex items-center bg-no-repeat bg-cover bg-center relative"
+          className="w-full h-fit md:h-[500px] bg-how-it-works flex items-center bg-no-repeat bg-cover bg-center relative"
           style={{ padding: "100px 0px 140px 0px" }}
         >
           <div className="w-full absolute top-0 bottom-0 bg-[rgba(0,0,0,0.75)] transition-all delay-75"></div>
           <div className="container mx-auto flex items-center justify-center z-10 flex-col gap-y-5">
             <h1
               className={cn(
-                `${syne.className} text-white flex text-center my-5 text-[40px] leading-[1] uppercase`
+                `${syne.className} text-white flex text-center my-5 text-[30px] md:text-[40px] leading-[1] uppercase`
               )}
             >
-              HOW DOES
-              <br />
-              RENTAL WORKS.
+              HOW IT WORKS.
             </h1>
-            <div className="w-full grid grid-cols-3 gap-5">
-              <div className=" text-[whitesmoke] w-[380px]  flex items-center gap-5">
+            <div className="w-full grid md:grid-cols-3 grid-cols-1 gap-5">
+              <div className=" text-[whitesmoke] w-full md:w-[380px]  flex items-center gap-5">
                 <Search size={100} />
                 <div>
                   <h1
@@ -170,7 +168,7 @@ export default function Home() {
                 </div>
                 <ChevronRight size={80} />
               </div>
-              <div className=" text-[whitesmoke]  w-[380px] flex items-center gap-5">
+              <div className=" text-[whitesmoke]  w-full md:w-[380px] flex items-center gap-5">
                 <MapPinned size={100} />
                 <div>
                   <h1
@@ -187,7 +185,7 @@ export default function Home() {
                 </div>
                 <ChevronRight size={80} />
               </div>
-              <div className=" text-[whitesmoke] w-[380px] flex items-center gap-5">
+              <div className=" text-[whitesmoke] w-full md:w-[380px] flex items-center gap-5">
                 <CreditCard size={80} />
                 <div>
                   <h1

@@ -19,13 +19,13 @@ const Page = () => {
 
   return (
     <>
-      <section className="w-full flex bg-[url('/images/page-img.jpg')] bg-cover pt-[100px] pb-[10px] bg-fixed bg-right-top relative">
+      <section className="w-full flex bg-[url('/images/page-img.jpg')] bg-cover pt-[80px] pb-10 bg-fixed bg-right-top relative">
         <span class="bg-[#20262f] absolute top-0 bottom-0 w-full inline-block h-full opacity-0 "></span>
-        <div className="container mx-auto flex text-white z-10 w-[80%]">
-          <div className="pt-[70px] pb-20 text-left">
+        <div className="container mx-auto flex text-white z-10 md:w-[80%]">
+          <div className="text-left">
             <h1
               className={cn(
-                `${raleway.className} text-[40px] capitalize font-[500] `
+                `${raleway.className} md:text-[40px] capitalize font-[500] `
               )}
             >
               Auto Listing

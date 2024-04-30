@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Hero from "./_component/Hero";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { open_sans, syne } from "@/lib/fonts";
@@ -11,7 +11,9 @@ import {
   MapPinned,
   Search,
 } from "lucide-react";
-import { CarCarousa } from "./_component/carousel/carCard";
+
+import Hero from "../_component/Hero";
+import { CarCarousa } from "../_component/carousel/carCard";
 
 export default function Home() {
   return (

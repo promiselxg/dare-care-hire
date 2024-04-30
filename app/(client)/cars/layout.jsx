@@ -1,8 +1,8 @@
-import "./globals.css";
-import Footer from "./_component/Footer";
-import Header from "./_component/Header";
+import "../globals.css";
 import { cn } from "@/lib/utils";
 import { raleway } from "@/lib/fonts";
+import Footer from "../_component/Footer";
+import Header from "../_component/Header";
 
 export const metadata = {
   title: "Create Next App",

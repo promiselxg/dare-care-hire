@@ -29,7 +29,7 @@ const Header = () => {
                   <Link href="/">Home</Link>
                 </li>
                 <li className=" hover:text-[--text-hover] transition-all delay-75">
-                  <Link href="/auto-listing">Auto Listing</Link>
+                  <Link href="/cars">Auto Listing</Link>
                 </li>
                 <li className=" hover:text-[--text-hover] transition-all delay-75">
                   <Link href="/">About Us</Link>

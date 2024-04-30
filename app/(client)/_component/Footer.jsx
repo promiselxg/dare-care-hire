@@ -1,6 +1,4 @@
-"use client";
-
-import { barlow, open_sans, syne } from "@/lib/fonts";
+import { open_sans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { FiInstagram } from "react-icons/fi";

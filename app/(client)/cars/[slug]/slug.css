@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.image-gallery-thumbnails-container {
+  cursor: pointer;
+  text-align: left !important;
+  white-space: nowrap;
+}
+.image-gallery-left-nav {
+  padding: 0 !important;
+}
+.data-\[state\=active\]\:shadow[data-state="active"] {
+  box-shadow: none !important;
+  color: rgb(186, 21, 43) !important;
+  border-bottom: 2px solid rgb(186, 21, 43) !important;
+}
+.image-gallery-svg {
+  height: 80px !important;
+  width: 60px !important;
+  color: #ccc !important;
+}
+.image-gallery-icon {
+  filter: none !important;
+}

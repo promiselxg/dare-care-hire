@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .shop_table {
   margin: 0;
   text-align: left;

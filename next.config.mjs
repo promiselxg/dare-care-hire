@@ -8,6 +8,11 @@ const nextConfig = {
         destination: "/home",
         permanent: true,
       },
+      {
+        source: "/admin",
+        destination: "/admin/dashboard",
+        permanent: true,
+      },
     ];
   },
   images: {
@@ -16,10 +21,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "autostar.pro-theme.info",
       },
-      //   {
-      //     protocol: "https",
-      //     hostname: "res.cloudinary.com",
-      //   },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
 };

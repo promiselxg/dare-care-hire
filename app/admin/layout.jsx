@@ -15,11 +15,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={cn(`${raleway.className} w-full flex`)}>
-        <div className="w-full flex h-screen ">
+        <div className="w-full flex h-screen">
           <SideNav />
           <div className="w-full bg-[#fafafb]">
-            <ScrollArea className="flex h-screen overflow-x-hidden bg-[#F8F7F1]">
-              <div className="m-5 p-5 bg-[#FDFDFD] h-screen rounded-[8px]">
+            <ScrollArea className="flex h-screen  overflow-x-hidden bg-[#F8F7F1]">
+              <div className="bg-[#FDFDFD] h-screen  rounded-[8px]">
                 {children}
               </div>
             </ScrollArea>

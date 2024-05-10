@@ -7,6 +7,7 @@ import {
   AtSign,
   BookUser,
   CarFront,
+  CarIcon,
   LayoutDashboard,
   Power,
   Settings,
@@ -17,20 +18,23 @@ import { cn } from "@/lib/utils";
 import { barlow } from "@/lib/fonts";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
 
 const SideNav = () => {
   const [openNavBar, setOpenNavBar] = useState(false);
+  const currentRoute = usePathname();
 
   const hanldeOpenNav = () => {
     setOpenNavBar(!openNavBar);
   };
+  console.log(currentRoute);
   return (
     <>
       <ScrollArea
         className={cn(
           `${
             barlow.className
-          } flex bg-[#191919] text-[#757575] h-screen navbar ${
+          }  bg-[#191919] text-[#757575] h-screen navbar  hidden md:flex ${
             openNavBar ? "w-[5%]" : "w-[20%]"
           }`
         )}
@@ -41,9 +45,13 @@ const SideNav = () => {
           </h1>
           <div className="relative h-[calc(100vh-100px)]">
             <ul className="flex flex-col ">
-              <li className="my-[2px] h-10 active">
+              <li
+                className={`${
+                  currentRoute === "/admin/dashboard" && "active"
+                } my-[2px] h-10 nav`}
+              >
                 <Link
-                  href="/"
+                  href="/admin/dashboard"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -51,9 +59,13 @@ const SideNav = () => {
                   Dashboard
                 </Link>
               </li>
-              <li className="my-[2px] h-10 nav">
+              <li
+                className={`${
+                  currentRoute === "/admin/drivers" && "active"
+                } my-[2px] h-10 nav`}
+              >
                 <Link
-                  href="/"
+                  href="/admin/drivers"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -61,9 +73,13 @@ const SideNav = () => {
                   Drivers
                 </Link>
               </li>
-              <li className="my-[2px] h-10 nav">
+              <li
+                className={`${
+                  currentRoute === "/admin/customers" && "active"
+                } my-[2px] h-10 nav`}
+              >
                 <Link
-                  href="/"
+                  href="/admin/customers"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -71,9 +87,13 @@ const SideNav = () => {
                   Customers
                 </Link>
               </li>
-              <li className="my-[2px] h-10 nav">
+              <li
+                className={`${
+                  currentRoute === "/admin/outsourced" && "active"
+                } my-[2px] h-10 nav`}
+              >
                 <Link
-                  href="/"
+                  href="/admin/outsourced"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -81,14 +101,18 @@ const SideNav = () => {
                   Outsourced
                 </Link>
               </li>
-              <li className="my-[2px] h-10 nav">
+              <li
+                className={`${
+                  currentRoute === "/admin/cars" && "active"
+                } my-[2px] h-10 nav`}
+              >
                 <Link
-                  href="/"
+                  href="/admin/cars"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
-                  <BookUser size={18} />
-                  Bookings
+                  <CarIcon size={18} />
+                  Vehicles
                 </Link>
               </li>
               <Separator
@@ -97,18 +121,26 @@ const SideNav = () => {
               />
               <span className="my-2 px-3 ">Report</span>
 
-              <li className="my-[2px] h-10 nav">
+              <li
+                className={`${
+                  currentRoute === "/admin/report/transactions" && "active"
+                } my-[2px] h-10 nav`}
+              >
                 <Link
-                  href="/"
+                  href="/admin/report/transactions"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
                   <h1 className="text-[20px]">&#8358;</h1>Transactions
                 </Link>
               </li>
-              <li className="my-[2px] h-10 nav">
+              <li
+                className={`${
+                  currentRoute === "/admin/report/car" && "active"
+                } my-[2px] h-10 nav`}
+              >
                 <Link
-                  href="/"
+                  href="/admin/report/car"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -121,9 +153,13 @@ const SideNav = () => {
                 orientation="horizontal"
               />
               <span className="my-2 px-3 ">Settings</span>
-              <li className="my-[2px] h-10 nav">
+              <li
+                className={`${
+                  currentRoute === "/admin/settings" && "active"
+                } my-[2px] h-10 nav`}
+              >
                 <Link
-                  href="/"
+                  href="/admin/settings"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>

@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { TransactionDataTable } from "./transactions/columns";
-import { columns } from "./transactions/data-table";
+
 import { Calendar } from "@/components/ui/calendar";
 
 import {
@@ -15,6 +14,8 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { raleway } from "@/lib/fonts";
 import { SlidersVertical } from "lucide-react";
+import { TransactionDataTable } from "./transactions/data-table";
+import { columns } from "./transactions/columns";
 
 const TransactionTable = () => {
   const data = [
@@ -22,7 +23,11 @@ const TransactionTable = () => {
       id: "728ed52f",
       amount: 100,
       status: "pending",
-      email: "m@example.com",
+      pick_up_date: "",
+      drop_off_date: "",
+      type: "Within Abuja",
+      duration: "2 Days",
+      customer: "m@example.com",
     },
   ];
   const [date, setDate] = useState(new Date());

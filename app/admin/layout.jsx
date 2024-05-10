@@ -4,7 +4,6 @@ import "../(client)/globals.css";
 import "./dashboard.css";
 
 import SideNav from "./_components/sidenav/sidenav";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const metadata = {
   title: "Next.js",
@@ -15,15 +14,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={cn(`${raleway.className} w-full flex`)}>
-        <div className="w-full flex h-screen">
-          <SideNav />
-          <div className="w-full bg-[#fafafb]">
-            <ScrollArea className="flex h-screen  overflow-x-hidden bg-[#F8F7F1]">
-              <div className="bg-[#FDFDFD] h-screen  rounded-[8px]">
-                {children}
-              </div>
-            </ScrollArea>
-          </div>
+        <SideNav />
+        <div className="bg-[#FDFDFD] h-screen rounded-[8px] w-full">
+          {children}
         </div>
       </body>
     </html>

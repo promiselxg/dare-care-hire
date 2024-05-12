@@ -1,3 +1,4 @@
+"use client";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,8 +10,16 @@ import {
 import "../../cart/cart.css";
 import { raleway, syne } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 const SuccessfullOrderPage = ({ params }) => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
       <section className="w-full flex bg-[url('/images/page-img.jpg')] bg-cover pt-[80px] pb-10 bg-fixed bg-right-top relative">

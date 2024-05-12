@@ -1,3 +1,4 @@
+"use client";
 import { CornerDownLeft, Home } from "lucide-react";
 import "./checkout.css";
 import "../cart/cart.css";
@@ -5,8 +6,16 @@ import { raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const CheckoutPage = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
       <div className="w-full flex">

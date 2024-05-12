@@ -10,8 +10,8 @@ import TransactionTable from "../_components/table/TransactionTable";
 const Dashboard = async () => {
   return (
     <>
-      <Header />
-      <section className="w-full bg-[whitesmoke] h-fit p-5">
+      <section className="w-full flex h-screen flex-col gap-y-5 p-5 overflow-y-scroll bg-[whitesmoke]">
+        <Header />
         <div className="w-full">
           <div className="w-full grid md:grid-cols-4  grid-cols-1 gap-3">
             <DashboardCard
@@ -45,8 +45,8 @@ const Dashboard = async () => {
         </div>
         <div className="w-full my-4">
           <div className="flex justify-between gap-3 flex-col md:flex-row">
-            <SalesAnalytics data={salesAnalytics} />
-            <SalesReport data={salesReport} />
+            <SalesAnalytics data={salesAnalytics} label="Sales Analystics" />
+            <SalesReport data={salesReport} label="Sales Report" />
           </div>
         </div>
         <div className="w-full">

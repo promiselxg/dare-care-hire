@@ -12,13 +12,13 @@ import { cn } from "@/lib/utils";
 import { raleway } from "@/lib/fonts";
 import { ResponsiveBar } from "@nivo/bar";
 
-const SalesAnalytics = ({ data }) => {
+const SalesAnalytics = ({ label, data }) => {
   return (
     <>
       <div className="w-full md:w-[70%] bg-white rounded-[8px] p-5">
         <div className="flex items-center justify-between w-full">
           <h1 className={cn(`${raleway.className} capitalize font-[600]`)}>
-            Sales Analystics
+            {label}
           </h1>
           <Select>
             <SelectTrigger className="bg-[whitesmoke] border-none outline-none w-fit rounded-md py-5 flex gap-5">

@@ -91,7 +91,9 @@
     background: #da1c36;
   }
 }
-
+html {
+  scroll-behavior: smooth !important;
+}
 @layer base {
   * {
     @apply border-border;

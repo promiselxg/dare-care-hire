@@ -5,6 +5,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -18,9 +19,13 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
-export function TransactionDataTable({ columns, data }) {
+export function DriversDataTable({ columns, data }) {
   const [columnFilters, setColumnFilters] = useState();
+  const [sorting, setSorting] = useState([]);
+  const [columnVisibility, setColumnVisibility] = useState({});
+
   const table = useReactTable({
     data,
     columns,
@@ -28,21 +33,26 @@ export function TransactionDataTable({ columns, data }) {
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       columnFilters,
+      sorting,
+      columnVisibility,
     },
   });
 
   return (
-    <div className="rounded-md border my-5 p-5">
-      <div className="flex items-center py-4">
+    <div className="rounded-md border my-5 p-5 bg-white">
+      <div className="flex items-center py-4 justify-between w-full">
         <Input
           placeholder="Search Table"
           value={table.getColumn("customer")?.getFilterValue() ?? ""}
           onChange={(event) =>
             table.getColumn("customer")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="w-full md:w-1/3"
         />
       </div>
       <Table className="border w-full">
@@ -87,6 +97,24 @@ export function TransactionDataTable({ columns, data }) {
           )}
         </TableBody>
       </Table>
+      <div className="space-x-2 py-4 float-right">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 }

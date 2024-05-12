@@ -8,42 +8,47 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
+
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { FiTrash2 } from "react-icons/fi";
 
 export const columns = [
   {
-    accessorKey: "customer",
-    header: "Customer Name",
+    accessorKey: "driver",
+    header: ({ column }) => {
+      return (
+        <span
+          className="cursor-pointer flex items-center"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Driver&apos;s Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
   },
   {
-    accessorKey: "pick_up_date",
-    header: "Pick-up Date",
+    accessorKey: "description",
+    header: "Description",
   },
   {
-    accessorKey: "drop_off_date",
-    header: "Drop-off Date",
+    accessorKey: "vehicle_type",
+    header: "Vehicle Type",
   },
+
   {
-    accessorKey: "type",
-    header: "Booking Type",
-  },
-  {
-    accessorKey: "duration",
-    header: "No of Day(s)",
+    accessorKey: "date",
+    header: "Date",
   },
   {
     accessorKey: "amount",
     header: "Amount",
   },
-  {
-    accessorKey: "status",
-    header: "Status",
-  },
+
   {
     id: "actions",
     cell: ({ row }) => {
-      const { mediaType, id, mediaUrl, publicId } = row.original;
+      const { id } = row.original;
 
       return (
         <DropdownMenu>
@@ -56,10 +61,10 @@ export const columns = [
           <DropdownMenuContent align="end" className="bg-white">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => handleRemove(mediaType, id, mediaUrl, publicId)}
+              onClick={() => alert(id)}
               className="text-red-400 flex items-center gap-2 cursor-pointer"
             >
-              <FiTrash2 /> Delete Item
+              <FiTrash2 /> Delete Record
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

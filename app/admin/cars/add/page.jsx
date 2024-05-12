@@ -31,7 +31,8 @@ import Image from "next/image";
 import { generateSlug } from "@/utils/generateSlug";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import { _ } from "@/utils/getElementById";
+import { acceptNumbersOnly } from "@/utils/regExpression";
+import { __ } from "@/utils/getElementById";
 
 const formSchema = z.object({
   vehicle_name: z.string().min(2, {
@@ -145,7 +146,7 @@ const AddCar = () => {
             "api_key",
             process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY
           );
-          _("submitBtn").innerHTML = "Uploading Image...";
+          __("submitBtn").innerHTML = "Uploading Image...";
           const uploadRes = await axios.post(
             `https://api.cloudinary.com/v1_1/promiselxg/image/upload`,
             formData
@@ -156,7 +157,7 @@ const AddCar = () => {
         })
       );
       if (list) {
-        _("submitBtn").innerHTML = "Submiting data...";
+        __("submitBtn").innerHTML = "Submiting data...";
         const data = {
           values,
           slug,
@@ -178,11 +179,11 @@ const AddCar = () => {
           window.location = "/admin/cars/";
         }
       }
-      _("submitBtn").innerHTML = "Submit";
+      __("submitBtn").innerHTML = "Submit";
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      _("submitBtn").innerHTML = "Submit";
+      __("submitBtn").innerHTML = "Submit";
       console.log(error);
       toast({
         variant: "destructive",
@@ -362,6 +363,9 @@ const AddCar = () => {
                             placeholder="Amount"
                             {...field}
                             className="form-input"
+                            id="amount"
+                            defaultValue={field.value}
+                            onKeyUp={() => acceptNumbersOnly("amount")}
                           />
                         </FormControl>
                         <FormMessage />

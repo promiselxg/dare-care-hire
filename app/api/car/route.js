@@ -1,8 +1,11 @@
 import { removeUploadedImage } from "@/utils/cloudinary";
 import prisma from "@/utils/dbConnect";
+import { logger } from "@/utils/logger";
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
+  const userAgent = req.headers.get("user-agent");
+  const urlPath = req.headers.get("referer").split(process.env.HOST_URL)[1];
   try {
     const body = await req.json();
     const photoId = body?.photos.map((url) => url.public_id.split("/")[1]);
@@ -12,7 +15,7 @@ export const POST = async (req) => {
       !body.values.amount ||
       !body.values.vehicle_type ||
       !body.values.vehicle_model ||
-      body.slug
+      !body.slug
     ) {
       removeUploadedImage(photoId, "dareCareHireImages");
       return new NextResponse(
@@ -52,12 +55,14 @@ export const POST = async (req) => {
       },
     });
     if (response) {
+      logger(userAgent, urlPath, "success", "POST", "add vehicle");
       return new NextResponse(
         JSON.stringify({ message: "success" }, { status: 200 })
       );
     }
   } catch (err) {
     removeUploadedImage(photoId, "dareCareHireImages");
+    logger(userAgent, urlPath, "failed", "POST", "add vehicle");
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );

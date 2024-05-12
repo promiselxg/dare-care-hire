@@ -21,3 +21,14 @@ model vehicleInfo {
   createdAt               DateTime   @default(now())
   updatedAt               DateTime   @updatedAt
 }
+
+model logger {
+  id                      String     @id @default(cuid()) @map("_id")
+  userAgent             String    
+  urlPath                     String    
+  logStatus               String
+  method                  String
+  action                  String
+  createdAt               DateTime   @default(now())
+  updatedAt               DateTime   @updatedAt
+}

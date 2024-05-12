@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/utils/formatCurrency";
+import { truncateText } from "@/utils/trucateText";
 
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import Image from "next/image";
@@ -31,12 +33,16 @@ export const columns = [
       );
     },
     cell: ({ row }) => {
-      const { id, vehicle_name } = row.original;
+      const { slug, vehicle_name } = row.original;
       return (
         <>
           <div>
             <h1 className={cn(`${raleway.className} font-bold`)}>
-              <Link href={`/cars/${id}`} target="_blank">
+              <Link
+                href={`/cars/${slug}`}
+                target="_blank"
+                className="hover:underline hover:text-[#e97688] transition-all delay-75 capitalize"
+              >
                 {vehicle_name}
               </Link>
             </h1>
@@ -53,7 +59,7 @@ export const columns = [
       return (
         <>
           <div className="w-fit">
-            <p>{description}</p>
+            <p>{truncateText(description, 50)}</p>
           </div>
         </>
       );
@@ -64,15 +70,16 @@ export const columns = [
     id: "image",
     header: "Image",
     cell: ({ row }) => {
-      const { id } = row.original;
+      const { vehicle_name, imgThumbnail } = row.original;
       return (
         <>
-          <div className="">
+          <div className="w-full">
             <Image
-              src="https://autostar.pro-theme.info/wp-content/uploads/2018/12/1487537941593e2393c6984322098766_0_0.jpg"
+              src={imgThumbnail}
               width={100}
               height={50}
-              alt="car"
+              alt={vehicle_name}
+              className="w-[80px] object-contain"
             />
           </div>
         </>
@@ -81,14 +88,14 @@ export const columns = [
   },
 
   {
-    accessorKey: "type",
+    accessorKey: "vehicle_type",
     header: "Vehicle Type",
     cell: ({ row }) => {
-      const { type } = row.original;
+      const { vehicle_type } = row.original;
       return (
         <>
           <div className="w-1/2">
-            <p>{type}</p>
+            <p className="uppercase">{vehicle_type}</p>
           </div>
         </>
       );
@@ -97,6 +104,18 @@ export const columns = [
   {
     accessorKey: "amount",
     header: "Amount",
+    cell: ({ row }) => {
+      const { amount } = row.original;
+      return (
+        <>
+          <div className="w-1/2">
+            <p className={cn(`${raleway.className} font-bold`)}>
+              {formatCurrency(amount)}
+            </p>
+          </div>
+        </>
+      );
+    },
   },
 
   {

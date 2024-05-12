@@ -9,9 +9,10 @@ import "../../admin/dashboard.css";
 import { VehicleDataTable } from "../_components/table/cars/data-table";
 import { columns } from "../_components/table/cars/columns";
 import Link from "next/link";
+import useFetch from "@/hooks/useFetch";
 
 const CarsPage = () => {
-  const data = [
+  const dat = [
     {
       id: "728ed52f",
       amount: "9,800",
@@ -31,7 +32,7 @@ const CarsPage = () => {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos",
     },
   ];
-
+  const { data } = useFetch("/car");
   return (
     <>
       <section className="w-full flex h-screen flex-col gap-y-5 p-5 overflow-y-scroll bg-[whitesmoke]">

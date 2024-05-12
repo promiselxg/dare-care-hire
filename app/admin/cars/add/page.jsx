@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, CloudUpload, X } from "lucide-react";
+import { ChevronLeft, CloudUpload, Loader2, X } from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

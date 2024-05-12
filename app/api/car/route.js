@@ -51,6 +51,7 @@ export const POST = async (req) => {
         amount: parseInt(body?.values?.amount),
         imgUrl: body?.photos?.map((url) => url.secure_url),
         imageId: body?.photos?.map((url) => url.public_id.split("/")[1]),
+        imgThumbnail: body?.photos[0]?.secure_url,
         vehicle_type: body?.values?.vehicle_type,
       },
     });
@@ -63,6 +64,31 @@ export const POST = async (req) => {
   } catch (err) {
     removeUploadedImage(photoId, "dareCareHireImages");
     logger(userAgent, urlPath, "failed", "POST", "add vehicle");
+    return new NextResponse(
+      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+    );
+  }
+};
+
+export const GET = async (req) => {
+  const userAgent = req.headers.get("user-agent");
+  const urlPath = req.headers.get("referer").split(process.env.HOST_URL)[1];
+  try {
+    const response = await prisma.vehicleInfo.findMany({
+      select: {
+        id: true,
+        vehicle_name: true,
+        description: true,
+        imgThumbnail: true,
+        vehicle_type: true,
+        amount: true,
+        slug: true,
+        features: true,
+      },
+    });
+    return new NextResponse(JSON.stringify(response, { status: 200 }));
+  } catch (err) {
+    logger(userAgent, urlPath, "failed", "GET", "get vehicle");
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );

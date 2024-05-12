@@ -23,3 +23,13 @@
 .image-gallery-icon {
   filter: none !important;
 }
+.image-gallery-image {
+  width: 1000px !important;
+  height: max-content !important;
+}
+.image-gallery-swipe {
+  width: 100%;
+}
+.image-gallery-thumbnails-wrapper {
+  margin-top: 20px !important;
+}

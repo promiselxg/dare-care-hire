@@ -1,5 +1,5 @@
+"use client";
 import Image from "next/image";
-
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { open_sans, syne } from "@/lib/fonts";
@@ -14,8 +14,16 @@ import {
 
 import Hero from "../_component/Hero";
 import { CarCarousa } from "../_component/carousel/carCard";
+import { useEffect } from "react";
 
 export default function Home() {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
       <div className="w-full">

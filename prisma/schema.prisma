@@ -17,6 +17,7 @@ model vehicleInfo {
   amount                  Int
   imgUrl                  String[]
   imageId                 String[]
+  imgThumbnail            String?
   vehicle_type            String
   createdAt               DateTime   @default(now())
   updatedAt               DateTime   @updatedAt

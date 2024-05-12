@@ -27,7 +27,7 @@ const SideNav = () => {
   const hanldeOpenNav = () => {
     setOpenNavBar(!openNavBar);
   };
-  console.log(currentRoute);
+
   return (
     <>
       <ScrollArea
@@ -103,7 +103,8 @@ const SideNav = () => {
               </li>
               <li
                 className={`${
-                  currentRoute === "/admin/cars" && "active"
+                  (currentRoute === "/admin/cars" && "active") ||
+                  (currentRoute === "/admin/cars/add" && "active")
                 } my-[2px] h-10 nav`}
               >
                 <Link

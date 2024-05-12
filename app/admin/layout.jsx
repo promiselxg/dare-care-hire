@@ -2,6 +2,7 @@ import { raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import "../(client)/globals.css";
 import "./dashboard.css";
+import { Toaster } from "@/components/ui/toaster";
 
 import SideNav from "./_components/sidenav/sidenav";
 
@@ -15,9 +16,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={cn(`${raleway.className} w-full flex`)}>
         <SideNav />
-        <div className="bg-[#FDFDFD] h-screen rounded-[8px] w-full">
+        <div className="bg-[whitesmoke] h-screen rounded-[8px] w-full">
           {children}
         </div>
+        <Toaster />
       </body>
     </html>
   );

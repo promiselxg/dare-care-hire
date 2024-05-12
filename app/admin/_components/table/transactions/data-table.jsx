@@ -38,9 +38,9 @@ export function TransactionDataTable({ columns, data }) {
       <div className="flex items-center py-4">
         <Input
           placeholder="Search Table"
-          value={table.getColumn("mediaType")?.getFilterValue() ?? ""}
+          value={table.getColumn("customer")?.getFilterValue() ?? ""}
           onChange={(event) =>
-            table.getColumn("mediaType")?.setFilterValue(event.target.value)
+            table.getColumn("customer")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

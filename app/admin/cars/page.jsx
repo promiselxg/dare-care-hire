@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import "../../admin/dashboard.css";
 import { VehicleDataTable } from "../_components/table/cars/data-table";
 import { columns } from "../_components/table/cars/columns";
+import Link from "next/link";
 
 const CarsPage = () => {
   const data = [
@@ -53,8 +54,10 @@ const CarsPage = () => {
           >
             Vehicles
           </h1>
-          <Button className="flex gap-2 items-center border-none outline-none bg-[--button-bg] hover:bg-[--button-bg-hover] text-white transition-all delay-75 rounded-[5px]">
-            <Cross size={13} /> Add new Vehicle
+          <Button className="border-none outline-none bg-[--button-bg] hover:bg-[--button-bg-hover] text-white transition-all delay-75 rounded-[5px]">
+            <Link href="/admin/cars/add" className="flex gap-2 items-center ">
+              <Cross size={13} /> Add new Vehicle
+            </Link>
           </Button>
         </div>
         <VehicleDataTable columns={columns} data={data} />

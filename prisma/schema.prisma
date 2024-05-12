@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model vehicleInfo {
+  id                      String     @id @default(cuid()) @map("_id")
+  vehicle_name            String     @unique
+  slug                    String     @unique
+  description             String
+  features                String?
+  model                   String
+  amount                  Int
+  imgUrl                  String[]
+  imageId                 String[]
+  vehicle_type            String
+  createdAt               DateTime   @default(now())
+  updatedAt               DateTime   @updatedAt
+}

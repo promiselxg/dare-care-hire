@@ -294,12 +294,12 @@ const AddCar = () => {
                   )}
                 />
 
-                <div className="w-full flex items-center gap-5">
+                <div className="w-full flex items-center gap-5 flex-col md:flex-row ">
                   <FormField
                     control={form.control}
                     name="vehicle_type"
                     render={({ field }) => (
-                      <FormItem className="w-1/2">
+                      <FormItem className="md:w-1/2 w-full">
                         <FormLabel>Vehicle type</FormLabel>
                         <Select
                           onValueChange={field.onChange}
@@ -328,7 +328,7 @@ const AddCar = () => {
                     control={form.control}
                     name="vehicle_model"
                     render={({ field }) => (
-                      <FormItem className="w-1/2">
+                      <FormItem className="md:w-1/2 w-full">
                         <FormLabel>Car Model</FormLabel>
                         <Select
                           onValueChange={field.onChange}
@@ -356,7 +356,7 @@ const AddCar = () => {
                     control={form.control}
                     name="amount"
                     render={({ field }) => (
-                      <FormItem className="w-1/2">
+                      <FormItem className="md:w-1/2 w-full">
                         <FormLabel>Amount</FormLabel>
                         <FormControl>
                           <Input
@@ -392,7 +392,7 @@ const AddCar = () => {
                     className="hidden"
                   />
 
-                  <div className="w-full grid md:grid-cols-10 grid-cols-4 gap-3">
+                  <div className="w-full grid md:grid-cols-10 grid-cols-3 gap-3">
                     {selectedImages && renderImages(selectedImages)}
                   </div>
                 </div>

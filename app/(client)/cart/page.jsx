@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { useCart } from "@/context/cartContext";
 
 const CartPage = () => {
-  const { cart } = useCart();
+  // const { cart } = useCart();
   useEffect(() => {
     window.scrollTo({
       top: 0,

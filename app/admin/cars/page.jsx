@@ -21,7 +21,7 @@ const CarsPage = () => {
             <DashboardCard
               title="Total"
               icon={<User color="green" />}
-              value="25"
+              value={data?.length || "0"}
               bg="whitesmoke"
               desc="+5.5% since last week"
             />

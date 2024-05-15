@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Header = () => {
-  const { cart } = useCart();
+  //const { cart } = useCart();
 
   return (
     <>

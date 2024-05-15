@@ -32,10 +32,8 @@ const handleDeleteBtn = (id) => {
     preConfirm: async () => {
       try {
         const deleteRequest = await axios.delete(`${host.url}/car/${id}`);
-        if (deleteRequest?.data?.message !== "Record deleted successfully") {
-          Swal.showValidationMessage(
-            "An error occured while trying to delete this item, please try again later."
-          );
+        if (deleteRequest?.data !== "Record deleted successfully") {
+          Swal.showValidationMessage(`${deleteRequest?.data}`);
         }
       } catch (error) {
         Swal.showValidationMessage(`
@@ -46,7 +44,17 @@ const handleDeleteBtn = (id) => {
     allowOutsideClick: () => !Swal.isLoading(),
   }).then((result) => {
     if (result.isConfirmed) {
-      window.location.reload();
+      Swal.fire({
+        title: "",
+        text: "Item deleted successfully.",
+        icon: "success",
+        confirmButtonText: "Ok",
+        showCancelButton: false,
+      }).then((status) => {
+        if (status.isConfirmed) {
+          window.location.reload();
+        }
+      });
     }
   });
 };

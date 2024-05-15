@@ -13,13 +13,11 @@ export const metadata = {
 export default function CheckoutLayout({ children }) {
   return (
     <html lang="en">
-      <CartProvider>
-        <body className={cn(`${raleway.className}`)}>
-          <Header />
-          {children}
-          <Footer />
-        </body>
-      </CartProvider>
+      <body className={cn(`${raleway.className}`)}>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

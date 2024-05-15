@@ -15,7 +15,7 @@ export const GET = async (req, { params }) => {
       },
     });
     if (!itemExist) {
-      logger(userAgent, urlPath, "failed", "GET", "Invalid vehicle ID");
+      //logger(userAgent, urlPath, "failed", "GET", "Invalid vehicle ID");
       return new NextResponse(
         JSON.stringify(
           { message: "No Record found with the ID Provided" },
@@ -25,13 +25,13 @@ export const GET = async (req, { params }) => {
     }
     return new NextResponse(JSON.stringify(itemExist, { status: 200 }));
   } catch (err) {
-    logger(
-      userAgent,
-      urlPath,
-      "failed",
-      "GET",
-      `error occured while trying to query DB with ${params.id}`
-    );
+    // logger(
+    //   userAgent,
+    //   urlPath,
+    //   "failed",
+    //   "GET",
+    //   `error occured while trying to query DB with ${params.id}`
+    // );
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );
@@ -76,7 +76,7 @@ export const DELETE = async (req, { params }) => {
   }
 };
 const errorResponse = (message, status) => {
-  return new NextResponse(JSON.stringify({ message }), { status });
+  return new NextResponse(JSON.stringify(message), { status });
 };
 const successResponse = (message, status) => {
   return new NextResponse(JSON.stringify(message), { status });

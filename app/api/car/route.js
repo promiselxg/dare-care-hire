@@ -27,7 +27,6 @@ export const POST = async (req) => {
       removeUploadedImage(photoId, "dareCareHireImages");
       return errorResponse("A Vehicle with this name already exist.", 400);
     }
-
     const vehicleData = getVehicleDataFromRequestBody(body);
     const response = await prisma.vehicleInfo.create({ data: vehicleData });
 

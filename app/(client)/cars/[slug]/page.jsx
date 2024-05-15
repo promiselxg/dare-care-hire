@@ -26,9 +26,9 @@ import Link from "next/link";
 const CarDetails = ({ params }) => {
   const { loading, data } = useFetch(`/car/${params?.slug}`);
   const { cart, addItemToCart } = useCart();
-  console.log(data);
+  console.log(cart);
   if (data?.message === "No Record found with the ID Provided") {
-    ///redirect("/cars");
+    redirect("/cars");
   }
   const images = data?.imgUrl?.map((url, index) => {
     return {

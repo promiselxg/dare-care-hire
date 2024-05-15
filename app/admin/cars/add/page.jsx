@@ -125,6 +125,7 @@ const AddCar = () => {
       !values.amount ||
       !values.vehicle_type ||
       !values.vehicle_model ||
+      !values.features ||
       selectedImages.length < 1
     ) {
       setLoading(false);
@@ -184,7 +185,6 @@ const AddCar = () => {
     } catch (error) {
       setLoading(false);
       __("submitBtn").innerHTML = "Submit";
-      console.log(error);
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",

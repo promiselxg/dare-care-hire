@@ -1,6 +1,7 @@
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { raleway } from "@/lib/fonts";
+import { CartProvider } from "@/context/cartContext";
 
 export const metadata = {
   title: "Checkout page",
@@ -10,7 +11,9 @@ export const metadata = {
 export default function CheckoutLayout({ children }) {
   return (
     <html lang="en">
-      <body className={cn(`${raleway.className}`)}>{children}</body>
+      <CartProvider>
+        <body className={cn(`${raleway.className}`)}>{children}</body>
+      </CartProvider>
     </html>
   );
 }

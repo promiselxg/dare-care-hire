@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { raleway } from "@/lib/fonts";
 import Footer from "../_component/Footer";
 import Header from "../_component/Header";
+import { CartProvider } from "@/context/cartContext";
 
 export const metadata = {
   title: "Create Next App",
@@ -12,11 +13,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={cn(`${raleway.className}`)}>
-        <Header />
-        {children}
-        <Footer />
-      </body>
+      <CartProvider>
+        <body className={cn(`${raleway.className}`)}>
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </CartProvider>
     </html>
   );
 }

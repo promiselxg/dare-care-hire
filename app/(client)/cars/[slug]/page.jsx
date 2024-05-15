@@ -3,7 +3,6 @@
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
@@ -21,11 +20,15 @@ import SkeletonLoader from "../../_component/Loader";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { Loader2, ShieldCheck } from "lucide-react";
 import { redirect } from "next/navigation";
+import { useCart } from "@/context/cartContext";
+import Link from "next/link";
 
 const CarDetails = ({ params }) => {
   const { loading, data } = useFetch(`/car/${params?.slug}`);
+  const { cart, addItemToCart } = useCart();
+  console.log(data);
   if (data?.message === "No Record found with the ID Provided") {
-    redirect("/cars");
+    ///redirect("/cars");
   }
   const images = data?.imgUrl?.map((url, index) => {
     return {
@@ -41,6 +44,7 @@ const CarDetails = ({ params }) => {
       behavior: "smooth",
     });
   }, []);
+
   return (
     <>
       <div className="relative">
@@ -62,11 +66,11 @@ const CarDetails = ({ params }) => {
                   )}
                 >
                   <BreadcrumbItem>
-                    <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                    <Link href="/">Home</Link>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
-                    <BreadcrumbLink href="/cars">Auto Listing</BreadcrumbLink>
+                    <Link href="/cars">Auto Listing</Link>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
@@ -270,6 +274,14 @@ const CarDetails = ({ params }) => {
                     className={cn(
                       `${raleway.className} w-full bg-[--button-bg] font-[500] hover:scale-[1.1] hover:bg-[--button-bg] rounded-[5px] py-6 px-8 text-white transition-all delay-75 uppercase`
                     )}
+                    onClick={() =>
+                      addItemToCart({
+                        id: data?.id,
+                        name: data?.vehicle_name,
+                        amount: data?.amount,
+                        quantity: 1, // or specify the desired quantity here
+                      })
+                    }
                   >
                     rent this car
                   </Button>

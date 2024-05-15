@@ -12,26 +12,6 @@ import Link from "next/link";
 import useFetch from "@/hooks/useFetch";
 
 const CarsPage = () => {
-  const dat = [
-    {
-      id: "728ed52f",
-      amount: "9,800",
-      type: "bus",
-      date: "2 Days",
-      vehicle_name: "Peagout",
-      description:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium, qui.",
-    },
-    {
-      id: "728ed52f",
-      amount: "10,000",
-      type: "suv",
-      date: "2 Days",
-      vehicle_name: "Toyota Corolla",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos",
-    },
-  ];
   const { data } = useFetch("/car");
   return (
     <>

@@ -13,6 +13,11 @@ const nextConfig = {
         destination: "/admin/dashboard",
         permanent: true,
       },
+      {
+        source: "/admin/cars/edit",
+        destination: "/admin/cars",
+        permanent: true,
+      },
     ];
   },
   images: {

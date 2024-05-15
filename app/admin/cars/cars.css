@@ -17,3 +17,15 @@ textarea {
 .form-input {
   padding: 15px !important;
 }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 400;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}

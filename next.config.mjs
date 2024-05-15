@@ -1,20 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async redirects() {
-    return [
-      // Basic redirect
-      {
-        source: "/",
-        destination: "/home",
-        permanent: true,
-      },
-      {
-        source: "/admin",
-        destination: "/admin/dashboard",
-        permanent: true,
-      },
-    ];
-  },
+  // async redirects() {
+  //   return [
+  //     // Basic redirect
+  //     {
+  //       source: "/",
+  //       destination: "/home",
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: "/admin",
+  //       destination: "/admin/dashboard",
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: "/admin/cars/edit",
+  //       destination: "/admin/cars",
+  //       permanent: true,
+  //     },
+  //   ];
+  // },
   images: {
     remotePatterns: [
       {

@@ -15,6 +15,7 @@ const removeUploadedImage = async (imageArray, preset) => {
       resource_type: "image",
     });
     console.log(result);
+    return result;
   } catch (error) {
     console.log(error.error.message);
   }

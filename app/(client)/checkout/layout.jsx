@@ -1,6 +1,7 @@
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { raleway } from "@/lib/fonts";
+import { CartProvider } from "@/context/cartContext";
 
 export const metadata = {
   title: "Checkout page",

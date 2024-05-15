@@ -13,8 +13,10 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
+import { useCart } from "@/context/cartContext";
 
 const CartPage = () => {
+  // const { cart } = useCart();
   useEffect(() => {
     window.scrollTo({
       top: 0,

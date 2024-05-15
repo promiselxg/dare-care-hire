@@ -109,7 +109,7 @@ const Page = () => {
                 <SkeletonLoader />
               ) : (
                 data?.map((car) => (
-                  <Link href={`/cars/${car?.slug}`} key={car?.id}>
+                  <Link href={`/cars/${car?.id}`} key={car?.id}>
                     <div className="bg-white flex flex-col w-full md:w-[280px] justify-center text-center items-center  carousel-item">
                       <Image
                         src={car?.imgThumbnail}
@@ -150,7 +150,7 @@ const Page = () => {
                           >
                             {formatCurrency(car?.amount)}
                           </h1>
-                          <Link href={`/cars/${car?.slug}`}>
+                          <Link href={`/cars/${car?.id}`}>
                             <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit ">
                               rent it
                             </Button>

@@ -6,7 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import "../cars.css";
+import "../../cars.css";
 
 import {
   Form,
@@ -26,13 +26,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { generateSlug } from "@/utils/generateSlug";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { acceptNumbersOnly } from "@/utils/regExpression";
 import { __ } from "@/utils/getElementById";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   vehicle_name: z.string().min(2, {
@@ -41,19 +42,21 @@ const formSchema = z.object({
   description: z.string().min(10, {
     message: "description must be at least 10 characters.",
   }),
-  features: z.string({ message: "this field is required" }),
+  features: z.string().optional(),
   amount: z.string().min(4, { message: "Please enter a valid amound." }),
   vehicle_type: z.string(),
   vehicle_model: z.string(),
 });
 
-const AddCar = () => {
+const EditCar = ({ params }) => {
   const [selectedImages, setselectedImages] = useState([]);
   const [files, setFiles] = useState([]);
   const [slug, setSlug] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
+  const [loadingData, setLoadingData] = useState(false);
+  const [data, setData] = useState([]);
 
+  const { toast } = useToast();
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
@@ -89,16 +92,18 @@ const AddCar = () => {
     setselectedImages(updatedImages);
   };
   //  Display the selected Item
-  const renderImages = (source) => {
-    return source.map((image, i) => (
+  const renderImages = (source, type) => {
+    return source?.map((image, i) => (
       <div
         className="w-full h-[60px] rounded-md relative mb-5   bg-contain"
         key={i}
       >
-        <X
-          className="absolute -top-2 -right-2 bg-[rgba(0,0,0,0.9)] rounded-full text-white p-[5px]  cursor-pointer"
-          onClick={() => removeSelectedImage(i)}
-        />
+        {type === "file" && (
+          <X
+            className="absolute -top-2 -right-2 bg-[rgba(0,0,0,0.9)] rounded-full text-white p-[5px]  cursor-pointer"
+            onClick={() => removeSelectedImage(i)}
+          />
+        )}
         <Image
           src={image}
           alt={`images ${i}`}
@@ -115,28 +120,39 @@ const AddCar = () => {
     setSlug(generateSlug(text));
   };
 
-  async function onSubmit(values) {
-    setLoading(true);
-    const timestamp = Math.round(new Date().getTime() / 1000);
-    if (
-      !values.vehicle_name ||
-      !values.description ||
-      !slug ||
-      !values.amount ||
-      !values.vehicle_type ||
-      !values.vehicle_model ||
-      !values.features ||
-      selectedImages.length < 1
-    ) {
-      setLoading(false);
-      toast({
-        variant: "destructive",
-        title: "Please fill out the rquired fields.",
-        description: "There was a problem with your request.",
-      });
-    }
+  async function onSubmit(values) {}
+
+  const handleFormUpdate = async (field, value) => {
+    if (!value) return false;
+    const fieldName = __(field);
+    fieldName.innerHTML = "Updating...";
     try {
-      setLoading(true);
+      const response = await axios.put("/api/car", {
+        id: params?.id,
+        value,
+        field,
+      });
+
+      if (response.data.message !== "success") {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: response.data.message,
+        });
+      } else {
+        toast({ title: "Updated successfully." });
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      fieldName.innerHTML = "Update";
+    }
+  };
+
+  const handleImageUpload = async (field, value) => {
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    try {
       const list = await Promise.all(
         Object.values(files).map(async (file) => {
           const formData = new FormData();
@@ -152,46 +168,62 @@ const AddCar = () => {
             `https://api.cloudinary.com/v1_1/promiselxg/image/upload`,
             formData
           );
-
           const { data } = uploadRes;
           return data;
         })
       );
       if (list) {
         __("submitBtn").innerHTML = "Submiting data...";
-        const data = {
-          values,
-          slug,
+        const response = await axios.put("/api/car", {
+          id: params?.id,
+          value,
+          field,
           photos: list,
-        };
-        const response = await axios.post("/api/car", data);
+        });
         if (response?.data?.message !== "success") {
           toast({
             variant: "destructive",
             title: "There was a problem with your request.",
-            description: `${response.data.message}`,
+            description: `${response?.data?.message}`,
           });
+          __("submitBtn").innerHTML = "Update Photo";
         }
         if (response?.data.message === "success") {
           toast({
-            title: "New Record created successfully.",
-            description: `${values.vehicle_name} created successfully.`,
+            title: "Vehicle Images updated successfully.",
           });
           window.location = "/admin/cars/";
         }
       }
-      __("submitBtn").innerHTML = "Submit";
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
-      __("submitBtn").innerHTML = "Submit";
+      console.log(error);
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description: "There was a problem with your request.",
       });
     }
-  }
+  };
+  useEffect(() => {
+    const getRecord = async () => {
+      if (!params?.id || params.id === "") {
+        router.push("/admin/cars");
+      }
+      try {
+        setLoadingData(true);
+        const { data } = await axios.get(`/api/car/${params?.id}`);
+        if (data?.message === "No Record found with the ID Provided") {
+          router.push("/admin/cars");
+        }
+        setData(data);
+        setLoadingData(false);
+      } catch (error) {
+        setLoadingData(false);
+        console.log(error);
+      }
+    };
+    getRecord();
+  }, [params.id, router]);
 
   return (
     <>
@@ -208,7 +240,7 @@ const AddCar = () => {
         </div>
         <div className="w-full my-5 bg-[whitesmoke] px-5 flex flex-col h-screen ">
           <div className=" p-5">
-            <h1>New Vehicle</h1>
+            <h1>Edit Vehicle Information</h1>
           </div>
           <div className="p-5 bg-white container w-full">
             <Form {...form}>
@@ -227,10 +259,20 @@ const AddCar = () => {
                           placeholder="Vehicle Name"
                           {...field}
                           className="form-input"
+                          defaultValue={data?.vehicle_name}
                           onKeyUp={() => handleGenerateSlug(field?.value)}
                         />
                       </FormControl>
-                      <FormDescription>Vehicle Name</FormDescription>
+                      <Button
+                        type="button"
+                        disabled={!field.value}
+                        id="vehicle_name"
+                        onClick={() =>
+                          handleFormUpdate("vehicle_name", field?.value)
+                        }
+                      >
+                        Update
+                      </Button>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -246,7 +288,7 @@ const AddCar = () => {
                           placeholder="slug"
                           {...field}
                           disabled
-                          defaultValue={slug}
+                          defaultValue={slug || data?.slug}
                         />
                       </FormControl>
                       <FormDescription className="text-[12px] text-[#333]">
@@ -266,9 +308,20 @@ const AddCar = () => {
                         <Textarea
                           placeholder="Description"
                           className="resize-none"
+                          defaultValue={data?.description}
                           {...field}
                         />
                       </FormControl>
+                      <Button
+                        type="button"
+                        disabled={!field.value}
+                        id="description"
+                        onClick={() =>
+                          handleFormUpdate("description", field?.value)
+                        }
+                      >
+                        Update
+                      </Button>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -284,11 +337,22 @@ const AddCar = () => {
                           placeholder="Features"
                           {...field}
                           className="form-input"
+                          defaultValue={data?.features}
                         />
                       </FormControl>
                       <FormDescription className="text-[12px] text-[#333]">
                         seperated by comma (e.g, AC,Unlimited Milage, etc)
                       </FormDescription>
+                      <Button
+                        type="button"
+                        disabled={!field.value}
+                        id="features"
+                        onClick={() =>
+                          handleFormUpdate("features", field?.value)
+                        }
+                      >
+                        Update
+                      </Button>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -319,7 +383,16 @@ const AddCar = () => {
                             <SelectItem value="suv">SUV</SelectItem>
                           </SelectContent>
                         </Select>
-
+                        <Button
+                          type="button"
+                          disabled={!field.value}
+                          id="vehicle_type"
+                          onClick={() =>
+                            handleFormUpdate("vehicle_type", field?.value)
+                          }
+                        >
+                          Update
+                        </Button>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -347,14 +420,23 @@ const AddCar = () => {
                             <SelectItem value="mbw">BMW</SelectItem>
                           </SelectContent>
                         </Select>
-
+                        <Button
+                          type="button"
+                          disabled={!field.value}
+                          id="model"
+                          onClick={() =>
+                            handleFormUpdate("model", field?.value)
+                          }
+                        >
+                          Update
+                        </Button>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                   <FormField
                     control={form.control}
-                    name="amount"
+                    name="db_amount"
                     render={({ field }) => (
                       <FormItem className="md:w-1/2 w-full">
                         <FormLabel>Amount</FormLabel>
@@ -363,11 +445,21 @@ const AddCar = () => {
                             placeholder="Amount"
                             {...field}
                             className="form-input"
-                            id="amount"
-                            defaultValue={field.value}
-                            onKeyUp={() => acceptNumbersOnly("amount")}
+                            id="db_amount"
+                            defaultValue={field.value || data?.amount}
+                            onKeyUp={() => acceptNumbersOnly("db_amount")}
                           />
                         </FormControl>
+                        <Button
+                          type="button"
+                          disabled={!field.value}
+                          id="amount"
+                          onClick={() =>
+                            handleFormUpdate("amount", parseInt(field?.value))
+                          }
+                        >
+                          Update
+                        </Button>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -391,17 +483,19 @@ const AddCar = () => {
                     onChange={imageHandleChange}
                     className="hidden"
                   />
-
                   <div className="w-full grid md:grid-cols-10 grid-cols-3 gap-3">
-                    {selectedImages && renderImages(selectedImages)}
+                    {selectedImages.length > 0
+                      ? renderImages(selectedImages, "file")
+                      : renderImages(data?.imgUrl)}
                   </div>
                 </div>
                 <Button
-                  type="submit"
+                  type="button"
                   id="submitBtn"
-                  disabled={loading || !slug || selectedImages.length < 1}
+                  disabled={selectedImages.length < 1}
+                  onClick={() => handleImageUpload("image", data?.imageId)}
                 >
-                  Submit
+                  Update Photo
                 </Button>
               </form>
             </Form>
@@ -412,4 +506,4 @@ const AddCar = () => {
   );
 };
 
-export default AddCar;
+export default EditCar;

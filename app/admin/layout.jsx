@@ -14,7 +14,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={cn(`${raleway.className} w-full flex`)}>
+      <body
+        className={cn(
+          `${raleway.className} w-full flex h-screen overflow-hidden`
+        )}
+      >
         <SideNav />
         <div className="bg-[whitesmoke] h-screen rounded-[8px] w-full">
           {children}

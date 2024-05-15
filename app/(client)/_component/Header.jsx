@@ -1,9 +1,13 @@
+"use client";
+import { useCart } from "@/context/cartContext";
 import { montserrat, syne } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
 const Header = () => {
+  //const { cart } = useCart();
+
   return (
     <>
       <div className="w-full flex bg-[#000]  h-[80px] items-center">
@@ -30,6 +34,9 @@ const Header = () => {
                 </li>
                 <li className=" hover:text-[--text-hover] transition-all delay-75">
                   <Link href="/cars">Auto Listing</Link>
+                </li>
+                <li className=" hover:text-[--text-hover] transition-all delay-75">
+                  <Link href="/cart">Auto Cart</Link>
                 </li>
                 <li className=" hover:text-[--text-hover] transition-all delay-75">
                   <Link href="/">About Us</Link>

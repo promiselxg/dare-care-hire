@@ -1,8 +1,13 @@
 export const dateDiffInDays = (startDate, endDate) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
-  const difference = end.getTime() - start.getTime();
-  return Math.ceil(difference / (1000 * 3600 * 24));
+
+  if (start.getTime() > end.getTime()) {
+    return "wrong_date";
+  } else {
+    const difference = end.getTime() - start.getTime();
+    return Math.ceil(difference / (1000 * 3600 * 24));
+  }
 };
 
 export function formatDateTime(dateString) {

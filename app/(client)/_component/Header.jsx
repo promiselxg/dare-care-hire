@@ -26,7 +26,7 @@ const Header = () => {
             <div>
               <ul
                 className={cn(
-                  `${montserrat.className} text-white flex items-center gap-5 text-sm uppercase`
+                  `${montserrat.className} text-white md:flex items-center gap-5 text-sm uppercase hidden`
                 )}
               >
                 <li className=" hover:text-[--text-hover] transition-all delay-75">

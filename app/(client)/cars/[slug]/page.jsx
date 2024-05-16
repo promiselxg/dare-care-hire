@@ -14,26 +14,38 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./slug.css";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useFetch from "@/hooks/useFetch";
 import SkeletonLoader from "../../_component/Loader";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { Loader2, ShieldCheck } from "lucide-react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useCart } from "@/context/cartContext";
 import Link from "next/link";
+import { useToast } from "@/components/ui/use-toast";
+import { dateDiffInDays } from "@/utils/getDateDifference";
 
 const CarDetails = ({ params }) => {
   const { loading, data } = useFetch(`/car/${params?.slug}`);
-  const { cart, addItemToCart } = useCart();
-  console.log(cart);
-  if (data?.message === "No Record found with the ID Provided") {
-    redirect("/cars");
-  }
+  const { addItemToCart, isloading } = useCart();
+  const router = useRouter();
+  const { toast } = useToast();
+  const [inputValues, setInputValues] = useState({
+    pickup_location: "",
+    dropoff_location: "",
+    pickup_date: "",
+    dropoff_date: "",
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setInputValues((prevValues) => ({ ...prevValues, [name]: value }));
+  };
+
   const images = data?.imgUrl?.map((url, index) => {
     return {
       original: url,
-      thumbnail: data?.imgUrl[index === 0 ? 0 : 1], // use the first image as the thumbnail for the first image, and the second image as the thumbnail for the second image
+      thumbnail: data?.imgUrl[index === 0 ? 0 : 1],
     };
   });
 
@@ -44,6 +56,38 @@ const CarDetails = ({ params }) => {
       behavior: "smooth",
     });
   }, []);
+
+  const handleAddToCart = async () => {
+    const totalDays = dateDiffInDays(
+      inputValues.pickup_date,
+      inputValues.dropoff_date
+    );
+    const subtotal = totalDays * data?.amount;
+    try {
+      const response = await addItemToCart({
+        id: data?.id,
+        vehicle_name: data?.vehicle_name,
+        amount: data?.amount,
+        quantity: 1,
+        days: totalDays,
+        subtotal: subtotal,
+        imgUrl: data?.imgUrl[0],
+        rideInfo: {
+          pickup_location: inputValues.pickup_location,
+          dropoff_location: inputValues.dropoff_location,
+          pickup_date: inputValues.pickup_date,
+          dropoff_date: inputValues.dropoff_date,
+        },
+      });
+      toast({ title: `${response?.message}` });
+      router.push("/cart");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  if (data?.message === "No Record found with the ID Provided") {
+    redirect("/cars");
+  }
 
   return (
     <>
@@ -111,13 +155,13 @@ const CarDetails = ({ params }) => {
                   <TabsList className=" bg-[#f7f7f7] w-full justify-start text-left py-6">
                     <TabsTrigger
                       value="description"
-                      className={cn(`${raleway.className} uppercase`)}
+                      className={cn(`${raleway.className} uppercase tab`)}
                     >
                       vehicle description
                     </TabsTrigger>
                     <TabsTrigger
                       value="specification"
-                      className={cn(`${raleway.className} uppercase`)}
+                      className={cn(`${raleway.className} uppercase tab`)}
                     >
                       specification
                     </TabsTrigger>
@@ -166,6 +210,8 @@ const CarDetails = ({ params }) => {
                     type="text"
                     name="pickup_location"
                     placeholder="Pick-up Location"
+                    value={inputValues.name}
+                    onChange={handleInputChange}
                     className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px]  text-[--primary-bg] "
                   />
                 </div>
@@ -182,6 +228,8 @@ const CarDetails = ({ params }) => {
                     type="text"
                     name="dropoff_location"
                     placeholder="drop-off Location"
+                    value={inputValues.name}
+                    onChange={handleInputChange}
                     className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px] "
                   />
                 </div>
@@ -197,6 +245,8 @@ const CarDetails = ({ params }) => {
                   <input
                     type="datetime-local"
                     name="pickup_date"
+                    value={inputValues.name}
+                    onChange={handleInputChange}
                     className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px] uppercase"
                   />
                 </div>
@@ -212,6 +262,8 @@ const CarDetails = ({ params }) => {
                   <input
                     type="datetime-local"
                     name="dropoff_date"
+                    value={inputValues.name}
+                    onChange={handleInputChange}
                     className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px] uppercase"
                   />
                 </div>
@@ -274,14 +326,14 @@ const CarDetails = ({ params }) => {
                     className={cn(
                       `${raleway.className} w-full bg-[--button-bg] font-[500] hover:scale-[1.1] hover:bg-[--button-bg] rounded-[5px] py-6 px-8 text-white transition-all delay-75 uppercase`
                     )}
-                    onClick={() =>
-                      addItemToCart({
-                        id: data?.id,
-                        name: data?.vehicle_name,
-                        amount: data?.amount,
-                        quantity: 1, // or specify the desired quantity here
-                      })
+                    disabled={
+                      isloading ||
+                      !inputValues.pickup_location ||
+                      !inputValues.dropoff_location ||
+                      !inputValues.pickup_date ||
+                      !inputValues.dropoff_date
                     }
+                    onClick={handleAddToCart}
                   >
                     rent this car
                   </Button>

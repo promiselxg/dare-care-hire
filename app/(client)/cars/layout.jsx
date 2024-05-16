@@ -4,6 +4,7 @@ import { raleway } from "@/lib/fonts";
 import Footer from "../_component/Footer";
 import Header from "../_component/Header";
 import { CartProvider } from "@/context/cartContext";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   title: "Auto Listing",
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
           <Footer />
+          <Toaster />
         </body>
       </CartProvider>
     </html>

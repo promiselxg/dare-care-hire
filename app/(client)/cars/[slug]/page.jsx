@@ -23,7 +23,7 @@ import { redirect, useRouter } from "next/navigation";
 import { useCart } from "@/context/cartContext";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
-import { dateDiffInDays } from "@/utils/getDateDifference";
+import { checkDate, dateDiffInDays } from "@/utils/getDateDifference";
 
 const CarDetails = ({ params }) => {
   const { loading, data } = useFetch(`/car/${params?.slug}`);
@@ -62,6 +62,13 @@ const CarDetails = ({ params }) => {
       inputValues.pickup_date,
       inputValues.dropoff_date
     );
+    if (totalDays === "wrong_date") {
+      toast({
+        variant: "destructive",
+        title: "Pick-up Date cannot be greater than Drop-off  Date",
+      });
+      return false;
+    }
     const subtotal = totalDays * data?.amount;
     try {
       const response = await addItemToCart({
@@ -247,6 +254,7 @@ const CarDetails = ({ params }) => {
                     name="pickup_date"
                     value={inputValues.name}
                     onChange={handleInputChange}
+                    min={new Date().toISOString().slice(0, 16)}
                     className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px] uppercase"
                   />
                 </div>
@@ -264,6 +272,7 @@ const CarDetails = ({ params }) => {
                     name="dropoff_date"
                     value={inputValues.name}
                     onChange={handleInputChange}
+                    min={new Date().toISOString().slice(0, 16)}
                     className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px] uppercase"
                   />
                 </div>

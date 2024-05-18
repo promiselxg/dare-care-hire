@@ -1,3 +1,4 @@
+import prisma from "@/utils/dbConnect";
 import { errorResponse, successResponse } from "@/utils/errorMessage";
 import host from "@/utils/host";
 import { logger } from "@/utils/logger";
@@ -64,7 +65,7 @@ export const GET = async (req, { params }) => {
       "GET",
       `error occured while trying to query DB with ${params.id}`
     );
-    return new NextResponse(JSON.stringify(err, { status: 500 }));
+    return errorResponse("something went wrong!", 500);
   }
 };
 const isIdValid = (params) => {

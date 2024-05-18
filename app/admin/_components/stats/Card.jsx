@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { raleway, syne } from "@/lib/fonts";
+import { montserrat, raleway, syne } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
 const DashboardCard = ({ loading, title, icon, desc, value, bg }) => {
@@ -15,7 +15,7 @@ const DashboardCard = ({ loading, title, icon, desc, value, bg }) => {
         </h1>
         <div
           className={cn(
-            `${raleway.className} flex justify-between items-center`
+            `${montserrat.className} flex justify-between items-center`
           )}
         >
           <h1 className="text-[30px] font-[600]">

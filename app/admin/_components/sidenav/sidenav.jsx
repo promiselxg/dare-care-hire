@@ -156,16 +156,16 @@ const SideNav = () => {
               </li>
               <li
                 className={`${
-                  currentRoute === "/admin/report/car" && "active"
+                  currentRoute === "/admin/report/log" && "active"
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin/report/car"
+                  href="/admin/report/log"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
                   <StickyNote size={18} />
-                  Car Report
+                  Logs
                 </Link>
               </li>
               <Separator

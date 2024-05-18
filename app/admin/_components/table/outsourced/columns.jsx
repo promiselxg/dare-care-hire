@@ -12,7 +12,6 @@ import { barlow, raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { handleDeleteBtn } from "@/utils/deleteItemFromDb";
 import { formatCurrency } from "@/utils/formatCurrency";
-import { formatDateTime } from "@/utils/getDateDifference";
 
 import { ArrowUpDown, Edit2, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
@@ -21,6 +20,18 @@ import { FiTrash2 } from "react-icons/fi";
 export const columns = [
   {
     accessorKey: "driver_name",
+    cell: ({ row }) => {
+      const { driver_name } = row.original;
+      return (
+        <>
+          <div>
+            <h1 className={cn(`${raleway.className} capitalize font-[600]`)}>
+              {driver_name}
+            </h1>
+          </div>
+        </>
+      );
+    },
     header: ({ column }) => {
       return (
         <span

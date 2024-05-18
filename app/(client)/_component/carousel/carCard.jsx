@@ -75,7 +75,7 @@ export function CarCarousa() {
                     >
                       {formatCurrency(car?.amount)}
                     </h1>
-                    <Link href={`/cars/${car?.slug}`}>
+                    <Link href={`/cars/${car?.id}`}>
                       <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
                         rent it
                       </Button>

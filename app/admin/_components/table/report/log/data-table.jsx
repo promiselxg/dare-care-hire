@@ -22,7 +22,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function OutsourcedDataTable({ columns, data, loading }) {
+export function LogReportTable({ columns, data, loading }) {
   const [columnFilters, setColumnFilters] = useState();
   const [sorting, setSorting] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -49,9 +49,9 @@ export function OutsourcedDataTable({ columns, data, loading }) {
       <div className="flex items-center py-4 justify-between w-full">
         <Input
           placeholder="Search Table"
-          value={table.getColumn("driver_name")?.getFilterValue() ?? ""}
+          value={table.getColumn("logStatus")?.getFilterValue() ?? ""}
           onChange={(event) =>
-            table.getColumn("driver_name")?.setFilterValue(event.target.value)
+            table.getColumn("logStatus")?.setFilterValue(event.target.value)
           }
           className="w-full md:w-1/3"
         />

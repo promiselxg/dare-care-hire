@@ -10,54 +10,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
+import { handleDeleteBtn } from "@/utils/deleteItemFromDb";
 import { formatCurrency } from "@/utils/formatCurrency";
-import host from "@/utils/host";
 import { truncateText } from "@/utils/trucateText";
-import axios from "axios";
-
 import { ArrowUpDown, Edit2, MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FiTrash2 } from "react-icons/fi";
-import Swal from "sweetalert2";
 
-const handleDeleteBtn = (id) => {
-  Swal.fire({
-    title: "Please confirm action.",
-    text: "Do you want to delete this item?",
-    showCancelButton: true,
-    confirmButtonText: "Delete",
-    showLoaderOnConfirm: true,
-    confirmButtonColor: "#d33",
-    preConfirm: async () => {
-      try {
-        const deleteRequest = await axios.delete(`${host.url}/car/${id}`);
-        if (deleteRequest?.data !== "Record deleted successfully") {
-          Swal.showValidationMessage(`${deleteRequest?.data}`);
-        }
-      } catch (error) {
-        Swal.showValidationMessage(`
-          Request failed: ${error}
-        `);
-      }
-    },
-    allowOutsideClick: () => !Swal.isLoading(),
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: "",
-        text: "Item deleted successfully.",
-        icon: "success",
-        confirmButtonText: "Ok",
-        showCancelButton: false,
-      }).then((status) => {
-        if (status.isConfirmed) {
-          window.location.reload();
-        }
-      });
-    }
-  });
-};
 export const columns = [
   {
     accessorKey: "vehicle_name",
@@ -182,7 +142,7 @@ export const columns = [
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => handleDeleteBtn(id)}
+              onClick={() => handleDeleteBtn(id, "car")}
               className="text-red-400 flex items-center gap-2 cursor-pointer"
             >
               <FiTrash2 /> Delete

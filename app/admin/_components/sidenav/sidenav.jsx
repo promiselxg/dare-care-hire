@@ -5,13 +5,13 @@ import React, { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import {
   AtSign,
-  BookUser,
   CarFront,
   CarIcon,
   LayoutDashboard,
   Power,
   Settings,
   StickyNote,
+  Users,
   UsersRound,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -89,7 +89,9 @@ const SideNav = () => {
               </li>
               <li
                 className={`${
-                  currentRoute === "/admin/outsourced" && "active"
+                  (currentRoute === "/admin/outsourced" && "active") ||
+                  (currentRoute === "/admin/outsourced/add" && "active") ||
+                  (currentRoute.includes("/admin/outsourced/edit/") && "active")
                 } my-[2px] h-10 nav`}
               >
                 <Link
@@ -99,6 +101,22 @@ const SideNav = () => {
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
                   <AtSign size={18} />
                   Outsourced
+                </Link>
+              </li>
+              <li
+                className={`${
+                  (currentRoute === "/admin/vendors" && "active") ||
+                  (currentRoute === "/admin/vendors/add" && "active") ||
+                  (currentRoute.includes("/admin/vendors/edit/") && "active")
+                } my-[2px] h-10 nav`}
+              >
+                <Link
+                  href="/admin/vendors"
+                  className="flex gap-2 items-center py-2  h-8 leading-tight relative"
+                >
+                  <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
+                  <Users size={18} />
+                  Vendors
                 </Link>
               </li>
               <li
@@ -138,16 +156,16 @@ const SideNav = () => {
               </li>
               <li
                 className={`${
-                  currentRoute === "/admin/report/car" && "active"
+                  currentRoute === "/admin/report/log" && "active"
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin/report/car"
+                  href="/admin/report/log"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
                   <StickyNote size={18} />
-                  Car Report
+                  Logs
                 </Link>
               </li>
               <Separator

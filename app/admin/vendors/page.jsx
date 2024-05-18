@@ -2,17 +2,18 @@
 
 import { cn } from "@/lib/utils";
 import { raleway } from "@/lib/fonts";
-import { Cross, User } from "lucide-react";
+import { Cross, User, Users } from "lucide-react";
 import DashboardCard from "../_components/stats/Card";
 import { Button } from "@/components/ui/button";
 import "../../admin/dashboard.css";
-import { VehicleDataTable } from "../_components/table/cars/data-table";
-import { columns } from "../_components/table/cars/columns";
+import { columns } from "../_components/table/vendors/columns";
 import Link from "next/link";
 import useFetch from "@/hooks/useFetch";
+import { VendorsTable } from "../_components/table/vendors/data-table";
+import { formatCurrency } from "@/utils/formatCurrency";
 
-const CarsPage = () => {
-  const { data, loading } = useFetch("/car");
+const VendorsPage = () => {
+  const { loading, data } = useFetch("/vendor");
   return (
     <>
       <section className="w-full flex h-screen flex-col gap-y-5 p-5 overflow-y-scroll bg-[whitesmoke]">
@@ -21,9 +22,18 @@ const CarsPage = () => {
             <DashboardCard
               title="Total"
               icon={<User color="green" />}
-              value={data?.length || "0"}
+              value={data?.length}
               bg="whitesmoke"
               desc="+5.5% since last week"
+              loading={loading}
+            />
+            <DashboardCard
+              title="Revenue"
+              icon={<Users color="purple" />}
+              value={formatCurrency(
+                data?.reduce((acc, current) => acc + current.amount, 0)
+              )}
+              bg="whitesmoke"
               loading={loading}
             />
           </div>
@@ -34,18 +44,18 @@ const CarsPage = () => {
               `${raleway.className} uppercase font-[600] my-4 md:my-0`
             )}
           >
-            Vehicles
+            Vendors
           </h1>
-          <Button className="border-none outline-none bg-[--button-bg] hover:bg-[--button-bg-hover] text-white transition-all delay-75 rounded-[5px]">
-            <Link href="/admin/cars/add" className="flex gap-2 items-center ">
-              <Cross size={13} /> Add new Vehicle
+          <Button className="flex gap-2 items-center border-none outline-none bg-[--button-bg] hover:bg-[--button-bg-hover] text-white transition-all delay-75 rounded-[5px]">
+            <Link href="/admin/vendors/add" className="flex gap-2 items-center">
+              <Cross size={13} /> Add Vendor
             </Link>
           </Button>
         </div>
-        <VehicleDataTable columns={columns} data={data} loading={loading} />
+        <VendorsTable columns={columns} data={data} loading={loading} />
       </section>
     </>
   );
 };
 
-export default CarsPage;
+export default VendorsPage;

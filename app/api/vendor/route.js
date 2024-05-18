@@ -55,6 +55,7 @@ export const GET = async (req) => {
     return new NextResponse(JSON.stringify(response, { status: 200 }));
   } catch (err) {
     logger(userAgent, urlPath, "failed", "GET", "get all vendors");
+    console.log(err);
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );

@@ -24,6 +24,7 @@ export const DELETE = async (req, { params }) => {
       return successResponse("Record deleted successfully", 200);
     }
   } catch (error) {
+    console.log(error);
     logger(
       userAgent,
       urlPath,

@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { barlow, raleway } from "@/lib/fonts";
+import { barlow, open_sans, raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/utils/formatCurrency";
 import {
@@ -101,7 +101,7 @@ export const columns = [
                 `${raleway.className} text-[--text-hover] font-[600]`
               )}
             >
-              {formatDateTime(createdAt)}
+              {formatDateTime(createdAt)?.split(" at ")[0]}
             </h1>
           </div>
         </>
@@ -168,85 +168,121 @@ export const columns = [
                 <DialogTrigger className="flex items-center gap-2">
                   <Eye size={16} /> View Record
                 </DialogTrigger>
-                <DialogContent className="max-w-[50%] ">
+                <DialogContent className="md:max-w-[50%] ">
                   <DialogHeader>
                     <DialogTitle className="capitalize">
                       {organization_name}
                     </DialogTitle>
                   </DialogHeader>
-                  <table
-                    className="w-full border justify-start flex"
-                    cellPadding={15}
-                  >
-                    <thead className="w-1/4  flex flex-col">
-                      <tr className="border">
-                        <th className="w-full">Client&apos;s Name</th>
-                      </tr>
-                      <tr className="border">
-                        <th className="w-full">Pick-up Date</th>
-                      </tr>
-                      <tr className="border">
-                        <th>Drop-off Date</th>
-                      </tr>
-                      <tr className="border">
-                        <th>Pick-up Location</th>
-                      </tr>
-                      <tr className="border">
-                        <th>Drop-off Location</th>
-                      </tr>
-                      <tr className="border">
-                        <th>Vehicle Type</th>
-                      </tr>
-                      <tr className="border">
-                        <th>Vehicle Model</th>
-                      </tr>
-                      <tr className="border">
-                        <th>Description</th>
-                      </tr>
-                      {row?.original.additional_note && (
-                        <tr className="border">
-                          <th>Additional Note</th>
-                        </tr>
-                      )}
-                    </thead>
-                    <tbody className="w-3/4 flex flex-col capitalize">
-                      <tr className="border w-full">
-                        <td className="w-full capitalize">
+                  <div className="w-full flex h-[500px] md:h-[500px] overflow-y-scroll">
+                    <div className="w-full grid md:grid-cols-2 grid-col-1 ">
+                      <div className=" items-start border p-5 w-full bg-[whitesmoke]">
+                        <div className={cn(`${raleway.className} font-bold`)}>
+                          Client&apos;s Name
+                        </div>
+                      </div>
+                      <div className=" justify-start items-start border p-5 w-full ">
+                        <div
+                          className={cn(
+                            `${raleway.className} font-bold capitalize`
+                          )}
+                        >
                           {row?.original?.client_name}
-                        </td>
-                      </tr>
-                      <tr className="border w-full">
-                        <td className="w-full">
+                        </div>
+                      </div>
+                      <div className=" items-start border p-5 w-full bg-[whitesmoke]">
+                        <div className={cn(`${raleway.className} font-bold`)}>
+                          Pick-up Date
+                        </div>
+                      </div>
+                      <div className=" justify-start items-start border p-5 w-full ">
+                        <div className={cn(`${raleway.className} font-bold`)}>
                           {formatDateWithoutTime(row?.original?.pickup_date)}
-                        </td>
-                      </tr>
-                      <tr className="border">
-                        <td>
+                        </div>
+                      </div>
+                      <div className=" items-start border p-5 w-full bg-[whitesmoke]">
+                        <div className={cn(`${raleway.className} font-bold`)}>
+                          Drop-off Date
+                        </div>
+                      </div>
+                      <div className=" justify-start items-start border p-5 w-full ">
+                        <div className={cn(`${raleway.className} font-bold`)}>
                           {formatDateWithoutTime(row?.original?.pickup_date)}
-                        </td>
-                      </tr>
-                      <tr className="border">
-                        <td>{row?.original?.pickup_location}</td>
-                      </tr>
-                      <tr className="border">
-                        <td>{row?.original?.dropoff_location}</td>
-                      </tr>
-                      <tr className="border">
-                        <td>{row?.original?.vehicle_type}</td>
-                      </tr>
-                      <tr className="border">
-                        <td>{row?.original?.vehicle_model}</td>
-                      </tr>
-                      <tr className="border">
-                        <td>{row?.original?.job_description}</td>
-                      </tr>
+                        </div>
+                      </div>
+                      <div className=" items-start border p-5 w-full bg-[whitesmoke]">
+                        <div className={cn(`${raleway.className} font-bold`)}>
+                          Pick-up Location
+                        </div>
+                      </div>
+                      <div className=" justify-start items-start border p-5 w-full ">
+                        <div className={cn(`${raleway.className} capitalize`)}>
+                          {row?.original?.pickup_location}
+                        </div>
+                      </div>
+                      <div className=" items-start border p-5 w-full bg-[whitesmoke]">
+                        <div className={cn(`${raleway.className} font-bold`)}>
+                          Drop-off Location
+                        </div>
+                      </div>
+                      <div className=" justify-start items-start border p-5 w-full ">
+                        <div className={cn(`${raleway.className} capitalize`)}>
+                          {row?.original?.dropoff_location}
+                        </div>
+                      </div>
+                      <div className=" items-start border p-5 w-full bg-[whitesmoke]">
+                        <div className={cn(`${raleway.className} font-bold`)}>
+                          Vehicle Type
+                        </div>
+                      </div>
+                      <div className=" justify-start items-start border p-5 w-full ">
+                        <div className={cn(`${raleway.className} capitalize`)}>
+                          {row?.original?.vehicle_type}
+                        </div>
+                      </div>
+                      <div className=" items-start border p-5 w-full bg-[whitesmoke]">
+                        <div className={cn(`${raleway.className} font-bold`)}>
+                          Vehicle Model
+                        </div>
+                      </div>
+                      <div className=" justify-start items-start border p-5 w-full ">
+                        <div className={cn(`${raleway.className} capitalize`)}>
+                          {row?.original?.vehicle_model}
+                        </div>
+                      </div>
+                      <div className=" items-start border p-5 w-full bg-[whitesmoke]">
+                        <div className={cn(`${raleway.className} font-bold`)}>
+                          Description
+                        </div>
+                      </div>
+                      <div className=" justify-start items-start border p-5 w-full ">
+                        <p className={cn(`${open_sans.className} text-[12px]`)}>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Error laudantium fuga asperiores soluta, esse
+                          blanditiis officia modi provident, dolore corrupti
+                          rerum itaque. At earum vel velit modi dicta natus
+                          soluta laudantium minima ad maiores ex, veritatis sit
+                          maxime numquam, aspernatur officia perferendis.
+                          Reiciendis ipsam vitae itaque cupiditate quos omnis
+                          libero.
+                        </p>
+                      </div>
                       {row?.original.additional_note && (
-                        <tr className="border">
-                          <td>{row?.original?.additional_note}</td>
-                        </tr>
+                        <>
+                          <div className=" items-start border p-5 w-full bg-[whitesmoke]">
+                            <div
+                              className={cn(`${raleway.className} font-bold`)}
+                            >
+                              Additional Note
+                            </div>
+                          </div>
+                          <div className=" justify-start items-start border p-5 w-full ">
+                            <div>{row?.original?.additional_note}</div>
+                          </div>
+                        </>
                       )}
-                    </tbody>
-                  </table>
+                    </div>
+                  </div>
                 </DialogContent>
               </Dialog>
             </DropdownMenuItem>

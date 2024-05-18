@@ -41,39 +41,27 @@ import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  organization_name: z.string().min(10, {
-    message: "Organization's Name must be at least 10 characters long.",
-  }),
-  client_name: z.string().min(5, {
-    message: "Client's Name must be at least 5 characters long.",
-  }),
   driver_name: z
     .string()
     .min(5, { message: "Drver's Name must be at least 5 characters long." }),
-  job_description: z.string().min(10, {
-    message: "Job Description must be at least 10 characters long.",
+  description: z.string().min(10, {
+    message: "Description must be at least 10 characters long.",
   }),
-  pickup_location: z.string().min(10),
-  dropoff_location: z.string().min(10),
-  additional_note: z.string().min(10).optional(),
   amount: z.string().min(4, { message: "Please enter a valid amount." }),
   vehicle_type: z.string(),
-  vehicle_model: z.string(),
-  pickup_date: z.date({
-    required_error: "This field is required.",
-  }),
-  dropoff_date: z.date({
+  date: z.date({
     required_error: "This field is required.",
   }),
 });
 
-const AddVendor = () => {
+const AddOutsourcedDriver = () => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
+
   async function onSubmit(values) {
     if (!isInputFieldsValid(values)) {
       toast({
@@ -81,51 +69,45 @@ const AddVendor = () => {
         title: "Required Fields",
         description: "Please fill out the required fields.",
       });
+      return;
     }
     try {
       setLoading(true);
-      __("submitBtn").innerHTML = "Submiting...";
-      const { data } = await axios.post("/api/vendor", values);
+      __("submitBtn").innerHTML = "Submitting...";
+      const response = await axios.post("/api/outsourced", values);
+      const { data } = response;
+
       if (data?.message === "success") {
-        setLoading(false);
         toast({
-          title: "New Vendor record added successfully.",
+          title: "New record added successfully.",
         });
-        __("submitBtn").innerHTML = "Submit";
-        router.push("/admin/vendors");
+        router.push("/admin/outsourced");
       } else {
-        setLoading(false);
         toast({
           variant: "destructive",
           description: `${data?.message}`,
         });
-        __("submitBtn").innerHTML = "Submit";
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
       toast({
         variant: "destructive",
         title: "Something went wrong",
-        description: `Error creating vendor`,
+        description: `Error creating new Outsourced Driver`,
       });
+    } finally {
+      setLoading(false);
       __("submitBtn").innerHTML = "Submit";
     }
   }
 
   const isInputFieldsValid = (field) => {
     return (
-      field.organization_name &&
-      field.client_name &&
       field.driver_name &&
-      field.job_description &&
-      field.pickup_location &&
-      field.dropoff_location &&
+      field.description &&
+      field.date &&
       field.amount &&
-      field.vehicle_type &&
-      field.vehicle_model &&
-      field.dropoff_date &&
-      field.pickup_date
+      field.vehicle_type
     );
   };
   return (
@@ -134,7 +116,7 @@ const AddVendor = () => {
         <div className="w-full bg-white h-[60px] p-5 flex items-center border-[#eee] border-b-[1px]">
           <div className="w-fit flex  h-[60px]">
             <Link
-              href="/admin/vendors"
+              href="/admin/outsourced"
               className="border-r-[1px] border-[#eee] w-fit flex items-center pr-5"
             >
               <ChevronLeft size={30} />
@@ -143,7 +125,7 @@ const AddVendor = () => {
         </div>
         <div className="w-full my-5 bg-[whitesmoke] px-5 flex flex-col h-screen ">
           <div className=" p-5">
-            <h1>New Vendor</h1>
+            <h1>Add new Outsourced Driver</h1>
           </div>
           <div className="p-5 bg-white container w-full">
             <Form {...form}>
@@ -151,40 +133,6 @@ const AddVendor = () => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-5"
               >
-                <FormField
-                  control={form.control}
-                  name="organization_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Organization&apos;s Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Organization's Name"
-                          {...field}
-                          className="form-input"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="client_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Client&apos;s Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Client's Name"
-                          {...field}
-                          className="form-input"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
                 <FormField
                   control={form.control}
                   name="driver_name"
@@ -204,13 +152,13 @@ const AddVendor = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="job_description"
+                  name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Job Description</FormLabel>
+                      <FormLabel>Description</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Job Description"
+                          placeholder="Description"
                           className="resize-none"
                           {...field}
                         />
@@ -269,82 +217,13 @@ const AddVendor = () => {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name="vehicle_model"
-                    render={({ field }) => (
-                      <FormItem className="md:w-1/5 w-full">
-                        <FormLabel>Car Model</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue
-                                placeholder="Car Model"
-                                className="form-input"
-                              />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="toyota">Toyota</SelectItem>
-                            <SelectItem value="mbw">BMW</SelectItem>
-                          </SelectContent>
-                        </Select>
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                   <FormField
                     control={form.control}
-                    name="pickup_date"
+                    name="date"
                     render={({ field }) => (
                       <FormItem className="flex flex-col w-full md:w-fit">
-                        <FormLabel>Pickup Date</FormLabel>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button
-                                variant={"outline"}
-                                className={cn(
-                                  "md:w-[240px] w-full text-left font-normal h-10",
-                                  !field.value && "text-muted-foreground"
-                                )}
-                              >
-                                {field.value ? (
-                                  format(field.value, "PPP")
-                                ) : (
-                                  <span>Pick a date</span>
-                                )}
-                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) =>
-                                date <=
-                                new Date(new Date().getTime() - 86400000)
-                              }
-                              initialFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="dropoff_date"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col w-full md:w-fit">
-                        <FormLabel>Drop-off Date</FormLabel>
+                        <FormLabel>Date</FormLabel>
                         <Popover>
                           <PopoverTrigger asChild>
                             <FormControl>
@@ -382,57 +261,6 @@ const AddVendor = () => {
                     )}
                   />
                 </div>
-                <FormField
-                  control={form.control}
-                  name="pickup_location"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Pickup Location</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Pickup Location"
-                          {...field}
-                          className="form-input"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="dropoff_location"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Drop-off Location</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Drop-off Location"
-                          {...field}
-                          className="form-input"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="additional_note"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Additional Notes</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Additional Notes"
-                          className="resize-none"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
                 <Button type="submit" id="submitBtn" disabled={loading}>
                   Submit
                 </Button>
@@ -445,4 +273,4 @@ const AddVendor = () => {
   );
 };
 
-export default AddVendor;
+export default AddOutsourcedDriver;

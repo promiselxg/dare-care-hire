@@ -31,7 +31,7 @@ const VendorsPage = () => {
               title="Revenue"
               icon={<Users color="purple" />}
               value={formatCurrency(
-                data.reduce((acc, current) => acc + current.amount, 0)
+                data?.reduce((acc, current) => acc + current.amount, 0)
               )}
               bg="whitesmoke"
               loading={loading}

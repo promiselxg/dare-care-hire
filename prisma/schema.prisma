@@ -51,3 +51,14 @@ model vendors {
   createdAt               DateTime   @default(now())
   updatedAt               DateTime   @updatedAt
 }
+
+model outsourcedDriver {
+  id                      String     @id @default(cuid()) @map("_id") 
+  driver_name             String
+  description             String
+  amount                  Int
+  vehicle_type            String
+  date                    String
+  createdAt               DateTime   @default(now())
+  updatedAt               DateTime   @updatedAt
+}

@@ -20,8 +20,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export function OutsourcedDataTable({ columns, data }) {
+export function OutsourcedDataTable({ columns, data, loading }) {
   const [columnFilters, setColumnFilters] = useState();
   const [sorting, setSorting] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -48,9 +49,9 @@ export function OutsourcedDataTable({ columns, data }) {
       <div className="flex items-center py-4 justify-between w-full">
         <Input
           placeholder="Search Table"
-          value={table.getColumn("customer")?.getFilterValue() ?? ""}
+          value={table.getColumn("driver_name")?.getFilterValue() ?? ""}
           onChange={(event) =>
-            table.getColumn("customer")?.setFilterValue(event.target.value)
+            table.getColumn("driver_name")?.setFilterValue(event.target.value)
           }
           className="w-full md:w-1/3"
         />
@@ -74,28 +75,48 @@ export function OutsourcedDataTable({ columns, data }) {
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody className="border">
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="border">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+        {loading ? (
+          <>
+            <tr>
+              <td colSpan="7">
+                <div className="p-5 w-full space-y-2">
+                  <Skeleton className="h-2 w-full bg-[#171726] rounded-full" />
+                  <Skeleton className="h-2 w-2/3 bg-[#212136] rounded-full" />
+                  <Skeleton className="h-2 w-1/3 bg-[#0d0d16] rounded-full" />
+                </div>
+              </td>
+            </tr>
+          </>
+        ) : (
+          <TableBody className="border">
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="border">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
+            )}
+          </TableBody>
+        )}
       </Table>
       <div className="space-x-2 py-4 float-right">
         <Button

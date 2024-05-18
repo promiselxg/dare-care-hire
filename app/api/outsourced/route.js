@@ -11,22 +11,17 @@ export const POST = async (req) => {
   const urlPath = req.headers.get("referer").split(host.host_url)[1];
 
   if (!isInputValuesValid(inputValue)) {
-    return new NextResponse(
-      JSON.stringify({ message: "Invalid input values" }),
-      { status: 400 }
-    );
+    return errorResponse("Invalid input values", 400);
   }
-  const { pickup_date, dropoff_date, ...rest } = inputValue;
+  const { date, ...rest } = inputValue;
   try {
     // Format dates
-    const formattedPickupDate = formatDateTime(pickup_date);
-    const formattedDropoffDate = formatDateTime(dropoff_date);
-    const vendor = await prisma.vendors.create({
+    const formattedDate = formatDateTime(date);
+    const vendor = await prisma.outsourcedDriver.create({
       data: {
         ...rest,
         amount: parseInt(inputValue.amount),
-        pickup_date: formattedPickupDate,
-        dropoff_date: formattedDropoffDate,
+        date: formattedDate,
       },
     });
     if (vendor) {
@@ -35,15 +30,21 @@ export const POST = async (req) => {
         urlPath,
         "success",
         "POST",
-        "Vendor created successfully"
+        "outsourced driver created successfully"
       );
       return successResponse("success");
     } else {
-      return errorResponse("Unable to create vendor", 500);
+      return errorResponse("Unable to create outsourced driver", 500);
     }
   } catch (error) {
-    logger(userAgent, urlPath, "failed", "POST", "Error creating vendor");
-    return errorResponse("Error creating vendor", 500);
+    logger(
+      userAgent,
+      urlPath,
+      "failed",
+      "POST",
+      "Error creating outsourced driver"
+    );
+    return errorResponse("Error creating outsourced driver", 500);
   }
 };
 
@@ -51,10 +52,10 @@ export const GET = async (req) => {
   const userAgent = req.headers.get("user-agent");
   const urlPath = req.headers.get("referer").split(host.host_url)[1];
   try {
-    const response = await prisma.vendors.findMany();
+    const response = await prisma.outsourcedDriver.findMany();
     return new NextResponse(JSON.stringify(response, { status: 200 }));
   } catch (err) {
-    logger(userAgent, urlPath, "failed", "GET", "get all vendors");
+    logger(userAgent, urlPath, "failed", "GET", "get all outsourced drivers");
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );
@@ -70,7 +71,7 @@ export const PUT = async (req) => {
     return errorResponse("Please fill out the form.", 403);
   }
   try {
-    await prisma.vendors.update({
+    await prisma.outsourcedDriver.update({
       where: { id: body?.id },
       data: {
         [body.field]: body.value,
@@ -93,16 +94,10 @@ export const PUT = async (req) => {
 
 const isInputValuesValid = (input) => {
   return (
-    input.organization_name &&
-    input.client_name &&
     input.driver_name &&
-    input.job_description &&
-    input.pickup_location &&
-    input.dropoff_location &&
+    input.description &&
+    input.date &&
     input.amount &&
-    input.vehicle_type &&
-    input.vehicle_model &&
-    input.pickup_date &&
-    input.dropoff_date
+    input.vehicle_type
   );
 };

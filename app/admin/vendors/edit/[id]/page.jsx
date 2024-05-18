@@ -57,14 +57,14 @@ const formSchema = z.object({
   pickup_location: z.string().min(10),
   dropoff_location: z.string().min(10),
   additional_note: z.string().min(10).optional(),
-  amount: z.string().min(4, { message: "Please enter a valid amound." }),
+  amount: z.string().min(4, { message: "Please enter a valid amount." }),
   vehicle_type: z.string(),
   vehicle_model: z.string(),
   pickup_date: z.date({
-    required_error: "A date of birth is required.",
+    required_error: "This field is required.",
   }),
   dropoff_date: z.date({
-    required_error: "A date of birth is required.",
+    required_error: "This field is required.",
   }),
 });
 
@@ -273,9 +273,9 @@ const EditCar = ({ params }) => {
                             placeholder="Amount"
                             {...field}
                             className="form-input"
-                            id="amount"
+                            id="amount_"
                             defaultValue={field.value || data?.amount}
-                            onKeyUp={() => acceptNumbersOnly("amount")}
+                            onKeyUp={() => acceptNumbersOnly("amount_")}
                           />
                         </FormControl>
                         <Button
@@ -284,7 +284,7 @@ const EditCar = ({ params }) => {
                           id="amount"
                           className="w-full"
                           onClick={() =>
-                            handleFormUpdate("amount", field?.value)
+                            handleFormUpdate("amount", parseInt(field?.value))
                           }
                         >
                           Update
@@ -494,8 +494,10 @@ const EditCar = ({ params }) => {
                       <Button
                         type="button"
                         disabled={!field.value}
-                        id="amount"
-                        onClick={() => handleFormUpdate("amount", field?.value)}
+                        id="pickup_location"
+                        onClick={() =>
+                          handleFormUpdate("pickup_location", field?.value)
+                        }
                       >
                         Update
                       </Button>

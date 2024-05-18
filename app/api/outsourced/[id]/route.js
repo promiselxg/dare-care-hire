@@ -53,8 +53,10 @@ export const GET = async (req, { params }) => {
       logger(userAgent, urlPath, "failed", "GET", "Invalid vehicle ID");
       return errorResponse("No Record found with the ID Provided", 500);
     }
+    console.log(itemExist);
     return new NextResponse(JSON.stringify(itemExist, { status: 200 }));
   } catch (err) {
+    console.log(err);
     logger(
       userAgent,
       urlPath,
@@ -62,7 +64,7 @@ export const GET = async (req, { params }) => {
       "GET",
       `error occured while trying to query DB with ${params.id}`
     );
-    return successResponse("Something went wrong!", 200);
+    return errorResponse("Something went wrong", 500);
   }
 };
 const isIdValid = (params) => {

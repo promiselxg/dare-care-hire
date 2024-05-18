@@ -100,6 +100,7 @@ const EditOutSorucedDriver = ({ params }) => {
       }
       try {
         const { data } = await axios.get(`/api/outsourced/${params?.id}`);
+        console.log(data);
         if (data?.message === "No Record found with the ID Provided") {
           router.push("/admin/outsourced");
         }

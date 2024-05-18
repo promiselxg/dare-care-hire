@@ -60,6 +60,38 @@ export const GET = async (req) => {
     );
   }
 };
+
+export const PUT = async (req) => {
+  const userAgent = req.headers.get("user-agent");
+  const urlPath = req.headers.get("referer").split(host.host_url)[1];
+  const body = await req.json();
+
+  if (!body?.value || !body?.field || !body.id) {
+    return errorResponse("Please fill out the form.", 403);
+  }
+  try {
+    await prisma.vendors.update({
+      where: { id: body?.id },
+      data: {
+        [body.field]: body.value,
+      },
+    });
+
+    logger(userAgent, urlPath, "success", "PUT", "Update vendor's information");
+    return successResponse("success");
+  } catch (error) {
+    logger(
+      userAgent,
+      urlPath,
+      "failed",
+      "PUT",
+      "Update vendor's information failed"
+    );
+    console.log(error);
+    return errorResponse("Error occurred", 500);
+  }
+};
+
 const isInputValuesValid = (input) => {
   return (
     input.organization_name &&

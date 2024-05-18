@@ -250,13 +250,9 @@ export const columns = [
                 </DialogContent>
               </Dialog>
             </DropdownMenuItem>
-
-            <DropdownMenuItem
-              onClick={() => alert(id)}
-              className=" flex items-center gap-2 cursor-pointer"
-            >
+            <DropdownMenuItem className=" flex items-center gap-2 cursor-pointer">
               <Link
-                href={`/admin/vendor/edit/${id}`}
+                href={`/admin/vendors/edit/${id}`}
                 className="flex items-center gap-2"
               >
                 <Edit2 size={16} /> Edit Record

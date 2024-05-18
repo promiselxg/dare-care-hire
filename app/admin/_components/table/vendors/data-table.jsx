@@ -22,7 +22,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function VehicleDataTable({ columns, data, loading }) {
+export function VendorsTable({ columns, data, loading }) {
   const [columnFilters, setColumnFilters] = useState();
   const [sorting, setSorting] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -49,9 +49,11 @@ export function VehicleDataTable({ columns, data, loading }) {
       <div className="flex items-center py-4 justify-between w-full">
         <Input
           placeholder="Search Table"
-          value={table.getColumn("vehicle_name")?.getFilterValue() ?? ""}
+          value={table.getColumn("organization_name")?.getFilterValue() ?? ""}
           onChange={(event) =>
-            table.getColumn("vehicle_name")?.setFilterValue(event.target.value)
+            table
+              .getColumn("organization_name")
+              ?.setFilterValue(event.target.value)
           }
           className="w-full md:w-1/3"
         />

@@ -5,13 +5,13 @@ import React, { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import {
   AtSign,
-  BookUser,
   CarFront,
   CarIcon,
   LayoutDashboard,
   Power,
   Settings,
   StickyNote,
+  Users,
   UsersRound,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -99,6 +99,22 @@ const SideNav = () => {
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
                   <AtSign size={18} />
                   Outsourced
+                </Link>
+              </li>
+              <li
+                className={`${
+                  (currentRoute === "/admin/vendors" && "active") ||
+                  (currentRoute === "/admin/vendors/add" && "active") ||
+                  (currentRoute.includes("/admin/vendors/edit/") && "active")
+                } my-[2px] h-10 nav`}
+              >
+                <Link
+                  href="/admin/vendors"
+                  className="flex gap-2 items-center py-2  h-8 leading-tight relative"
+                >
+                  <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
+                  <Users size={18} />
+                  Vendors
                 </Link>
               </li>
               <li

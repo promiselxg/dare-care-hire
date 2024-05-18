@@ -25,11 +25,29 @@ model vehicleInfo {
 
 model logger {
   id                      String     @id @default(cuid()) @map("_id")
-  userAgent             String    
-  urlPath                     String    
+  userAgent               String    
+  urlPath                 String    
   logStatus               String
   method                  String
   action                  String
+  createdAt               DateTime   @default(now())
+  updatedAt               DateTime   @updatedAt
+}
+
+model vendors {
+  id                      String     @id @default(cuid()) @map("_id")
+  organization_name       String    
+  client_name             String    
+  driver_name             String
+  job_description         String
+  pickup_location         String
+  dropoff_location        String
+  additional_note         String?
+  amount                  Int
+  vehicle_type            String
+  vehicle_model           String
+  pickup_date             String
+  dropoff_date            String
   createdAt               DateTime   @default(now())
   updatedAt               DateTime   @updatedAt
 }

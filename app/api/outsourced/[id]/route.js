@@ -64,7 +64,7 @@ export const GET = async (req, { params }) => {
       "GET",
       `error occured while trying to query DB with ${params.id}`
     );
-    return errorResponse("Something went wrong", 500);
+    return new NextResponse(JSON.stringify(err, { status: 500 }));
   }
 };
 const isIdValid = (params) => {

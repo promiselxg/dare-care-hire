@@ -1,3 +1,4 @@
+import prisma from "@/utils/dbConnect";
 import { errorResponse, successResponse } from "@/utils/errorMessage";
 import host from "@/utils/host";
 import { logger } from "@/utils/logger";
@@ -54,7 +55,6 @@ export const GET = async (req, { params }) => {
     }
     return new NextResponse(JSON.stringify(itemExist, { status: 200 }));
   } catch (err) {
-    console.log(err);
     logger(
       userAgent,
       urlPath,

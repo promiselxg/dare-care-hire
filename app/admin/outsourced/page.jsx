@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { raleway } from "@/lib/fonts";
-import { Cross, Database } from "lucide-react";
+import { Cross } from "lucide-react";
 import { OutsourcedDataTable } from "../_components/table/outsourced/data-table";
 import { columns } from "../_components/table/outsourced/columns";
 import DashboardCard from "../_components/stats/Card";
@@ -22,7 +22,6 @@ const OutsourcedPage = () => {
           <div className="w-full grid md:grid-cols-4  grid-cols-1 gap-3">
             <DashboardCard
               title="Amount"
-              icon={<Database color="green" />}
               value={formatCurrency(
                 data?.reduce((acc, current) => acc + current.amount, 0)
               )}

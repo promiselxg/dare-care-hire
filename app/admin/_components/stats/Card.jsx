@@ -25,7 +25,11 @@ const DashboardCard = ({ loading, title, icon, desc, value, bg }) => {
               value
             )}
           </h1>
-          <div className={cn(`bg-[${bg}] p-5 rounded-full`)}>{icon}</div>
+          {icon ? (
+            <div className={cn(`bg-[${bg}] p-5 rounded-full`)}>{icon}</div>
+          ) : (
+            <div className="py-5">&nbsp;</div>
+          )}
         </div>
         <p className={cn(`${syne.className} font-[600] capitalize text-sm `)}>
           {loading ? "" : desc}

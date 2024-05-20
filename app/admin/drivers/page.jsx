@@ -8,59 +8,51 @@ import { Button } from "@/components/ui/button";
 import "../../admin/dashboard.css";
 import { DriversDataTable } from "../_components/table/drivers/data-table";
 import { columns } from "../_components/table/drivers/columns";
+import Link from "next/link";
+import { useContext } from "react";
+import { DriverContext } from "@/context/sortContext";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 const DriverPage = () => {
-  const data = [
-    {
-      id: "728ed52f",
-      amount: "9,800",
-      type: "Outsourced",
-      date: "2 Days",
-      driver: "deede@gmail.com",
-    },
-    {
-      id: "728ed52f",
-      amount: "10,000",
-      type: "In-House",
-      date: "2 Days",
-      driver: "user@gmail.com",
-    },
-  ];
-
+  const { data, loading } = useContext(DriverContext);
   return (
     <>
       <section className="w-full flex h-screen flex-col gap-y-5 p-5 overflow-y-scroll bg-[whitesmoke]">
         <div className="w-full">
           <div className="w-full grid md:grid-cols-4  grid-cols-1 gap-3">
             <DashboardCard
-              title="Total"
+              title="Total Drivers"
               icon={<User color="green" />}
-              value="25"
+              value={data?.length}
               bg="whitesmoke"
-              desc="+5.5% since last week"
+              desc="Total number of Drivers"
+              loading={loading}
             />
             <DashboardCard
-              title="Total Outsourced"
-              icon={<Users color="purple" />}
-              value="10"
+              title="Total Expenditure"
+              value={formatCurrency(
+                data?.reduce((acc, current) => acc + current.amount, 0)
+              )}
               bg="whitesmoke"
-              desc="+5.5% since last week"
+              loading={loading}
             />
           </div>
         </div>
         <div className="flex md:items-center md:justify-between w-full my-5 md:my-10 flex-col md:flex-row justify-start items-start">
           <h1
             className={cn(
-              `${raleway.className} uppercase font-[600] my-4 md:my-0`
+              `${raleway.className} text-[16px] uppercase font-[600] my-4 md:my-0`
             )}
           >
             Drivers
           </h1>
-          <Button className="flex gap-2 items-center border-none outline-none bg-[--button-bg] hover:bg-[--button-bg-hover] text-white transition-all delay-75 rounded-[5px]">
-            <Cross size={13} /> Add new Driver
-          </Button>
+          <Link href="/admin/drivers/add">
+            <Button className="flex gap-2 items-center border-none outline-none bg-[--button-bg] hover:bg-[--button-bg-hover] text-white transition-all delay-75 rounded-[5px]">
+              <Cross size={13} /> Add new Driver
+            </Button>
+          </Link>
         </div>
-        <DriversDataTable columns={columns} data={data} />
+        <DriversDataTable columns={columns} data={data} loading={loading} />
       </section>
     </>
   );

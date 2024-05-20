@@ -6,7 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import "../../../cars/cars.css";
+import "../../cars/cars.css";
 
 import {
   Form,
@@ -25,12 +25,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import { acceptNumbersOnly } from "@/utils/regExpression";
+import { acceptNumbersOnly, phoneRegex } from "@/utils/regExpression";
 import { __ } from "@/utils/getElementById";
 import { useRouter } from "next/navigation";
+import { raleway } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
 import {
   Popover,
   PopoverContent,
@@ -38,86 +40,87 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   driver_name: z
     .string()
     .min(5, { message: "Drver's Name must be at least 5 characters long." }),
-  description: z.string().min(10, {
-    message: "Description must be at least 10 characters long.",
+  address: z.string().min(10, {
+    message: "Address must be at least 10 characters long.",
   }),
   amount: z.string().min(4, { message: "Please enter a valid amount." }),
-  vehicle_type: z.string(),
+  account_type: z.string(),
+  phone_number: z
+    .string()
+    .regex(phoneRegex, "please enter a valid phone numeber"),
+  email_address: z.string().email().optional(),
   date: z.date({
     required_error: "This field is required.",
   }),
 });
-const EditOutSorucedDriver = ({ params }) => {
-  const [data, setData] = useState([]);
+
+const AddOutsourcedDriver = () => {
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
 
-  async function onSubmit(values) {}
-
-  const handleFormUpdate = async (field, value) => {
-    if (!value) return false;
-    const fieldName = __(field);
-    fieldName.disabled = true;
-    fieldName.innerHTML = "Updating...";
-    try {
-      const response = await axios.put("/api/outsourced", {
-        id: params?.id,
-        value,
-        field,
+  async function onSubmit(values) {
+    if (!isInputFieldsValid(values)) {
+      toast({
+        variant: "destructive",
+        title: "Required Fields",
+        description: "Please fill out the required fields.",
       });
+      return;
+    }
+    try {
+      setLoading(true);
+      __("submitBtn").innerHTML = "Submitting...";
+      const response = await axios.post("/api/driver", values);
+      const { data } = response;
 
-      if (response.data.message !== "success") {
+      if (data?.message === "success") {
+        toast({
+          title: "New record added successfully.",
+        });
+        router.push("/admin/drivers");
+      } else {
         toast({
           variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: response.data.message,
+          description: `${data?.message}`,
         });
-      } else {
-        toast({ title: "Updated successfully." });
-        window.location.reload();
       }
     } catch (error) {
-      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: `Error creating new Outsourced Driver`,
+      });
     } finally {
-      fieldName.innerHTML = "Update";
-      fieldName.disabled = false;
+      setLoading(false);
+      __("submitBtn").innerHTML = "Submit";
     }
+  }
+
+  const isInputFieldsValid = (field) => {
+    return (
+      field.driver_name &&
+      field.address &&
+      field.account_type &&
+      field.amount &&
+      field.phone_number
+    );
   };
-
-  useEffect(() => {
-    const getRecord = async () => {
-      if (!params?.id || params.id === "") {
-        router.push("/admin/outsourced");
-      }
-      try {
-        const { data } = await axios.get(`/api/outsourced/${params?.id}`);
-        if (data?.message === "No Record found with the ID Provided") {
-          router.push("/admin/outsourced");
-        }
-        setData(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getRecord();
-  }, [params.id, router]);
-
   return (
     <>
-      <div className="h-screen w-full flex flex-col  overflow-y-scroll">
+      <div className="h-screen w-full flex flex-col  overflow-y-scroll pb-[100px] md:pb-20">
         <div className="w-full bg-white h-[60px] p-5 flex items-center border-[#eee] border-b-[1px]">
           <div className="w-fit flex  h-[60px]">
             <Link
-              href="/admin/outsourced"
+              href="/admin/drivers"
               className="border-r-[1px] border-[#eee] w-fit flex items-center pr-5"
             >
               <ChevronLeft size={30} />
@@ -125,8 +128,10 @@ const EditOutSorucedDriver = ({ params }) => {
           </div>
         </div>
         <div className="w-full my-5 bg-[whitesmoke] px-5 flex flex-col h-screen ">
-          <div className=" p-5">
-            <h1>Edit Vendor Information</h1>
+          <div className="p-5">
+            <h1 className={cn(`${raleway.className} font-bold`)}>
+              Add new Driver
+            </h1>
           </div>
           <div className="p-5 bg-white container w-full">
             <Form {...form}>
@@ -145,47 +150,64 @@ const EditOutSorucedDriver = ({ params }) => {
                           placeholder="Driver's Name"
                           {...field}
                           className="form-input"
-                          defaultValue={data?.driver_name}
                         />
                       </FormControl>
-                      <Button
-                        type="button"
-                        disabled={!field.value}
-                        id="driver_name"
-                        onClick={() =>
-                          handleFormUpdate("driver_name", field?.value)
-                        }
-                      >
-                        Update
-                      </Button>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={form.control}
-                  name="description"
+                  name="address"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Description</FormLabel>
+                      <FormLabel>Address</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Description"
+                          placeholder="Driver's Address"
                           className="resize-none"
                           {...field}
-                          defaultValue={data?.description}
                         />
                       </FormControl>
-                      <Button
-                        type="button"
-                        disabled={!field.value}
-                        id="description"
-                        onClick={() =>
-                          handleFormUpdate("description", field?.value)
-                        }
-                      >
-                        Update
-                      </Button>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="phone_number"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Phone Number"
+                          {...field}
+                          className="form-input"
+                          id="phone_number"
+                          onKeyUp={() => acceptNumbersOnly("phone_number")}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email_address"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Email Address&nbsp;(
+                        <span className="italic text-sm">optional</span>)
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Email Address"
+                          {...field}
+                          className="form-input"
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -202,32 +224,21 @@ const EditOutSorucedDriver = ({ params }) => {
                             placeholder="Amount"
                             {...field}
                             className="form-input"
-                            id="amount_"
-                            defaultValue={field.value || data?.amount}
-                            onKeyUp={() => acceptNumbersOnly("amount_")}
+                            id="amount"
+                            defaultValue={field.value}
+                            onKeyUp={() => acceptNumbersOnly("amount")}
                           />
                         </FormControl>
-                        <Button
-                          type="button"
-                          disabled={!field.value}
-                          id="amount"
-                          className="w-full"
-                          onClick={() =>
-                            handleFormUpdate("amount", parseInt(field?.value))
-                          }
-                        >
-                          Update
-                        </Button>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                   <FormField
                     control={form.control}
-                    name="vehicle_type"
+                    name="account_type"
                     render={({ field }) => (
                       <FormItem className="md:w-1/5 w-full">
-                        <FormLabel>Vehicle type</FormLabel>
+                        <FormLabel>Account type</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -235,33 +246,23 @@ const EditOutSorucedDriver = ({ params }) => {
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue
-                                placeholder="Vehicle Type"
+                                placeholder="Account Type"
                                 className="form-input"
                               />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="peogout">PEOGOUT</SelectItem>
-                            <SelectItem value="bus">BUS</SelectItem>
-                            <SelectItem value="suv">SUV</SelectItem>
+                            <SelectItem value="outsourced">
+                              Outsourced
+                            </SelectItem>
+                            <SelectItem value="inhouse">In-House</SelectItem>
                           </SelectContent>
                         </Select>
-                        <Button
-                          type="button"
-                          disabled={!field.value}
-                          id="vehicle_type"
-                          className="w-full"
-                          onClick={() =>
-                            handleFormUpdate("vehicle_type", field?.value)
-                          }
-                        >
-                          Update
-                        </Button>
+
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-
                   <FormField
                     control={form.control}
                     name="date"
@@ -292,27 +293,18 @@ const EditOutSorucedDriver = ({ params }) => {
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
-                              disabled={(date) =>
-                                date <=
-                                new Date(new Date().getTime() - 86400000)
-                              }
                               initialFocus
                             />
                           </PopoverContent>
                         </Popover>
-                        <Button
-                          type="button"
-                          disabled={!field.value}
-                          id="date"
-                          onClick={() => handleFormUpdate("date", field?.value)}
-                        >
-                          Update
-                        </Button>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
+                <Button type="submit" id="submitBtn" disabled={loading}>
+                  Submit
+                </Button>
               </form>
             </Form>
           </div>
@@ -322,4 +314,4 @@ const EditOutSorucedDriver = ({ params }) => {
   );
 };
 
-export default EditOutSorucedDriver;
+export default AddOutsourcedDriver;

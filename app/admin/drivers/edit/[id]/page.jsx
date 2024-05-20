@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarIcon, ChevronLeft, X } from "lucide-react";
+import { CalendarIcon, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,14 +31,16 @@ import axios from "axios";
 import { acceptNumbersOnly } from "@/utils/regExpression";
 import { __ } from "@/utils/getElementById";
 import { useRouter } from "next/navigation";
+import { raleway } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import { formatDateWithoutTime } from "@/utils/getDateDifference";
 
 const formSchema = z.object({
   driver_name: z
@@ -69,7 +71,7 @@ const EditOutSorucedDriver = ({ params }) => {
     fieldName.disabled = true;
     fieldName.innerHTML = "Updating...";
     try {
-      const response = await axios.put("/api/outsourced", {
+      const response = await axios.put("/api/driver", {
         id: params?.id,
         value,
         field,
@@ -86,7 +88,6 @@ const EditOutSorucedDriver = ({ params }) => {
         window.location.reload();
       }
     } catch (error) {
-      console.log(error);
     } finally {
       fieldName.innerHTML = "Update";
       fieldName.disabled = false;
@@ -96,12 +97,12 @@ const EditOutSorucedDriver = ({ params }) => {
   useEffect(() => {
     const getRecord = async () => {
       if (!params?.id || params.id === "") {
-        router.push("/admin/outsourced");
+        router.push("/admin/drivers");
       }
       try {
-        const { data } = await axios.get(`/api/outsourced/${params?.id}`);
+        const { data } = await axios.get(`/api/driver/${params?.id}`);
         if (data?.message === "No Record found with the ID Provided") {
-          router.push("/admin/outsourced");
+          router.push("/admin/drivers");
         }
         setData(data);
       } catch (error) {
@@ -113,11 +114,11 @@ const EditOutSorucedDriver = ({ params }) => {
 
   return (
     <>
-      <div className="h-screen w-full flex flex-col  overflow-y-scroll">
+      <div className="h-screen w-full flex flex-col  overflow-y-scroll pb-[100px] md:pb-20">
         <div className="w-full bg-white h-[60px] p-5 flex items-center border-[#eee] border-b-[1px]">
           <div className="w-fit flex  h-[60px]">
             <Link
-              href="/admin/outsourced"
+              href="/admin/drivers"
               className="border-r-[1px] border-[#eee] w-fit flex items-center pr-5"
             >
               <ChevronLeft size={30} />
@@ -125,8 +126,8 @@ const EditOutSorucedDriver = ({ params }) => {
           </div>
         </div>
         <div className="w-full my-5 bg-[whitesmoke] px-5 flex flex-col h-screen ">
-          <div className=" p-5">
-            <h1>Edit Vendor Information</h1>
+          <div className={cn(`${raleway.className} font-bold p-5`)}>
+            <h1>Edit Driver Information</h1>
           </div>
           <div className="p-5 bg-white container w-full">
             <Form {...form}>
@@ -164,24 +165,83 @@ const EditOutSorucedDriver = ({ params }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="description"
+                  name="address"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Description</FormLabel>
+                      <FormLabel>Address</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Description"
+                          placeholder="Address"
                           className="resize-none"
                           {...field}
-                          defaultValue={data?.description}
+                          defaultValue={data?.address}
                         />
                       </FormControl>
                       <Button
                         type="button"
                         disabled={!field.value}
-                        id="description"
+                        id="address"
                         onClick={() =>
-                          handleFormUpdate("description", field?.value)
+                          handleFormUpdate("address", field?.value)
+                        }
+                      >
+                        Update
+                      </Button>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="phone_number"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Phone Number"
+                          {...field}
+                          className="form-input"
+                          defaultValue={data?.phone_number}
+                        />
+                      </FormControl>
+                      <Button
+                        type="button"
+                        disabled={!field.value}
+                        id="phone_number"
+                        onClick={() =>
+                          handleFormUpdate("phone_number", field?.value)
+                        }
+                      >
+                        Update
+                      </Button>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email_address"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Email Address&nbsp;(
+                        <span className="italic text-sm">optional</span>)
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Email Address"
+                          {...field}
+                          className="form-input"
+                          defaultValue={data?.email_address}
+                        />
+                      </FormControl>
+                      <Button
+                        type="button"
+                        disabled={!field.value}
+                        id="email_address"
+                        onClick={() =>
+                          handleFormUpdate("email_address", field?.value)
                         }
                       >
                         Update
@@ -224,10 +284,10 @@ const EditOutSorucedDriver = ({ params }) => {
                   />
                   <FormField
                     control={form.control}
-                    name="vehicle_type"
+                    name="account_type"
                     render={({ field }) => (
                       <FormItem className="md:w-1/5 w-full">
-                        <FormLabel>Vehicle type</FormLabel>
+                        <FormLabel>Account type</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -235,24 +295,25 @@ const EditOutSorucedDriver = ({ params }) => {
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue
-                                placeholder="Vehicle Type"
+                                placeholder="Account type"
                                 className="form-input"
                               />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="peogout">PEOGOUT</SelectItem>
-                            <SelectItem value="bus">BUS</SelectItem>
-                            <SelectItem value="suv">SUV</SelectItem>
+                            <SelectItem value="outsourced">
+                              Outsourced
+                            </SelectItem>
+                            <SelectItem value="inhouse">In-House</SelectItem>
                           </SelectContent>
                         </Select>
                         <Button
                           type="button"
                           disabled={!field.value}
-                          id="vehicle_type"
+                          id="account_type"
                           className="w-full"
                           onClick={() =>
-                            handleFormUpdate("vehicle_type", field?.value)
+                            handleFormUpdate("account_type", field?.value)
                           }
                         >
                           Update
@@ -261,7 +322,6 @@ const EditOutSorucedDriver = ({ params }) => {
                       </FormItem>
                     )}
                   />
-
                   <FormField
                     control={form.control}
                     name="date"
@@ -278,11 +338,9 @@ const EditOutSorucedDriver = ({ params }) => {
                                   !field.value && "text-muted-foreground"
                                 )}
                               >
-                                {field.value ? (
-                                  format(field.value, "PPP")
-                                ) : (
-                                  <span>Pick a date</span>
-                                )}
+                                {field.value
+                                  ? format(field.value, "PPP")
+                                  : data?.date}
                                 <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                               </Button>
                             </FormControl>
@@ -292,10 +350,6 @@ const EditOutSorucedDriver = ({ params }) => {
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
-                              disabled={(date) =>
-                                date <=
-                                new Date(new Date().getTime() - 86400000)
-                              }
                               initialFocus
                             />
                           </PopoverContent>
@@ -304,7 +358,12 @@ const EditOutSorucedDriver = ({ params }) => {
                           type="button"
                           disabled={!field.value}
                           id="date"
-                          onClick={() => handleFormUpdate("date", field?.value)}
+                          onClick={() =>
+                            handleFormUpdate(
+                              "date",
+                              formatDateWithoutTime(field?.value)
+                            )
+                          }
                         >
                           Update
                         </Button>

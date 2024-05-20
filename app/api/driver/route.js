@@ -1,50 +1,51 @@
 import prisma from "@/utils/dbConnect";
 import { errorResponse, successResponse } from "@/utils/errorMessage";
-import { formatDateTime } from "@/utils/getDateDifference";
 import host from "@/utils/host";
 import { logger } from "@/utils/logger";
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
   const inputValue = await req.json();
+  console.log(inputValue.phone_number);
   const userAgent = req.headers.get("user-agent");
   const urlPath = req.headers.get("referer").split(host.host_url)[1];
-
-  if (!isInputValuesValid(inputValue)) {
-    return errorResponse("Invalid input values", 400);
-  }
-  const { date, ...rest } = inputValue;
   try {
-    // Format dates
-    const formattedDate = formatDateTime(date);
-    const vendor = await prisma.outsourcedDriver.create({
+    if (!isInputValuesValid(inputValue)) {
+      return errorResponse("Invalid input values", 400);
+    }
+
+    const phoneNumberExists = await prisma.driver.count({
+      where: { phone_number: inputValue.phone_number },
+    });
+
+    if (phoneNumberExists > 0) {
+      return errorResponse("Phone number already exists.", 409);
+    }
+
+    const driver = await prisma.driver.create({
       data: {
-        ...rest,
-        amount: parseInt(inputValue.amount),
-        date: formattedDate,
+        ...inputValue,
+        amount: parseInt(inputValue?.amount),
       },
     });
-    if (vendor) {
+
+    if (driver) {
       logger(
         userAgent,
         urlPath,
         "success",
         "POST",
-        "outsourced driver created successfully"
+        "New Driver Information created successfully"
       );
       return successResponse("success");
     } else {
-      return errorResponse("Unable to create outsourced driver", 500);
+      logger(userAgent, urlPath, "failed", "POST", "Error creating new driver");
+      return errorResponse("Error creating new driver", 500);
     }
   } catch (error) {
-    logger(
-      userAgent,
-      urlPath,
-      "failed",
-      "POST",
-      "Error creating outsourced driver"
-    );
-    return errorResponse("Error creating outsourced driver", 500);
+    console.log(error);
+    logger(userAgent, urlPath, "failed", "POST", "Error creating new driver");
+    return errorResponse("Error creating new driver", 500);
   }
 };
 
@@ -52,14 +53,14 @@ export const GET = async (req) => {
   const userAgent = req.headers.get("user-agent");
   const urlPath = req.headers.get("referer").split(host.host_url)[1];
   try {
-    const response = await prisma.outsourcedDriver.findMany({
+    const response = await prisma.driver.findMany({
       orderBy: {
-        createdAt: "asc",
+        createdAt: "desc",
       },
     });
     return new NextResponse(JSON.stringify(response, { status: 200 }));
   } catch (err) {
-    logger(userAgent, urlPath, "failed", "GET", "get all outsourced drivers");
+    logger(userAgent, urlPath, "failed", "GET", "get all drivers");
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );
@@ -75,20 +76,13 @@ export const PUT = async (req) => {
     return errorResponse("Please fill out the form.", 403);
   }
   try {
-    await prisma.outsourcedDriver.update({
+    await prisma.driver.update({
       where: { id: body?.id },
       data: {
         [body.field]: body.value,
       },
     });
-
-    logger(
-      userAgent,
-      urlPath,
-      "success",
-      "PUT",
-      "Update outsourced driver's information"
-    );
+    logger(userAgent, urlPath, "success", "PUT", "Update Driver's information");
     return successResponse("success");
   } catch (error) {
     logger(
@@ -96,7 +90,7 @@ export const PUT = async (req) => {
       urlPath,
       "failed",
       "PUT",
-      "Update outsourced driver's information failed"
+      "Update Driver's information failed"
     );
     return errorResponse("Error occurred", 500);
   }
@@ -105,9 +99,9 @@ export const PUT = async (req) => {
 const isInputValuesValid = (input) => {
   return (
     input.driver_name &&
-    input.description &&
-    input.date &&
+    input.address &&
+    input.account_type &&
     input.amount &&
-    input.vehicle_type
+    input.phone_number
   );
 };

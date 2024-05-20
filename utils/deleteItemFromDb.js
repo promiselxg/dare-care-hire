@@ -3,6 +3,7 @@ import host from "./host";
 import axios from "axios";
 
 export const handleDeleteBtn = (id, route) => {
+  console.log(route, id);
   Swal.fire({
     title: "Please confirm action.",
     text: "Do you want to delete this item?",

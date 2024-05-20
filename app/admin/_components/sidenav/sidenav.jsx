@@ -61,7 +61,9 @@ const SideNav = () => {
               </li>
               <li
                 className={`${
-                  currentRoute === "/admin/drivers" && "active"
+                  (currentRoute === "/admin/drivers" && "active") ||
+                  (currentRoute === "/admin/drivers/add" && "active") ||
+                  (currentRoute.includes("/admin/drivers/edit/") && "active")
                 } my-[2px] h-10 nav`}
               >
                 <Link

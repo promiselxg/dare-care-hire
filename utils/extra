@@ -1,7 +1,0 @@
-export function extractQueryParams(url) {
-  const params = new URLSearchParams(url.split("?")[1]);
-  return {
-    accountType: params.get("account_type"),
-    date: params.get("date"),
-  };
-}

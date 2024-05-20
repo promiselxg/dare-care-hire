@@ -52,7 +52,11 @@ export const GET = async (req) => {
   const userAgent = req.headers.get("user-agent");
   const urlPath = req.headers.get("referer").split(host.host_url)[1];
   try {
-    const response = await prisma.outsourcedDriver.findMany();
+    const response = await prisma.outsourcedDriver.findMany({
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
     return new NextResponse(JSON.stringify(response, { status: 200 }));
   } catch (err) {
     logger(userAgent, urlPath, "failed", "GET", "get all outsourced drivers");

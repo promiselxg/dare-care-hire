@@ -33,6 +33,13 @@ import { __ } from "@/utils/getElementById";
 import { useRouter } from "next/navigation";
 import { raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
 
 const formSchema = z.object({
   driver_name: z
@@ -47,6 +54,9 @@ const formSchema = z.object({
     .string()
     .regex(phoneRegex, "please enter a valid phone numeber"),
   email_address: z.string().email().optional(),
+  date: z.date({
+    required_error: "This field is required.",
+  }),
 });
 
 const AddOutsourcedDriver = () => {
@@ -249,6 +259,44 @@ const AddOutsourcedDriver = () => {
                           </SelectContent>
                         </Select>
 
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col w-full md:w-fit">
+                        <FormLabel>Date</FormLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant={"outline"}
+                                className={cn(
+                                  "md:w-[240px] w-full text-left font-normal h-10",
+                                  !field.value && "text-muted-foreground"
+                                )}
+                              >
+                                {field.value ? (
+                                  format(field.value, "PPP")
+                                ) : (
+                                  <span>Pick a date</span>
+                                )}
+                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
                         <FormMessage />
                       </FormItem>
                     )}

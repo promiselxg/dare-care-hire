@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft } from "lucide-react";
+import { CalendarIcon, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,6 +33,14 @@ import { __ } from "@/utils/getElementById";
 import { useRouter } from "next/navigation";
 import { raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { formatDateWithoutTime } from "@/utils/getDateDifference";
 
 const formSchema = z.object({
   driver_name: z
@@ -306,6 +314,55 @@ const EditOutSorucedDriver = ({ params }) => {
                           className="w-full"
                           onClick={() =>
                             handleFormUpdate("account_type", field?.value)
+                          }
+                        >
+                          Update
+                        </Button>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col w-full md:w-fit">
+                        <FormLabel>Date</FormLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant={"outline"}
+                                className={cn(
+                                  "md:w-[240px] w-full text-left font-normal h-10",
+                                  !field.value && "text-muted-foreground"
+                                )}
+                              >
+                                {field.value
+                                  ? format(field.value, "PPP")
+                                  : data?.date}
+                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
+                        <Button
+                          type="button"
+                          disabled={!field.value}
+                          id="date"
+                          onClick={() =>
+                            handleFormUpdate(
+                              "date",
+                              formatDateWithoutTime(field?.value)
+                            )
                           }
                         >
                           Update

@@ -1,12 +1,12 @@
 import prisma from "@/utils/dbConnect";
 import { errorResponse, successResponse } from "@/utils/errorMessage";
+import { formatDateWithoutTime } from "@/utils/getDateDifference";
 import host from "@/utils/host";
 import { logger } from "@/utils/logger";
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
   const inputValue = await req.json();
-  console.log(inputValue.phone_number);
   const userAgent = req.headers.get("user-agent");
   const urlPath = req.headers.get("referer").split(host.host_url)[1];
   try {
@@ -26,6 +26,7 @@ export const POST = async (req) => {
       data: {
         ...inputValue,
         amount: parseInt(inputValue?.amount),
+        date: formatDateWithoutTime(inputValue?.date),
       },
     });
 
@@ -52,8 +53,20 @@ export const POST = async (req) => {
 export const GET = async (req) => {
   const userAgent = req.headers.get("user-agent");
   const urlPath = req.headers.get("referer").split(host.host_url)[1];
+  let query;
+  const { accountType, date } = extractQueryParams(req?.url);
+
+  if (!accountType && !date) {
+    query = {};
+  } else {
+    query = {
+      where: {
+        AND: [{ account_type: accountType }, { date: date }],
+      },
+    };
+  }
   try {
-    const response = await prisma.driver.findMany({
+    const response = await prisma.driver.findMany(query, {
       orderBy: {
         createdAt: "desc",
       },
@@ -105,3 +118,11 @@ const isInputValuesValid = (input) => {
     input.phone_number
   );
 };
+
+function extractQueryParams(url) {
+  const params = new URLSearchParams(url.split("?")[1]);
+  return {
+    accountType: params.get("account_type"),
+    date: params.get("date"),
+  };
+}

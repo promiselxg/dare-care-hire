@@ -9,29 +9,32 @@ import "../../admin/dashboard.css";
 import { DriversDataTable } from "../_components/table/drivers/data-table";
 import { columns } from "../_components/table/drivers/columns";
 import Link from "next/link";
-import useFetch from "@/hooks/useFetch";
+import { useContext } from "react";
+import { DriverContext } from "@/context/sortContext";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 const DriverPage = () => {
-  const { loading, data } = useFetch("/driver");
+  const { data, loading } = useContext(DriverContext);
   return (
     <>
       <section className="w-full flex h-screen flex-col gap-y-5 p-5 overflow-y-scroll bg-[whitesmoke]">
         <div className="w-full">
           <div className="w-full grid md:grid-cols-4  grid-cols-1 gap-3">
             <DashboardCard
-              title="Total"
+              title="Total Drivers"
               icon={<User color="green" />}
               value={data?.length}
               bg="whitesmoke"
-              desc="+5.5% since last week"
+              desc="Total number of Drivers"
               loading={loading}
             />
             <DashboardCard
-              title="Total Outsourced"
-              icon={<Users color="purple" />}
-              value="10"
+              title="Total Expenditure"
+              value={formatCurrency(
+                data?.reduce((acc, current) => acc + current.amount, 0)
+              )}
               bg="whitesmoke"
-              desc="+5.5% since last week"
+              loading={loading}
             />
           </div>
         </div>

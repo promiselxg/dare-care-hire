@@ -71,6 +71,7 @@ model driver {
   account_type            String
   phone_number            String
   email_address           String?
+  date                    String
   createdAt               DateTime   @default(now())
   updatedAt               DateTime   @updatedAt
 }

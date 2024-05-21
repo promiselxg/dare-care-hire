@@ -4,17 +4,57 @@ import "./checkout.css";
 import "../cart/cart.css";
 import { raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cartContext";
 import { formatDateTime } from "@/utils/getDateDifference";
 import { formatCurrency } from "@/utils/formatCurrency";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/use-toast";
+import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
+const FormSchema = z.object({
+  first_name: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  last_name: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  phone: z.string().min(11, {
+    message: "Username must be at least 2 characters.",
+  }),
+  email_address: z.string().optional(),
+  order_notes: z.string().optional(),
+  type: z.enum(["on_delivery", "online"], {
+    required_error: "You need to select a payment method.",
+  }),
+});
 
 const CheckoutPage = () => {
+  const { control } = useForm();
   const { cart } = useCart();
   const router = useRouter();
+  const [selectedValue, setSelectedValue] = useState(null);
+
+  const form = useForm({
+    resolver: zodResolver(FormSchema),
+  });
+
   const subtotal = cart.reduce((acc, current) => acc + current.subtotal, 0);
 
   useEffect(() => {
@@ -31,7 +71,14 @@ const CheckoutPage = () => {
     }
   }, [router, cart]);
 
-  console.log(cart);
+  const handleValueChange = (value) => {
+    setSelectedValue(value);
+  };
+
+  async function onSubmit(values) {
+    console.log(values, selectedValue);
+  }
+
   return (
     <>
       <div className="w-full flex">
@@ -49,90 +96,192 @@ const CheckoutPage = () => {
         </div>
       </div>
       <section className="w-full ">
-        <div className="mx-auto w-full md:w-[80%]  h-fit flex gap-5 flex-col md:flex-row">
+        <div className="mx-auto w-full md:w-[80%]  h-fit flex gap-5 flex-col-reverse md:flex-row">
           <div className="w-full md:w-[50%]  border-r-[1px] border-[#eee]">
             <div
               className={cn(
-                `${raleway.className} px-5 py-20 flex flex-col gap-y-3`
+                `${raleway.className} px-5 pb-20 md:pt-20 flex flex-col`
               )}
             >
-              <div className="w-full flex gap-3 flex-col md:flex-row">
-                <div className="flex flex-col w-full gap-y-2">
-                  <label
-                    htmlFor="first_name"
-                    className={cn(`${raleway.className} font-[600]`)}
-                  >
-                    First Name
-                  </label>
-                  <input type="text" name="first_name" id="" className="p-2" />
-                </div>
-                <div className="flex flex-col w-full gap-y-2">
-                  <label
-                    htmlFor="first_name"
-                    className={cn(`${raleway.className} font-[600]`)}
-                  >
-                    First Name
-                  </label>
-                  <input type="text" name="first_name" id="" className="p-2" />
-                </div>
-              </div>
-              <div className="w-full flex gap-3">
-                <div className="flex flex-col w-full gap-y-2">
-                  <label
-                    htmlFor="first_name"
-                    className={cn(`${raleway.className} font-[600]`)}
-                  >
-                    Phone
-                  </label>
-                  <input type="text" name="first_name" id="" className="p-2" />
-                </div>
-              </div>
-              <div className="w-full flex gap-3">
-                <div className="flex flex-col w-full gap-y-2">
-                  <label
-                    htmlFor="first_name"
-                    className={cn(`${raleway.className} font-[600]`)}
-                  >
-                    Email Address
-                  </label>
-                  <input type="text" name="first_name" id="" className="p-2" />
-                </div>
-              </div>
-              <div className="w-full flex gap-3">
-                <div className="flex flex-col w-full gap-y-2">
-                  <label
-                    htmlFor="first_name"
-                    className={cn(`${raleway.className} font-[600]`)}
-                  >
-                    Order notes (optional)
-                  </label>
-                  <textarea
-                    name=""
-                    id=""
-                    cols="30"
-                    className="p-2"
-                    placeholder="notes about your order eg.special order for delivery"
-                  ></textarea>
-                </div>
-              </div>
-              <div className="w-full bg-[#eeeeee] p-10">
-                <div className="py-3">
-                  <p className={cn(`${raleway.className} text-sm`)}>
-                    Your personal data will be used to process your order,
-                    support your experience throughout this website, and for
-                    other purposes described in our privacy policy.
-                  </p>
-                </div>
-              </div>
+              <h1
+                className={cn(`${raleway.className} font-bold uppercase pb-4`)}
+              >
+                Billing Information
+              </h1>
+              <Form
+                {...form}
+                className="w-full flex gap-3 flex-col md:flex-row"
+              >
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                  <div className="flex flex-col md:flex-row w-full gap-2 justify-between mb-3">
+                    <FormField
+                      control={form.control}
+                      name="first_name"
+                      render={({ field }) => (
+                        <FormItem
+                          className={cn(
+                            `${raleway.className} font-[600] w-full`
+                          )}
+                        >
+                          <FormLabel>First Name</FormLabel>
+                          <FormControl>
+                            <Input {...field} className="input-text" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="last_name"
+                      render={({ field }) => (
+                        <FormItem
+                          className={cn(
+                            `${raleway.className} font-[600] w-full`
+                          )}
+                        >
+                          <FormLabel>Last Name</FormLabel>
+                          <FormControl>
+                            <Input {...field} className="input-text" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className="w-full flex gap-3  mb-3">
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem
+                          className={cn(
+                            `${raleway.className} font-[600] w-full`
+                          )}
+                        >
+                          <FormLabel>Phone Number</FormLabel>
+                          <FormControl>
+                            <Input {...field} className="input-text" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="w-full flex gap-3  mb-3">
+                    <FormField
+                      control={form.control}
+                      name="email_address"
+                      render={({ field }) => (
+                        <FormItem
+                          className={cn(
+                            `${raleway.className} font-[600] w-full`
+                          )}
+                        >
+                          <FormLabel>Email Address</FormLabel>
+                          <FormControl>
+                            <Input {...field} className="input-text" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="w-full flex gap-3  mb-3">
+                    <FormField
+                      control={form.control}
+                      name="order_notes"
+                      render={({ field }) => (
+                        <FormItem
+                          className={cn(
+                            `${raleway.className} font-[600] w-full`
+                          )}
+                        >
+                          <FormLabel>
+                            Order Notes (
+                            <span className="italic text-[12px]">optional</span>
+                            )
+                          </FormLabel>
+                          <FormControl>
+                            <Textarea
+                              className="resize-none input-text"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Do you have some intructions to include in your
+                            order? write it here.
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className="w-full bg-[#eeeeee] p-10">
+                    <div className="py-3">
+                      <p className={cn(`${raleway.className} text-sm`)}>
+                        Your personal data will be used to process your order,
+                        support your experience throughout this website, and for
+                        other purposes described in our privacy policy.
+                      </p>
+                    </div>
+                  </div>
+
+                  <FormField
+                    control={form.control}
+                    name="type"
+                    render={({ field }) => (
+                      <FormItem className="space-y-3">
+                        <FormLabel>Choose Mode of Payment</FormLabel>
+                        <FormControl>
+                          <RadioGroup
+                            onValueChange={(value) => {
+                              field.onChange(value);
+                              handleValueChange(value);
+                            }}
+                            // onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            className="flex flex-col space-y-1"
+                          >
+                            <FormItem className="flex items-center space-x-3 space-y-0">
+                              <FormControl>
+                                <RadioGroupItem value="on_delivery" />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                Pay On Delivery
+                              </FormLabel>
+                            </FormItem>
+                            <FormItem className="flex items-center space-x-3 space-y-0">
+                              <FormControl>
+                                <RadioGroupItem value="online" />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                Pay Online (10% Discount)
+                              </FormLabel>
+                            </FormItem>
+                            {selectedValue === "online" && (
+                              <div className="hidden-div p-5 my-5 transition-all delay-75 border">
+                                Pay Online
+                              </div>
+                            )}
+                          </RadioGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className="my-5 w-full md:w-fit">
+                    Complete Checkout
+                  </Button>
+                </form>
+              </Form>
             </div>
           </div>
-          <div className="w-[93%] mx-auto md:mx-0 md:w-[50%] pt-0 pb-20 md:py-20">
+          <div className="w-[93%] mx-auto md:mx-0 md:w-[50%] pt-10 mb-pt-0 mb:pb-20 md:py-20  overflow-x-scroll md:overflow-x-auto">
             <div className="w-full">
-              <table
-                className={cn(
-                  `${raleway.className} w-full shop_table overflow-x-scroll md:overflow-x-auto`
-                )}
-              >
+              <table className={cn(`${raleway.className} w-full shop_table`)}>
                 <thead>
                   <tr>
                     <th className="text-left flex">PRODUCT</th>

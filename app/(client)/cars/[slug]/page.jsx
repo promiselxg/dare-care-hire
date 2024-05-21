@@ -27,7 +27,7 @@ import { checkDate, dateDiffInDays } from "@/utils/getDateDifference";
 
 const CarDetails = ({ params }) => {
   const { loading, data } = useFetch(`/car/${params?.slug}`);
-  const { addItemToCart, isloading } = useCart();
+  const { addItemToCart, isloading, setLoading } = useCart();
   const router = useRouter();
   const { toast } = useToast();
   const [inputValues, setInputValues] = useState({
@@ -70,6 +70,7 @@ const CarDetails = ({ params }) => {
       return false;
     }
     const subtotal = totalDays * data?.amount;
+    setLoading(true);
     try {
       const response = await addItemToCart({
         id: data?.id,
@@ -86,10 +87,17 @@ const CarDetails = ({ params }) => {
           dropoff_date: inputValues.dropoff_date,
         },
       });
+      setLoading(false);
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
       toast({ title: `${response?.message}` });
       router.push("/cart");
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   };
   if (data?.message === "No Record found with the ID Provided") {

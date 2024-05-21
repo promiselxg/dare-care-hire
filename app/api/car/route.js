@@ -83,6 +83,9 @@ export const GET = async (req) => {
         features: true,
         imageId: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
     return new NextResponse(JSON.stringify(response, { status: 200 }));
   } catch (err) {

@@ -7,8 +7,16 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useCart } from "@/context/cartContext";
+import { formatDateTime } from "@/utils/getDateDifference";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 const CheckoutPage = () => {
+  const { cart } = useCart();
+  const router = useRouter();
+  const subtotal = cart.reduce((acc, current) => acc + current.subtotal, 0);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -16,6 +24,14 @@ const CheckoutPage = () => {
       behavior: "smooth",
     });
   }, []);
+
+  useEffect(() => {
+    if (!cart || cart.length < 1) {
+      router.push("/cart");
+    }
+  }, [router, cart]);
+
+  console.log(cart);
   return (
     <>
       <div className="w-full flex">
@@ -99,6 +115,15 @@ const CheckoutPage = () => {
                   ></textarea>
                 </div>
               </div>
+              <div className="w-full bg-[#eeeeee] p-10">
+                <div className="py-3">
+                  <p className={cn(`${raleway.className} text-sm`)}>
+                    Your personal data will be used to process your order,
+                    support your experience throughout this website, and for
+                    other purposes described in our privacy policy.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <div className="w-[93%] mx-auto md:mx-0 md:w-[50%] pt-0 pb-20 md:py-20">
@@ -111,97 +136,82 @@ const CheckoutPage = () => {
                 <thead>
                   <tr>
                     <th className="text-left flex">PRODUCT</th>
-                    <th>SUBTOTAL</th>
+                    <th>DAY(s)</th>
+                    <th>PRICE</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td className="product_name w-[85%]">
-                      <h1 className="flex text-left">Your Auto</h1>
-                      <div className="pl-[20px] pt-[10px]">
-                        <div className="start-booking-pickup flex text-left flex-col min-h-[90px] relative">
-                          <span className="start-booking-date  font-[600]">
-                            Pickup
-                          </span>
-                          <span className="value">4/05/2024 20:00</span>
-                          <span className="location-value">Location 01</span>
-                        </div>
-                        <div className="flex text-left flex-col relative">
-                          <span className="end-booking-date font-[600]">
-                            Drop Off
-                          </span>
-                          <span className="value">4/05/2024 19:00</span>
-                          <span className="location-value">Location 01</span>
-                        </div>
-                        <div className="w-full inline-block text-left my-5">
+                  {cart?.map((item) => {
+                    return (
+                      <tr key={item.id}>
+                        <td className="product_name w-[85%]">
                           <h1
                             className={cn(
-                              `${raleway.className} font-[600] text-sm`
+                              `${raleway.className} flex text-left font-bold capitalize py-2`
                             )}
                           >
-                            Extra Resources
+                            {item?.vehicle_name}
                           </h1>
-                          <p className="flex gap-3  text-[12px]  capitalize">
-                            <span>Additional Driver</span>-
-                            <span>&#8358;35</span>
-                          </p>
-                          <p className="flex gap-3  text-[12px] capitalize">
-                            <span>Child seat</span>-<span>&#8358;35</span>
-                          </p>
-                        </div>
-                      </div>
+                          <div className="pl-[20px] pt-[10px]">
+                            <div className="start-booking-pickup flex text-left flex-col min-h-[90px] relative">
+                              <span className="start-booking-date  font-[600]">
+                                Pickup
+                              </span>
+                              <span className="value">
+                                {formatDateTime(item?.rideInfo?.pickup_date)}
+                              </span>
+                              <span className="location-value font-bold capitalize">
+                                {item?.rideInfo?.pickup_location}
+                              </span>
+                            </div>
+                            <div className="flex text-left flex-col relative">
+                              <span className="end-booking-date font-[600]">
+                                Drop Off
+                              </span>
+                              <span className="value">
+                                {formatDateTime(item?.rideInfo?.dropoff_date)}
+                              </span>
+                              <span className="location-value font-bold capitalize">
+                                {item?.rideInfo?.dropoff_location}
+                              </span>
+                            </div>
+                            <div className="w-full inline-block text-left my-5">
+                              <h1
+                                className={cn(
+                                  `${raleway.className} font-[600] text-sm`
+                                )}
+                              >
+                                Extra Resources
+                              </h1>
+                              <p className="flex gap-3  text-[12px]  capitalize">
+                                <span>Additional Driver</span>-
+                                <span>&#8358;35</span>
+                              </p>
+                              <p className="flex gap-3  text-[12px] capitalize">
+                                <span>Child seat</span>-<span>&#8358;35</span>
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>{item?.days}&nbsp;day(s)</td>
+                        <td className="w-[15%] text-[#da1c36] font-[600]">
+                          &#8358;
+                          {new Intl.NumberFormat().format(
+                            item?.days * item?.amount
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+
+                  <tr className="w-full">
+                    <th className="text-left flex uppercase">Total</th>
+                    <td className="font-[600]" colSpan={2}>
+                      {formatCurrency(subtotal)}
                     </td>
-                    <td className="w-[15%] text-[#da1c36] font-[600]">
-                      &#8358;10,000
-                    </td>
-                  </tr>
-                  <tr>
-                    <th className="text-lefth flex uppercase">SUBTOTAL</th>
-                    <td className="font-[600]">&#8358;10,000</td>
-                  </tr>
-                  <tr>
-                    <th className="text-lefth flex uppercase ">TOTAL</th>
-                    <td className="font-[600]">&#8358;10,000</td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-            <div className="w-full bg-[#eeeeee] p-10">
-              <div className="border-b-[1px] border-[#ccc] py-3">
-                <p className={cn(`${raleway.className} text-sm`)}>
-                  Your personal data will be used to process your order, support
-                  your experience throughout this website, and for other
-                  purposes described in our privacy policy.
-                </p>
-              </div>
-              <h1
-                className={cn(`${raleway.className} font-[600] uppercase py-2`)}
-              >
-                Pay with
-              </h1>
-              <div className="flex items-center gap-3 mb-4">
-                <a href="">
-                  <Image
-                    src="/images/paystack.svg"
-                    width={150}
-                    height={30}
-                    alt="paystack"
-                  />
-                </a>
-                <span
-                  className={cn(`${raleway.className} uppercase font-[600]`)}
-                >
-                  Or
-                </span>
-                <a href="">
-                  <Image
-                    src="/images/flutterwave.svg"
-                    width={150}
-                    height={30}
-                    alt="flutterwave"
-                  />
-                </a>
-              </div>
             </div>
           </div>
         </div>

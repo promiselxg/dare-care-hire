@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { useCart } from "@/context/cartContext";
 import { formatDateTime } from "@/utils/getDateDifference";
 import { formatCurrency } from "@/utils/formatCurrency";
+import Link from "next/link";
 
 const CartPage = () => {
   const { cart, removeItemFromCart } = useCart();
@@ -195,13 +196,15 @@ const CartPage = () => {
                   </span>
                 </div>
                 <div className="w-full my-5">
-                  <Button
-                    className={cn(
-                      `${raleway.className} w-full bg-[--button-bg] font-[500] hover:opacity-[.8] hover:bg-[--button-bg] rounded-[5px] py-6 px-8 text-white transition-all delay-75 uppercase`
-                    )}
-                  >
-                    proceed to checkout
-                  </Button>
+                  <Link href="/checkout">
+                    <Button
+                      className={cn(
+                        `${raleway.className} w-full bg-[--button-bg] font-[500] hover:opacity-[.8] hover:bg-[--button-bg] rounded-[5px] py-6 px-8 text-white transition-all delay-75 uppercase`
+                      )}
+                    >
+                      proceed to checkout
+                    </Button>
+                  </Link>
                 </div>
               </div>
             )}

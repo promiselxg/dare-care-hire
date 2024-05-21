@@ -6,7 +6,8 @@ export const dateDiffInDays = (startDate, endDate) => {
     return "wrong_date";
   } else {
     const difference = end.getTime() - start.getTime();
-    return Math.ceil(difference / (1000 * 3600 * 24));
+    const daysDifference = Math.ceil(difference / (1000 * 3600 * 24));
+    return daysDifference > 0 ? daysDifference : 1;
   }
 };
 

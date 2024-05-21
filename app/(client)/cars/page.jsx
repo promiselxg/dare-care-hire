@@ -151,7 +151,7 @@ const Page = () => {
                             {formatCurrency(car?.amount)}
                           </h1>
                           <Link href={`/cars/${car?.id}`}>
-                            <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit ">
+                            <Button className="bg-[white] text-[#000] border border-[#000] uppercase text-sm w-full md:w-fit ">
                               rent it
                             </Button>
                           </Link>

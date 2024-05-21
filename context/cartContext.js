@@ -16,25 +16,27 @@ export const CartProvider = ({ children }) => {
   });
 
   const addItemToCart = async (item) => {
-    setLoading(true);
-    const existingItemIndex = cart.findIndex(
-      (cartItem) => cartItem.id === item.id
-    );
-    const updatedCart = [...cart];
-    if (existingItemIndex !== -1) {
-      updatedCart[existingItemIndex] = item;
-    } else {
-      updatedCart.push(item);
+    try {
+      const existingItemIndex = cart.findIndex(
+        (cartItem) => cartItem.id === item.id
+      );
+      const updatedCart = [...cart];
+      if (existingItemIndex !== -1) {
+        updatedCart[existingItemIndex] = item;
+      } else {
+        updatedCart.push(item);
+      }
+      setCart(updatedCart);
+      return { message: "Item added to cart successfully!" };
+    } catch (error) {
+      console.error(error);
+      return { message: "Error adding item to cart" };
     }
-    setCart(updatedCart);
-    setLoading(false);
-    return { message: "Item added to cart successfully!" };
   };
 
-  const removeItemFromCart = (index) => {
+  const removeItemFromCart = (itemId) => {
     setLoading(true);
-    const newCart = [...cart];
-    newCart.splice(index, 1);
+    const newCart = cart.filter((item) => item.id !== itemId);
     setCart(newCart);
     setLoading(false);
   };
@@ -47,7 +49,7 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addItemToCart, removeItemFromCart, isloading }}
+      value={{ cart, addItemToCart, removeItemFromCart, isloading, setLoading }}
     >
       {children}
     </CartContext.Provider>

@@ -1,5 +1,5 @@
 "use client";
-import { CornerDownLeft, Home } from "lucide-react";
+import { CornerDownLeft, Home, Info } from "lucide-react";
 import "./checkout.css";
 import "../cart/cart.css";
 import { raleway } from "@/lib/fonts";
@@ -27,6 +27,21 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import axios from "axios";
 
 const FormSchema = z.object({
   first_name: z.string().min(2, {
@@ -50,13 +65,33 @@ const CheckoutPage = () => {
   const { cart } = useCart();
   const router = useRouter();
   const [selectedValue, setSelectedValue] = useState(null);
+  const [IdAndAmountMatch, setIdAndAmountMatch] = useState();
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
   });
-
+  //  calculate the cart sub total
   const subtotal = cart.reduce((acc, current) => acc + current.subtotal, 0);
+  //  get the sum of each extra resource in the array
+  const extraResourcesTotal = cart.reduce((acc, current) => {
+    const extraResources = current.extra_resource;
+    const total = Object.values(extraResources).reduce(
+      (acc, value) => acc + parseInt(value || 0),
+      0
+    );
+    return acc + total;
+  }, 0);
 
+  //  add the value of extra resource to the corresponding subtotal
+  const subTotalWithExtraResource = cart.map((item) => {
+    const extraResourcesTotal = item.extra_resource
+      ? Object.values(item.extra_resource).reduce(
+          (acc, value) => acc + parseInt(value || 0),
+          0
+        )
+      : 0;
+    return { ...item, subtotal: item.subtotal + extraResourcesTotal };
+  });
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -74,10 +109,30 @@ const CheckoutPage = () => {
   const handleValueChange = (value) => {
     setSelectedValue(value);
   };
+  const verifyIdAndAmountMatch = (cartItems) => {
+    return cartItems.every((item) => item.existsInDB && item.amountMatches);
+  };
+  useEffect(() => {
+    const verifyItemIDs = async () => {
+      const response = await axios.post("/api/verifyItemID", cart);
+      setIdAndAmountMatch(response?.data);
+    };
+    verifyItemIDs();
+  }, [cart]);
 
   async function onSubmit(values) {
     console.log(values, selectedValue);
   }
+
+  useEffect(() => {
+    const handleVerification = () => {
+      if (IdAndAmountMatch && !verifyIdAndAmountMatch(IdAndAmountMatch)) {
+        router.push("/cart");
+      }
+    };
+
+    handleVerification();
+  }, [IdAndAmountMatch, router]);
 
   return (
     <>
@@ -188,6 +243,136 @@ const CheckoutPage = () => {
                       )}
                     />
                   </div>
+                  <div className="w-full flex gap-3 mb-3 flex-col md:flex-row">
+                    <FormField
+                      control={form.control}
+                      name="trip_type"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Trip Type</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue
+                                  placeholder="Trip Type"
+                                  className="form-input"
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="interstate">
+                                Inter State
+                              </SelectItem>
+                              <SelectItem value="fct">Within FCT</SelectItem>
+                            </SelectContent>
+                          </Select>
+
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="purpose"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Purpose</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue
+                                  placeholder="Purpose"
+                                  className="form-input"
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="airport_drop_off">
+                                Airport Drop off
+                              </SelectItem>
+                              <SelectItem value="airport_pick_up">
+                                Airport Pick up
+                              </SelectItem>
+                              <SelectItem value="full_day_hire">
+                                Full day hire
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="w-full flex gap-3 mb-3 flex-col md:flex-row">
+                    <FormField
+                      control={form.control}
+                      name="vehicle_type"
+                      render={({ field }) => (
+                        <FormItem className=" w-full">
+                          <FormLabel>Vehicle Type</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue
+                                  placeholder="Vehicle Type"
+                                  className="form-input"
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="suv">SUV</SelectItem>
+                              <SelectItem value="bus">BUS</SelectItem>
+                              <SelectItem value="sedan">SEDAN (CAR)</SelectItem>
+                              <SelectItem value="hilux">
+                                HILUX (Escort)
+                              </SelectItem>
+                              <SelectItem value="costa">COSTA</SelectItem>
+                            </SelectContent>
+                          </Select>
+
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="escort"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Police Escort?</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue
+                                  placeholder="Police Escort?"
+                                  className="form-input"
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="yes">Yes</SelectItem>
+                              <SelectItem value="no">NO</SelectItem>
+                            </SelectContent>
+                          </Select>
+
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                   <div className="w-full flex gap-3  mb-3">
                     <FormField
                       control={form.control}
@@ -219,7 +404,7 @@ const CheckoutPage = () => {
                     />
                   </div>
 
-                  <div className="w-full bg-[#eeeeee] p-10">
+                  <div className="w-full bg-[#eeeeee] p-10 my-3">
                     <div className="py-3">
                       <p className={cn(`${raleway.className} text-sm`)}>
                         Your personal data will be used to process your order,
@@ -234,7 +419,13 @@ const CheckoutPage = () => {
                     name="type"
                     render={({ field }) => (
                       <FormItem className="space-y-3">
-                        <FormLabel>Choose Mode of Payment</FormLabel>
+                        <FormLabel
+                          className={cn(
+                            `${raleway.className} font-[600] text-[16px]`
+                          )}
+                        >
+                          Choose Mode of Payment
+                        </FormLabel>
                         <FormControl>
                           <RadioGroup
                             onValueChange={(value) => {
@@ -285,12 +476,13 @@ const CheckoutPage = () => {
                 <thead>
                   <tr>
                     <th className="text-left flex">PRODUCT</th>
-                    <th>DAY(s)</th>
                     <th>PRICE</th>
+                    <th>DAY(s)</th>
+                    <th>SUBTOTAL</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {cart?.map((item) => {
+                  {subTotalWithExtraResource?.map((item) => {
                     return (
                       <tr key={item.id}>
                         <td className="product_name w-[85%]">
@@ -324,30 +516,62 @@ const CheckoutPage = () => {
                                 {item?.rideInfo?.dropoff_location}
                               </span>
                             </div>
-                            <div className="w-full inline-block text-left my-5">
-                              <h1
-                                className={cn(
-                                  `${raleway.className} font-[600] text-sm`
-                                )}
-                              >
-                                Extra Resources
-                              </h1>
-                              <p className="flex gap-3  text-[12px]  capitalize">
-                                <span>Additional Driver</span>-
-                                <span>&#8358;35</span>
-                              </p>
-                              <p className="flex gap-3  text-[12px] capitalize">
-                                <span>Child seat</span>-<span>&#8358;35</span>
-                              </p>
-                            </div>
+                            {item?.extra_resource && (
+                              <div className="w-full inline-block text-left my-5">
+                                <h1
+                                  className={cn(
+                                    `${raleway.className} font-[600] text-sm`
+                                  )}
+                                >
+                                  Extra Resources
+                                </h1>
+                                <p className="flex gap-3  text-[12px]  capitalize">
+                                  <span>Police Escort</span>-
+                                  <span className="font-bold">
+                                    &#8358;
+                                    {new Intl.NumberFormat().format(
+                                      item?.extra_resource?.police_escort || 0
+                                    )}
+                                  </span>
+                                </p>
+                                <p className="flex gap-3  text-[12px] capitalize">
+                                  <span>Child seat</span>-
+                                  <span className="font-bold">
+                                    &#8358;
+                                    {new Intl.NumberFormat().format(
+                                      item?.extra_resource?.child_seat || 0
+                                    )}
+                                  </span>
+                                </p>
+                              </div>
+                            )}
                           </div>
                         </td>
-                        <td>{item?.days}&nbsp;day(s)</td>
                         <td className="w-[15%] text-[#da1c36] font-[600]">
                           &#8358;
-                          {new Intl.NumberFormat().format(
-                            item?.days * item?.amount
-                          )}
+                          {new Intl.NumberFormat().format(item?.amount)}
+                        </td>
+                        <td className="w-[15%] ">{item?.days}&nbsp;day(s)</td>
+                        <td className="w-[15%] text-[#da1c36] font-[600]">
+                          <div className="flex items-center gap-2">
+                            <span>
+                              &#8358;
+                              {new Intl.NumberFormat().format(item?.subtotal)}
+                            </span>
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger>
+                                  <Info size={16} />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    This price is calculated by summing (Price +
+                                    Number of Days + Extra Resources)
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </div>
                         </td>
                       </tr>
                     );
@@ -355,8 +579,8 @@ const CheckoutPage = () => {
 
                   <tr className="w-full">
                     <th className="text-left flex uppercase">Total</th>
-                    <td className="font-[600]" colSpan={2}>
-                      {formatCurrency(subtotal)}
+                    <td className="font-[600]" colSpan={3}>
+                      {formatCurrency(subtotal + extraResourcesTotal)}
                     </td>
                   </tr>
                 </tbody>

@@ -20,7 +20,28 @@ import Link from "next/link";
 
 const CartPage = () => {
   const { cart, removeItemFromCart } = useCart();
+  //  calculate the cart sub total
   const subtotal = cart.reduce((acc, current) => acc + current.subtotal, 0);
+  //  get the sum of each extra resource in the array
+  const extraResourcesTotal = cart.reduce((acc, current) => {
+    const extraResources = current.extra_resource;
+    const total = Object.values(extraResources).reduce(
+      (acc, value) => acc + parseInt(value || 0),
+      0
+    );
+    return acc + total;
+  }, 0);
+
+  //  add the value of extra resource to the corresponding subtotal
+  const subTotalWithExtraResource = cart.map((item) => {
+    const extraResourcesTotal = item.extra_resource
+      ? Object.values(item.extra_resource).reduce(
+          (acc, value) => acc + parseInt(value || 0),
+          0
+        )
+      : 0;
+    return { ...item, subtotal: item.subtotal + extraResourcesTotal };
+  });
 
   useEffect(() => {
     window.scrollTo({
@@ -80,8 +101,8 @@ const CartPage = () => {
               </tr>
             </thead>
             <tbody>
-              {cart &&
-                cart?.map((item) => {
+              {subTotalWithExtraResource &&
+                subTotalWithExtraResource?.map((item) => {
                   return (
                     <tr key={item.id}>
                       <td
@@ -125,22 +146,36 @@ const CartPage = () => {
                               {item?.rideInfo?.dropoff_location}
                             </span>
                           </div>
-                          <div className="w-full inline-block text-left my-5">
-                            <h1
-                              className={cn(
-                                `${raleway.className} font-[600] text-sm`
-                              )}
-                            >
-                              Extra Resources
-                            </h1>
-                            <p className="flex gap-3  text-[12px]  capitalize">
-                              <span>Additional Driver</span>-
-                              <span>&#8358;35</span>
-                            </p>
-                            <p className="flex gap-3  text-[12px] capitalize">
-                              <span>Child seat</span>-<span>&#8358;35</span>
-                            </p>
-                          </div>
+
+                          {item?.extra_resource && (
+                            <div className="w-full inline-block text-left my-5">
+                              <h1
+                                className={cn(
+                                  `${raleway.className} font-[600] text-sm`
+                                )}
+                              >
+                                Extra Resources
+                              </h1>
+                              <p className="flex gap-3  text-[12px]  capitalize">
+                                <span>Police Escort</span>-
+                                <span className="font-bold">
+                                  &#8358;
+                                  {new Intl.NumberFormat().format(
+                                    item?.extra_resource?.police_escort || 0
+                                  )}
+                                </span>
+                              </p>
+                              <p className="flex gap-3  text-[12px] capitalize">
+                                <span>Child seat</span>-
+                                <span className="font-bold">
+                                  &#8358;
+                                  {new Intl.NumberFormat().format(
+                                    item?.extra_resource?.child_seat || 0
+                                  )}
+                                </span>
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </td>
                       <td className="w-[15%] text-[#da1c36] font-[600]">
@@ -150,9 +185,7 @@ const CartPage = () => {
                       <td className="w-[15%] ">{item?.days}&nbsp;day(s)</td>
                       <td className="w-[15%] text-[#da1c36] font-[600]">
                         &#8358;
-                        {new Intl.NumberFormat().format(
-                          item?.days * item?.amount
-                        )}
+                        {new Intl.NumberFormat().format(item?.subtotal)}
                       </td>
                     </tr>
                   );
@@ -192,7 +225,7 @@ const CartPage = () => {
                       `${raleway.className} w-1/2 text-[#da1c36] font-[600]`
                     )}
                   >
-                    {formatCurrency(subtotal)}
+                    {formatCurrency(subtotal + extraResourcesTotal)}
                   </span>
                 </div>
                 <div className="w-full my-5">

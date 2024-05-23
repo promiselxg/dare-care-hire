@@ -23,7 +23,7 @@ import { redirect, useRouter } from "next/navigation";
 import { useCart } from "@/context/cartContext";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
-import { checkDate, dateDiffInDays } from "@/utils/getDateDifference";
+import { dateDiffInDays } from "@/utils/getDateDifference";
 
 const CarDetails = ({ params }) => {
   const { loading, data } = useFetch(`/car/${params?.slug}`);
@@ -35,11 +35,19 @@ const CarDetails = ({ params }) => {
     dropoff_location: "",
     pickup_date: "",
     dropoff_date: "",
+    police_escort: "",
   });
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setInputValues((prevValues) => ({ ...prevValues, [name]: value }));
+    const { name, value, checked, type } = event.target;
+    if (type === "checkbox") {
+      setInputValues((prevValues) => ({
+        ...prevValues,
+        [name]: checked ? value : "",
+      }));
+    } else {
+      setInputValues((prevValues) => ({ ...prevValues, [name]: value }));
+    }
   };
 
   const images = data?.imgUrl?.map((url, index) => {
@@ -86,6 +94,10 @@ const CarDetails = ({ params }) => {
           pickup_date: inputValues.pickup_date,
           dropoff_date: inputValues.dropoff_date,
         },
+        extra_resource: {
+          police_escort: inputValues.police_escort,
+          child_seat: inputValues.child_seat,
+        },
       });
       setLoading(false);
       window.scrollTo({
@@ -104,6 +116,7 @@ const CarDetails = ({ params }) => {
     redirect("/cars");
   }
 
+  console.log(inputValues);
   return (
     <>
       <div className="relative">
@@ -299,10 +312,16 @@ const CarDetails = ({ params }) => {
                     )}
                   >
                     <span className="flex items-center gap-3">
-                      <input type="checkbox" name="child_seat" id="" />
-                      child seat
+                      <input
+                        type="checkbox"
+                        name="police_escort"
+                        id="police_escort"
+                        value="5000"
+                        onChange={handleInputChange}
+                      />
+                      Police Escort
                     </span>
-                    <span>$10</span>
+                    <span>&#8358;5,000</span>
                   </div>
                   <div
                     className={cn(
@@ -310,32 +329,24 @@ const CarDetails = ({ params }) => {
                     )}
                   >
                     <span className="flex items-center gap-3">
-                      <input type="checkbox" name="additional_driver" id="" />
-                      additional driver
+                      <input
+                        type="checkbox"
+                        name="child_seat"
+                        id="child_seat"
+                        value="2000"
+                        onChange={handleInputChange}
+                      />
+                      Child Seat
                     </span>
-                    <span>$30</span>
+                    <span>&#8358;2,000</span>
                   </div>
-                  <div
-                    className={cn(
-                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
-                    )}
-                  >
-                    <span className="flex items-center gap-3">
-                      <input type="checkbox" name="wifi_access" id="" />
-                      wifi access
-                    </span>
-                    <span>$20</span>
-                  </div>
-                  <div
-                    className={cn(
-                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
-                    )}
-                  >
-                    <span className="flex items-center gap-3">
-                      <input type="checkbox" name="gps_navigation" id="" />
-                      gps navigation
-                    </span>
-                    <span>$10</span>
+                </div>
+                <div className="w-full bg-[#eeeeee] p-5 my-3">
+                  <div className="py-3">
+                    <p className={cn(`${raleway.className} text-sm`)}>
+                      An overtime fee is applicable to every trip that is over
+                      10hrs
+                    </p>
                   </div>
                 </div>
                 <div className="w-full my-5">

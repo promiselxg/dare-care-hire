@@ -8,37 +8,135 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
+import { barlow } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/utils/formatCurrency";
+import { formatDateTime } from "@/utils/getDateDifference";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { FiTrash2 } from "react-icons/fi";
 
 export const columns = [
   {
-    accessorKey: "customer",
-    header: "Customer Name",
+    accessorKey: "customer_name",
+    header: ({ column }) => {
+      return (
+        <span
+          className="cursor-pointer flex items-center"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Driver&apos;s Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </span>
+      );
+    },
+    cell: ({ row }) => {
+      const { customer_name } = row.original;
+      return (
+        <>
+          <div>
+            <h1 className={cn(`${barlow.className} capitalize`)}>
+              {customer_name}
+            </h1>
+          </div>
+        </>
+      );
+    },
   },
   {
-    accessorKey: "pick_up_date",
-    header: "Pick-up Date",
+    accessorKey: "pickup_date",
+    header: "Pick-up Date/Time",
+    cell: ({ row }) => {
+      const { pickup_date } = row.original;
+      return (
+        <>
+          <div>
+            <h1 className={cn(`${barlow.className} font-bold`)}>
+              {formatDateTime(pickup_date)}
+            </h1>
+          </div>
+        </>
+      );
+    },
   },
   {
-    accessorKey: "drop_off_date",
-    header: "Drop-off Date",
+    accessorKey: "dropoff_date",
+    header: "Drop-off Date/Time",
+    cell: ({ row }) => {
+      const { dropoff_date } = row.original;
+      return (
+        <>
+          <div>
+            <h1 className={cn(`${barlow.className} font-bold`)}>
+              {formatDateTime(dropoff_date)}
+            </h1>
+          </div>
+        </>
+      );
+    },
   },
   {
-    accessorKey: "type",
+    accessorKey: "trip_purpose",
     header: "Booking Type",
+    cell: ({ row }) => {
+      const { trip_purpose } = row.original;
+      return (
+        <>
+          <div>
+            <h1 className={cn(`${barlow.className} capitalize`)}>
+              {trip_purpose?.replace("_", " ")}
+            </h1>
+          </div>
+        </>
+      );
+    },
   },
   {
-    accessorKey: "duration",
+    accessorKey: "total_days",
     header: "No of Day(s)",
   },
   {
-    accessorKey: "amount",
+    accessorKey: "transaction_amount",
     header: "Amount",
+    cell: ({ row }) => {
+      const { transaction_amount } = row.original;
+      return (
+        <>
+          <div>
+            <h1
+              className={cn(
+                `${barlow.className} font-bold text-[--text-brown]`
+              )}
+            >
+              {formatCurrency(transaction_amount)}
+            </h1>
+          </div>
+        </>
+      );
+    },
   },
   {
-    accessorKey: "status",
+    accessorKey: "transaction_status",
     header: "Status",
+    cell: ({ row }) => {
+      const { transaction_status } = row.original;
+      let status = "";
+      let color = "text-black";
+      if (transaction_status?.toLowerCase() === "pending")
+        (status = "Pending"), (color = "text-[--text-brown]");
+      if (transaction_status?.toLowerCase() === "completed")
+        (status = "completed"), (color = "text-[green]");
+      return (
+        <>
+          <div>
+            <h1
+              className={cn(`${barlow.className} font-bold uppercase ${color}`)}
+            >
+              {status}
+            </h1>
+          </div>
+        </>
+      );
+    },
   },
   {
     id: "actions",

@@ -16,7 +16,6 @@ import Image from "next/image";
 import useFetch from "@/hooks/useFetch";
 import { truncateText } from "@/utils/trucateText";
 import Link from "next/link";
-import { formatCurrency } from "@/utils/formatCurrency";
 import SkeletonLoader from "../_component/Loader";
 import { Helmet } from "react-helmet";
 
@@ -34,8 +33,8 @@ const Page = () => {
   return (
     <>
       <Helmet>
-        <title>My Title</title>
-        <meta name="description" content="Helmet application" />
+        <title>Auto Listing</title>
+        <meta name="description" content="Vhicle Listing" />
       </Helmet>
       {loading ? (
         <div className="fixed top-0 bottom-0 w-full bg-[rgba(0,0,0,.8)] z-[999] h-screen overflow-hidden text-white flex items-center justify-center flex-col gap-y-2">

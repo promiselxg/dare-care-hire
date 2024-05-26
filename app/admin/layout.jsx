@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 import SideNav from "./_components/sidenav/sidenav";
 import { DriverProvider } from "@/context/sortContext";
+import { TransactionSortProvider } from "@/context/transactionSortContext";
 
 export const metadata = {
   title: "Next.js",
@@ -16,17 +17,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <DriverProvider>
-        <body
-          className={cn(
-            `${raleway.className} w-full flex h-screen overflow-hidden`
-          )}
-        >
-          <SideNav />
-          <div className="bg-[whitesmoke] h-screen rounded-[8px] w-full">
-            {children}
-          </div>
-          <Toaster />
-        </body>
+        <TransactionSortProvider>
+          <body
+            className={cn(
+              `${raleway.className} w-full flex h-screen overflow-hidden`
+            )}
+          >
+            <SideNav />
+            <div className="bg-[whitesmoke] h-screen rounded-[8px] w-full">
+              {children}
+            </div>
+            <Toaster />
+          </body>
+        </TransactionSortProvider>
       </DriverProvider>
     </html>
   );

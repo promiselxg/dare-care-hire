@@ -1,5 +1,7 @@
 import prisma from "@/utils/dbConnect";
-import { errorResponse, successResponse } from "@/utils/errorMessage";
+import { errorResponse } from "@/utils/errorMessage";
+import host from "@/utils/host";
+import { logger } from "@/utils/logger";
 import {
   generateRandomString,
   referenceNumber,
@@ -8,6 +10,9 @@ import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
   const body = await req.json();
+  const userAgent = req.headers.get("user-agent");
+  const urlPath = req.headers.get("referer").split(host.host_url)[1];
+
   try {
     const reservationData = await addReservation(body);
 
@@ -45,6 +50,7 @@ export const POST = async (req) => {
     );
 
     const result = await Promise.all(createPromises);
+    logger(userAgent, urlPath, "success", "POST", "Vehicle reservation");
     return new NextResponse(
       JSON.stringify({
         message: "Reservations created successfully:",
@@ -53,7 +59,7 @@ export const POST = async (req) => {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
+    logger(userAgent, urlPath, "failed", "POST", "Vehicle reservation failed");
     return errorResponse("Error creating reservations:", 500);
   }
 };

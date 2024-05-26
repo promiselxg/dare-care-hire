@@ -13,8 +13,10 @@ export default function CheckoutLayout({ children }) {
   return (
     <html lang="en">
       <CartProvider>
-        <body className={cn(`${raleway.className}`)}>{children}</body>
-        <Toaster />
+        <body className={cn(`${raleway.className}`)}>
+          {children}
+          <Toaster />
+        </body>
       </CartProvider>
     </html>
   );

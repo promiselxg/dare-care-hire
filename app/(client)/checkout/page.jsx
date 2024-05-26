@@ -51,7 +51,7 @@ const FormSchema = z.object({
 });
 
 const CheckoutPage = () => {
-  const { isloading, cart } = useCart();
+  const { cart } = useCart();
   const router = useRouter();
   const [selectedValue, setSelectedValue] = useState(null);
   const [IdAndAmountMatch, setIdAndAmountMatch] = useState();
@@ -107,12 +107,16 @@ const CheckoutPage = () => {
       __("submitBtn").innerHTML = "Please wait...";
       __("submitBtn").disabled = true;
       const response = await axios.post("/api/checkout", formData);
-      if (response) {
-        toast({ title: `${response?.data?.message}` });
-        localStorage.removeItem("cart");
-        router.push(`/checkout/${response?.data?.transaction_id}`);
-      }
+      toast({ title: `${response?.data?.message}` });
+      localStorage.removeItem("cart");
+      window.location = `/checkout/${response?.data?.transaction_id}`;
     } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error occured!!!",
+        description:
+          "An error occured while we where trying to submit your request, please try again.",
+      });
     } finally {
       __("submitBtn").disabled = false;
       __("submitBtn").innerHTML = "Complete Checkout";

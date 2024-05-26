@@ -1,11 +1,8 @@
 import prisma from "@/utils/dbConnect";
-import { errorResponse, successResponse } from "@/utils/errorMessage";
-import host from "@/utils/host";
+import { errorResponse } from "@/utils/errorMessage";
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
-  const userAgent = req.headers.get("user-agent");
-  const urlPath = req.headers.get("referer").split(host.host_url)[1];
   const cartItems = await req.json();
   const ids = cartItems.map((item) => item.id);
 
@@ -36,7 +33,6 @@ export const POST = async (req) => {
     });
     return new NextResponse(JSON.stringify(result, { status: 200 }));
   } catch (error) {
-    console.log(error);
     return errorResponse("Something went wrong!", 500);
   }
 };

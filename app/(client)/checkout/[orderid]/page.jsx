@@ -1,18 +1,15 @@
 "use client";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import "../../cart/cart.css";
 import { raleway, syne } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
+import Link from "next/link";
+import { CornerDownLeft, Home } from "lucide-react";
+import useFetch from "@/hooks/useFetch";
 
 const SuccessfullOrderPage = ({ params }) => {
+  const { loading, data } = useFetch(`/checkout/${params?.orderid}`);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -20,47 +17,30 @@ const SuccessfullOrderPage = ({ params }) => {
       behavior: "smooth",
     });
   }, []);
+
+  console.log(data);
   return (
     <>
-      <section className="w-full flex bg-[url('/images/page-img.jpg')] bg-cover pt-[80px] pb-10 bg-fixed bg-right-top relative">
-        <span className="bg-[#20262f] absolute top-0 bottom-0 w-full inline-block h-full opacity-0 "></span>
-        <div className="container mx-auto flex text-white z-10 md:w-[80%]">
-          <div className="text-left">
-            <h1
-              className={cn(
-                `${raleway.className} md:text-[40px] capitalize font-[500] `
-              )}
-            >
-              Checkout Page
-            </h1>
-            <Breadcrumb>
-              <BreadcrumbList
-                className={cn(
-                  `${raleway.className} font-[400] text-[12px] text-[whitesmoke]`
-                )}
-              >
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/checkout">
-                    Chekcout Page
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Order Received</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+      <div className="w-full flex">
+        <div className="w-full flex justify-between items-center border border-[#eee] ">
+          <div className="border-r-[1px] border-[#eee] h-[90px] flex items-center px-10">
+            <Link href="/cars">
+              <CornerDownLeft size={40} />
+            </Link>
+          </div>
+          <div className="border-l-[1px] border-[#eee] h-[90px] flex items-center px-10">
+            <Link href="/home">
+              <Home size={40} />
+            </Link>
           </div>
         </div>
-      </section>
+      </div>
       <section className="w-full flex h-fit overflow-x-scroll md:overflow-x-hidden">
-        <div className="md:container w-full md:w-[80%] flex mx-auto py-20 px-5 md:px-0 flex-col ">
+        <div className="md:container w-full md:w-[80%] flex mx-auto pt-10 px-5 md:px-0 flex-col ">
           <h1
-            className={cn(`${raleway.className} font-[500] text-[20px] pb-2`)}
+            className={cn(
+              `${raleway.className} font-[500] text-[20px] mb-10 bg-[green] p-5 rounded-[8px] text-white`
+            )}
           >
             Thank you. Your order has been received.
           </h1>

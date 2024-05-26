@@ -8,70 +8,113 @@ datasource db {
 }
 
 model vehicleInfo {
-  id                      String     @id @default(cuid()) @map("_id")
-  vehicle_name            String     @unique
-  slug                    String     @unique
-  description             String
-  features                String?
-  model                   String
-  amount                  Int
-  imgUrl                  String[]
-  imageId                 String[]
-  imgThumbnail            String?
-  vehicle_type            String
-  createdAt               DateTime   @default(now())
-  updatedAt               DateTime   @updatedAt
+  id           String   @id @default(cuid()) @map("_id")
+  vehicle_name String   @unique
+  slug         String   @unique
+  description  String
+  features     String?
+  model        String
+  amount       Int
+  imgUrl       String[]
+  imageId      String[]
+  imgThumbnail String?
+  vehicle_type String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model logger {
-  id                      String     @id @default(cuid()) @map("_id")
-  userAgent               String    
-  urlPath                 String    
-  logStatus               String
-  method                  String
-  action                  String
-  createdAt               DateTime   @default(now())
-  updatedAt               DateTime   @updatedAt
+  id        String   @id @default(cuid()) @map("_id")
+  userAgent String
+  urlPath   String
+  logStatus String
+  method    String
+  action    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model vendors {
-  id                      String     @id @default(cuid()) @map("_id")
-  organization_name       String    
-  client_name             String    
-  driver_name             String
-  job_description         String
-  pickup_location         String
-  dropoff_location        String
-  additional_note         String?
-  amount                  Int
-  vehicle_type            String
-  vehicle_model           String
-  pickup_date             String
-  dropoff_date            String
-  createdAt               DateTime   @default(now())
-  updatedAt               DateTime   @updatedAt
+  id                String   @id @default(cuid()) @map("_id")
+  organization_name String
+  client_name       String
+  driver_name       String
+  job_description   String
+  pickup_location   String
+  dropoff_location  String
+  additional_note   String?
+  amount            Int
+  vehicle_type      String
+  vehicle_model     String
+  pickup_date       String
+  dropoff_date      String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model outsourcedDriver {
-  id                      String     @id @default(cuid()) @map("_id") 
-  driver_name             String
-  description             String
-  amount                  Int
-  vehicle_type            String
-  date                    String
-  createdAt               DateTime   @default(now())
-  updatedAt               DateTime   @updatedAt
+  id           String   @id @default(cuid()) @map("_id")
+  driver_name  String
+  description  String
+  amount       Int
+  vehicle_type String
+  date         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model driver {
-  id                      String     @id @default(cuid()) @map("_id") 
-  driver_name             String
-  address                 String
-  amount                  Int
-  account_type            String
-  phone_number            String
-  email_address           String?
-  date                    String
-  createdAt               DateTime   @default(now())
-  updatedAt               DateTime   @updatedAt
+  id            String   @id @default(cuid()) @map("_id")
+  driver_name   String
+  address       String
+  amount        Int
+  account_type  String
+  phone_number  String
+  email_address String?
+  date          String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model reservationInfo {
+  id                  String         @id @default(cuid()) @map("_id")
+  transaction_id      String
+  reference_no        String
+  reservation_no      String
+  transaction_date    DateTime       @default(now())
+  trip_purpose        String
+  trip_type           String
+  transaction_status  Status
+  transaction_amount  Float
+  payment_method      String
+  pickup_date         String
+  dropoff_date        String 
+  pickup_location     String
+  dropoff_location    String
+  total_days          Int
+  order_note          String?
+  customer_name       String
+  customer_email      String?
+  customer_phone      String
+  vehicle_info        vehicleDetail
+  extra_resources     ExtraResource?
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+}
+
+enum Status {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+type ExtraResource {
+  police_escort String?
+  child_seat    String?
+}
+
+type vehicleDetail {
+  vehicle_id String
+  vehicle_name String
+  vehicle_img_url String
 }

@@ -7,6 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
@@ -36,6 +37,9 @@ const CarDetails = ({ params }) => {
     pickup_date: "",
     dropoff_date: "",
     police_escort: "",
+    child_seat: "",
+    purpose: "",
+    trip_type: "",
   });
 
   const handleInputChange = (event) => {
@@ -93,12 +97,15 @@ const CarDetails = ({ params }) => {
           dropoff_location: inputValues.dropoff_location,
           pickup_date: inputValues.pickup_date,
           dropoff_date: inputValues.dropoff_date,
+          purpose: inputValues.purpose,
+          trip_type: inputValues.trip_type,
         },
         extra_resource: {
           police_escort: inputValues.police_escort,
           child_seat: inputValues.child_seat,
         },
       });
+
       setLoading(false);
       window.scrollTo({
         top: 0,
@@ -116,7 +123,6 @@ const CarDetails = ({ params }) => {
     redirect("/cars");
   }
 
-  console.log(inputValues);
   return (
     <>
       <div className="relative">
@@ -304,6 +310,111 @@ const CarDetails = ({ params }) => {
                       `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
                     )}
                   >
+                    Purpose
+                  </label>
+                  <div
+                    className={cn(
+                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                    )}
+                  >
+                    <span className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="purpose"
+                        id="purpose"
+                        value="airport_pickup"
+                        onChange={handleInputChange}
+                      />
+                      Airport Pickup
+                    </span>
+                    <span>&nbsp;</span>
+                  </div>
+                  <div
+                    className={cn(
+                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                    )}
+                  >
+                    <span className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="purpose"
+                        id="purpose"
+                        value="airport_dropoff"
+                        onChange={handleInputChange}
+                      />
+                      Airport Drop-off
+                    </span>
+                    <span>&nbsp;</span>
+                  </div>
+                  <div
+                    className={cn(
+                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                    )}
+                  >
+                    <span className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="purpose"
+                        id="purpose"
+                        value="full_day"
+                        onChange={handleInputChange}
+                      />
+                      Full Day Hire
+                    </span>
+                    <span>&nbsp;</span>
+                  </div>
+                </div>
+                <div className="w-full flex flex-col my-2 gap-2">
+                  <label
+                    htmlFor="extra_resources"
+                    className={cn(
+                      `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
+                    )}
+                  >
+                    Trip type
+                  </label>
+                  <div
+                    className={cn(
+                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                    )}
+                  >
+                    <span className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="trip_type"
+                        id="trip_type"
+                        value="inter_state"
+                        onChange={handleInputChange}
+                      />
+                      Inter State
+                    </span>
+                    <span>&nbsp;</span>
+                  </div>
+                  <div
+                    className={cn(
+                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                    )}
+                  >
+                    <span className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="trip_type"
+                        id="trip_type"
+                        value="within_fct"
+                        onChange={handleInputChange}
+                      />
+                      Within the FCT
+                    </span>
+                    <span>&nbsp;</span>
+                  </div>
+                </div>
+                <div className="w-full flex flex-col my-2 gap-2">
+                  <label
+                    htmlFor="extra_resources"
+                    className={cn(
+                      `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
+                    )}
+                  >
                     Extra resources
                   </label>
                   <div
@@ -359,7 +470,9 @@ const CarDetails = ({ params }) => {
                       !inputValues.pickup_location ||
                       !inputValues.dropoff_location ||
                       !inputValues.pickup_date ||
-                      !inputValues.dropoff_date
+                      !inputValues.dropoff_date ||
+                      !inputValues.purpose ||
+                      !inputValues.trip_type
                     }
                     onClick={handleAddToCart}
                   >

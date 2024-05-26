@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,7 +13,7 @@ import { raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useCart } from "@/context/cartContext";
 import { formatDateTime } from "@/utils/getDateDifference";
 import { formatCurrency } from "@/utils/formatCurrency";
@@ -20,28 +21,38 @@ import Link from "next/link";
 
 const CartPage = () => {
   const { cart, removeItemFromCart } = useCart();
-  //  calculate the cart sub total
-  const subtotal = cart.reduce((acc, current) => acc + current.subtotal, 0);
-  //  get the sum of each extra resource in the array
-  const extraResourcesTotal = cart.reduce((acc, current) => {
-    const extraResources = current.extra_resource;
-    const total = Object.values(extraResources).reduce(
-      (acc, value) => acc + parseInt(value || 0),
-      0
-    );
-    return acc + total;
-  }, 0);
 
-  //  add the value of extra resource to the corresponding subtotal
-  const subTotalWithExtraResource = cart.map((item) => {
-    const extraResourcesTotal = item.extra_resource
-      ? Object.values(item.extra_resource).reduce(
+  const subtotal = useMemo(
+    () => cart?.reduce((acc, current) => acc + current.subtotal, 0),
+    [cart]
+  );
+
+  const extraResourcesTotal = useMemo(
+    () =>
+      cart.reduce((acc, current) => {
+        const extraResources = current.extra_resource;
+        const total = Object.values(extraResources).reduce(
           (acc, value) => acc + parseInt(value || 0),
           0
-        )
-      : 0;
-    return { ...item, subtotal: item.subtotal + extraResourcesTotal };
-  });
+        );
+        return acc + total;
+      }, 0),
+    [cart]
+  );
+
+  const subTotalWithExtraResource = useMemo(
+    () =>
+      cart.map((item) => {
+        const extraResourcesTotal = item.extra_resource
+          ? Object.values(item.extra_resource).reduce(
+              (acc, value) => acc + parseInt(value || 0),
+              0
+            )
+          : 0;
+        return { ...item, subtotal: item.subtotal + extraResourcesTotal };
+      }),
+    [cart]
+  );
 
   useEffect(() => {
     window.scrollTo({
@@ -51,6 +62,7 @@ const CartPage = () => {
     });
   }, []);
 
+  console.log(cart);
   return (
     <>
       <section className="w-full flex bg-[url('/images/page-img.jpg')] bg-cover pt-[80px] pb-10 bg-fixed bg-right-top relative">
@@ -74,7 +86,10 @@ const CartPage = () => {
                   <BreadcrumbLink href="/">Home</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
-
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/cars">Car Listing</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <BreadcrumbPage>Cart Page</BreadcrumbPage>
                 </BreadcrumbItem>
@@ -103,6 +118,9 @@ const CartPage = () => {
             <tbody>
               {subTotalWithExtraResource &&
                 subTotalWithExtraResource?.map((item) => {
+                  const showExtraResources =
+                    item?.extra_resource?.police_escort ||
+                    item?.extra_resource?.child_seat;
                   return (
                     <tr key={item.id}>
                       <td
@@ -112,12 +130,17 @@ const CartPage = () => {
                         X
                       </td>
                       <td className="w-[15%]">
-                        <Image
-                          src={item?.imgUrl}
-                          width={200}
-                          height={50}
-                          alt="img"
-                        />
+                        <Link
+                          href={`/cars/${item.id}`}
+                          className="cursor-pointer"
+                        >
+                          <Image
+                            src={item?.imgUrl}
+                            width={200}
+                            height={50}
+                            alt="img"
+                          />
+                        </Link>
                       </td>
                       <td className="product_name w-[35%]">
                         <h1 className="flex text-left capitalize font-[600]">
@@ -149,31 +172,39 @@ const CartPage = () => {
 
                           {item?.extra_resource && (
                             <div className="w-full inline-block text-left my-5">
-                              <h1
-                                className={cn(
-                                  `${raleway.className} font-[600] text-sm`
-                                )}
-                              >
-                                Extra Resources
-                              </h1>
-                              <p className="flex gap-3  text-[12px]  capitalize">
-                                <span>Police Escort</span>-
-                                <span className="font-bold">
-                                  &#8358;
-                                  {new Intl.NumberFormat().format(
-                                    item?.extra_resource?.police_escort || 0
+                              {showExtraResources ? (
+                                <h1
+                                  key={item.id}
+                                  className={cn(
+                                    `${raleway.className} font-[600] text-sm`
                                   )}
-                                </span>
-                              </p>
-                              <p className="flex gap-3  text-[12px] capitalize">
-                                <span>Child seat</span>-
-                                <span className="font-bold">
-                                  &#8358;
-                                  {new Intl.NumberFormat().format(
-                                    item?.extra_resource?.child_seat || 0
-                                  )}
-                                </span>
-                              </p>
+                                >
+                                  Extra Resources
+                                </h1>
+                              ) : null}
+                              {item?.extra_resource?.police_escort && (
+                                <div className="flex gap-3  text-[12px]  capitalize">
+                                  <span>Police Escort</span>-
+                                  <span className="font-bold">
+                                    &#8358;
+                                    {new Intl.NumberFormat().format(
+                                      item?.extra_resource?.police_escort
+                                    )}
+                                  </span>
+                                </div>
+                              )}
+
+                              {item?.extra_resource?.child_seat && (
+                                <div className="flex gap-3  text-[12px] capitalize">
+                                  <span>Child seat</span>-
+                                  <span className="font-bold">
+                                    &#8358;
+                                    {new Intl.NumberFormat().format(
+                                      item?.extra_resource?.child_seat
+                                    )}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>

@@ -29,6 +29,7 @@ const Page = () => {
       behavior: "smooth",
     });
   }, []);
+
   return (
     <>
       <section className="w-full flex bg-[url('/images/page-img.jpg')] bg-cover pt-[80px] pb-10 bg-fixed bg-right-top relative">
@@ -150,11 +151,10 @@ const Page = () => {
                           >
                             {formatCurrency(car?.amount)}
                           </h1>
-                          <Link href={`/cars/${car?.id}`}>
-                            <Button className="bg-[white] text-[#000] border border-[#000] uppercase text-sm w-full md:w-fit ">
-                              rent it
-                            </Button>
-                          </Link>
+
+                          <Button className="bg-[white] text-[#000] border border-[#000] uppercase text-sm w-full md:w-fit ">
+                            rent it
+                          </Button>
                         </div>
                       </div>
                     </div>

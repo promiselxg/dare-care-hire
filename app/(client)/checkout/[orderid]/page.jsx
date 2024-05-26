@@ -31,7 +31,7 @@ const SuccessfullOrderPage = ({ params }) => {
                 `${raleway.className} md:text-[40px] capitalize font-[500] `
               )}
             >
-              Checkout Page
+              order details
             </h1>
             <Breadcrumb>
               <BreadcrumbList
@@ -50,7 +50,7 @@ const SuccessfullOrderPage = ({ params }) => {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Order Received</BreadcrumbPage>
+                  <BreadcrumbPage>Order details</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>

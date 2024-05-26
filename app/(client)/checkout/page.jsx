@@ -1,5 +1,5 @@
 "use client";
-import { CornerDownLeft, Home, Info } from "lucide-react";
+import { CornerDownLeft, Home } from "lucide-react";
 import "./checkout.css";
 import "../cart/cart.css";
 import { raleway } from "@/lib/fonts";
@@ -11,7 +11,7 @@ import { useCart } from "@/context/cartContext";
 import { formatDateTime } from "@/utils/getDateDifference";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,48 +24,38 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import axios from "axios";
+import { __ } from "@/utils/getElementById";
+import { useToast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
-  first_name: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  first_name: z.string().min(3, {
+    message: "First Name must be at least 3 characters.",
   }),
-  last_name: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  last_name: z.string().min(3, {
+    message: "Last name must be at least 3 characters.",
   }),
-  phone: z.string().min(11, {
-    message: "Username must be at least 2 characters.",
-  }),
-  email_address: z.string().optional(),
+  phone: z
+    .string()
+    .min(11, {
+      message: "Phone number must be at least 11 characters.",
+    })
+    .max(11),
+  email_address: z.string().email().optional(),
   order_notes: z.string().optional(),
-  type: z.enum(["on_delivery", "online"], {
+  payment_method: z.enum(["on_delivery", "online"], {
     required_error: "You need to select a payment method.",
   }),
 });
 
 const CheckoutPage = () => {
-  const { control } = useForm();
-  const { cart } = useCart();
+  const { isloading, cart } = useCart();
   const router = useRouter();
   const [selectedValue, setSelectedValue] = useState(null);
   const [IdAndAmountMatch, setIdAndAmountMatch] = useState();
+  const { toast } = useToast();
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -92,6 +82,70 @@ const CheckoutPage = () => {
       : 0;
     return { ...item, subtotal: item.subtotal + extraResourcesTotal };
   });
+
+  const handleValueChange = (value) => {
+    setSelectedValue(value);
+  };
+  const verifyIdAndAmountMatch = (cartItems) => {
+    return cartItems.every((item) => item.existsInDB && item.amountMatches);
+  };
+
+  async function onSubmit(values) {
+    if (!validateInputFields(values)) {
+      toast({
+        variant: "destructive",
+        title: "Please fill out the rquired fields.",
+        description: "There was a problem with your request.",
+      });
+      return;
+    }
+    const formData = {
+      values,
+      subTotalWithExtraResource,
+    };
+    try {
+      __("submitBtn").innerHTML = "Please wait...";
+      __("submitBtn").disabled = true;
+      const response = await axios.post("/api/checkout", formData);
+      if (response) {
+        toast({ title: `${response?.data?.message}` });
+        localStorage.removeItem("cart");
+        router.push(`/checkout/${response?.data?.transaction_id}`);
+      }
+    } catch (error) {
+    } finally {
+      __("submitBtn").disabled = false;
+      __("submitBtn").innerHTML = "Complete Checkout";
+    }
+  }
+
+  const validateInputFields = (inputFields) => {
+    return (
+      inputFields.first_name &&
+      inputFields.last_name &&
+      inputFields.phone &&
+      inputFields.payment_method
+    );
+  };
+
+  useEffect(() => {
+    const handleVerification = () => {
+      if (IdAndAmountMatch && !verifyIdAndAmountMatch(IdAndAmountMatch)) {
+        router.push("/cart");
+      }
+    };
+
+    handleVerification();
+  }, [IdAndAmountMatch, router]);
+
+  useEffect(() => {
+    const verifyItemIDs = async () => {
+      const response = await axios.post("/api/verifyItemID", cart);
+      setIdAndAmountMatch(response?.data);
+    };
+    verifyItemIDs();
+  }, [cart]);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -105,34 +159,6 @@ const CheckoutPage = () => {
       router.push("/cart");
     }
   }, [router, cart]);
-
-  const handleValueChange = (value) => {
-    setSelectedValue(value);
-  };
-  const verifyIdAndAmountMatch = (cartItems) => {
-    return cartItems.every((item) => item.existsInDB && item.amountMatches);
-  };
-  useEffect(() => {
-    const verifyItemIDs = async () => {
-      const response = await axios.post("/api/verifyItemID", cart);
-      setIdAndAmountMatch(response?.data);
-    };
-    verifyItemIDs();
-  }, [cart]);
-
-  async function onSubmit(values) {
-    console.log(values, selectedValue);
-  }
-
-  useEffect(() => {
-    const handleVerification = () => {
-      if (IdAndAmountMatch && !verifyIdAndAmountMatch(IdAndAmountMatch)) {
-        router.push("/cart");
-      }
-    };
-
-    handleVerification();
-  }, [IdAndAmountMatch, router]);
 
   return (
     <>
@@ -243,136 +269,7 @@ const CheckoutPage = () => {
                       )}
                     />
                   </div>
-                  <div className="w-full flex gap-3 mb-3 flex-col md:flex-row">
-                    <FormField
-                      control={form.control}
-                      name="trip_type"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Trip Type</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue
-                                  placeholder="Trip Type"
-                                  className="form-input"
-                                />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="interstate">
-                                Inter State
-                              </SelectItem>
-                              <SelectItem value="fct">Within FCT</SelectItem>
-                            </SelectContent>
-                          </Select>
 
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="purpose"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Purpose</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue
-                                  placeholder="Purpose"
-                                  className="form-input"
-                                />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="airport_drop_off">
-                                Airport Drop off
-                              </SelectItem>
-                              <SelectItem value="airport_pick_up">
-                                Airport Pick up
-                              </SelectItem>
-                              <SelectItem value="full_day_hire">
-                                Full day hire
-                              </SelectItem>
-                            </SelectContent>
-                          </Select>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="w-full flex gap-3 mb-3 flex-col md:flex-row">
-                    <FormField
-                      control={form.control}
-                      name="vehicle_type"
-                      render={({ field }) => (
-                        <FormItem className=" w-full">
-                          <FormLabel>Vehicle Type</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue
-                                  placeholder="Vehicle Type"
-                                  className="form-input"
-                                />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="suv">SUV</SelectItem>
-                              <SelectItem value="bus">BUS</SelectItem>
-                              <SelectItem value="sedan">SEDAN (CAR)</SelectItem>
-                              <SelectItem value="hilux">
-                                HILUX (Escort)
-                              </SelectItem>
-                              <SelectItem value="costa">COSTA</SelectItem>
-                            </SelectContent>
-                          </Select>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="escort"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Police Escort?</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue
-                                  placeholder="Police Escort?"
-                                  className="form-input"
-                                />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="yes">Yes</SelectItem>
-                              <SelectItem value="no">NO</SelectItem>
-                            </SelectContent>
-                          </Select>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
                   <div className="w-full flex gap-3  mb-3">
                     <FormField
                       control={form.control}
@@ -416,7 +313,7 @@ const CheckoutPage = () => {
 
                   <FormField
                     control={form.control}
-                    name="type"
+                    name="payment_method"
                     render={({ field }) => (
                       <FormItem className="space-y-3">
                         <FormLabel
@@ -463,7 +360,11 @@ const CheckoutPage = () => {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="my-5 w-full md:w-fit">
+                  <Button
+                    type="submit"
+                    className="my-5 w-full md:w-fit"
+                    id="submitBtn"
+                  >
                     Complete Checkout
                   </Button>
                 </form>
@@ -483,6 +384,9 @@ const CheckoutPage = () => {
                 </thead>
                 <tbody>
                   {subTotalWithExtraResource?.map((item) => {
+                    const showExtraResources =
+                      item?.extra_resource?.police_escort ||
+                      item?.extra_resource?.child_seat;
                     return (
                       <tr key={item.id}>
                         <td className="product_name w-[85%]">
@@ -518,31 +422,39 @@ const CheckoutPage = () => {
                             </div>
                             {item?.extra_resource && (
                               <div className="w-full inline-block text-left my-5">
-                                <h1
-                                  className={cn(
-                                    `${raleway.className} font-[600] text-sm`
-                                  )}
-                                >
-                                  Extra Resources
-                                </h1>
-                                <p className="flex gap-3  text-[12px]  capitalize">
-                                  <span>Police Escort</span>-
-                                  <span className="font-bold">
-                                    &#8358;
-                                    {new Intl.NumberFormat().format(
-                                      item?.extra_resource?.police_escort || 0
+                                {showExtraResources ? (
+                                  <h1
+                                    key={item.id}
+                                    className={cn(
+                                      `${raleway.className} font-[600] text-sm`
                                     )}
-                                  </span>
-                                </p>
-                                <p className="flex gap-3  text-[12px] capitalize">
-                                  <span>Child seat</span>-
-                                  <span className="font-bold">
-                                    &#8358;
-                                    {new Intl.NumberFormat().format(
-                                      item?.extra_resource?.child_seat || 0
-                                    )}
-                                  </span>
-                                </p>
+                                  >
+                                    Extra Resources
+                                  </h1>
+                                ) : null}
+                                {item?.extra_resource?.police_escort && (
+                                  <div className="flex gap-3  text-[12px]  capitalize">
+                                    <span>Police Escort</span>-
+                                    <span className="font-bold">
+                                      &#8358;
+                                      {new Intl.NumberFormat().format(
+                                        item?.extra_resource?.police_escort
+                                      )}
+                                    </span>
+                                  </div>
+                                )}
+
+                                {item?.extra_resource?.child_seat && (
+                                  <div className="flex gap-3  text-[12px] capitalize">
+                                    <span>Child seat</span>-
+                                    <span className="font-bold">
+                                      &#8358;
+                                      {new Intl.NumberFormat().format(
+                                        item?.extra_resource?.child_seat
+                                      )}
+                                    </span>
+                                  </div>
+                                )}
                               </div>
                             )}
                           </div>
@@ -558,19 +470,6 @@ const CheckoutPage = () => {
                               &#8358;
                               {new Intl.NumberFormat().format(item?.subtotal)}
                             </span>
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger>
-                                  <Info size={16} />
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>
-                                    This price is calculated by summing (Price +
-                                    Number of Days + Extra Resources)
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
                           </div>
                         </td>
                       </tr>

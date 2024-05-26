@@ -1,3 +1,4 @@
+"use client";
 import { BookA, Car, Database, UsersRound } from "lucide-react";
 import Header from "../_components/header/Header";
 import DashboardCard from "../_components/stats/Card";
@@ -5,9 +6,15 @@ import SalesAnalytics from "../_components/graph/sales-analytics/SalesAnalytics"
 import SalesReport from "../_components/graph/sales-report/SalesReport";
 import salesAnalytics from "@/data/salesAnalytics.json";
 import salesReport from "@/data/salesReport.json";
-import TransactionTable from "../_components/table/TransactionTable";
+import { TransactionDataTable } from "../_components/table/transactions/data-table";
+import { cn } from "@/lib/utils";
+import { raleway } from "@/lib/fonts";
+import { columns } from "../_components/table/transactions/columns";
+import { useContext } from "react";
+import { TransactionContext } from "@/context/transactionSortContext";
 
-const Dashboard = async () => {
+const Dashboard = () => {
+  const { data, loading } = useContext(TransactionContext);
   return (
     <>
       <section className="w-full flex h-screen flex-col gap-y-5 p-5 overflow-y-scroll bg-[whitesmoke]">
@@ -50,7 +57,18 @@ const Dashboard = async () => {
           </div>
         </div>
         <div className="w-full">
-          <TransactionTable />
+          <div className="p-5 bg-white rounded-[12px]">
+            <div className="flex items-center justify-between w-full ">
+              <h1 className={cn(`${raleway.className} capitalize font-[600]`)}>
+                Recent Transactions
+              </h1>
+            </div>
+            <TransactionDataTable
+              columns={columns}
+              data={data}
+              loading={loading}
+            />
+          </div>
         </div>
       </section>
     </>

@@ -52,30 +52,33 @@ export const POST = async (req) => {
 
 export const GET = async (req) => {
   const userAgent = req.headers.get("user-agent");
-  const urlPath = req.headers.get("referer").split(host.host_url)[1];
-  let query;
-  const { accountType, date } = extractQueryParams(req?.url);
+  const referer = req.headers.get("referer");
+  const urlPath = referer ? referer.split(host.host_url)[1] : "";
 
-  if (!accountType && !date) {
-    query = {};
-  } else {
-    query = {
-      where: {
-        AND: [{ account_type: accountType }, { date: date }],
-      },
+  const { accountType, date } = extractQueryParams(req.url);
+
+  const query = {};
+
+  if (accountType || date) {
+    query.where = {
+      AND: [],
     };
+
+    if (accountType) query.where.AND.push({ account_type: accountType });
+    if (date) query.where.AND.push({ date: date });
   }
+
+  query.orderBy = { createdAt: "desc" };
+
   try {
-    const response = await prisma.driver.findMany(query, {
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-    return new NextResponse(JSON.stringify(response, { status: 200 }));
+    const response = await prisma.driver.findMany(query);
+    return new NextResponse(JSON.stringify(response), { status: 200 });
   } catch (err) {
+    console.error(err);
     logger(userAgent, urlPath, "failed", "GET", "get all drivers");
     return new NextResponse(
-      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+      JSON.stringify({ message: "Something went wrong!" }),
+      { status: 500 }
     );
   }
 };

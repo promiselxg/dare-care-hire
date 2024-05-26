@@ -10,11 +10,12 @@ export const GET = async (req, { params }) => {
         transaction_id: params.orderid,
       },
     });
-    if (!transaction) {
+    if (!transaction || transaction.length < 1) {
       return errorResponse("No Record found with the ID Provided", 500);
     }
     return new NextResponse(JSON.stringify(transaction, { status: 200 }));
   } catch (err) {
+    console.log(err);
     return errorResponse("Something went wrong!", 500);
   }
 };

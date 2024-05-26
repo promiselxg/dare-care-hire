@@ -28,7 +28,7 @@ export default function Home() {
     <>
       <div className="w-full">
         <Hero />
-        <section className="w-full">
+        {/* <section className="w-full">
           <div
             className="w-[80%] py-[40px] px-[30px] bg-white mx-auto h-fit -mt-[50px] relative mb-10 z-10 flex gap-3 items-center flex-col md:flex-row"
             style={{
@@ -87,7 +87,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
-        </section>
+        </section> */}
         <section className="w-full py-20">
           <div className="container w-full md:w-[1100px] mx-auto  h-fit pb-10 ">
             <div className="w-full justify-center flex flex-col text-center">
@@ -171,9 +171,9 @@ export default function Home() {
                   >
                     Find a car
                   </h1>
-                  <p className="text-sm">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Placeat, omnis.
+                  <p className={cn(`${syne.className} text-sm`)}>
+                    Discover your dream ride with our easy &apos;Find a
+                    car&apos; search tool.
                   </p>
                 </div>
                 <ChevronRight size={80} />
@@ -188,9 +188,9 @@ export default function Home() {
                   >
                     Select location
                   </h1>
-                  <p className="text-sm">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Placeat, omnis.
+                  <p className={cn(`${syne.className} text-sm`)}>
+                    Provide a ride pick-up, drop-off and pick-up and drop-off
+                    time.
                   </p>
                 </div>
                 <ChevronRight size={80} />
@@ -205,9 +205,9 @@ export default function Home() {
                   >
                     Place your order
                   </h1>
-                  <p className="text-sm">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Placeat, omnis.
+                  <p className={cn(`${syne.className} text-sm`)}>
+                    Use our checkout form to submit your reservation,
+                    reservation is valid after payment is made.
                   </p>
                 </div>
               </div>

@@ -33,8 +33,11 @@
     transition: all 0.3s ease-in;
     border: 1px solid #da1c36;
   }
-  .carousel-itembutton {
+  .carousel-item button {
     transition: all 0.3s ease-in;
+    border: 1px solid #222 !important;
+    color: #0d0d16 !important;
+    border-radius: 5px !important;
   }
   .dark {
     --background: 224 71.4% 4.1%;

@@ -11,11 +11,10 @@ import {
 import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { barlow, syne } from "@/lib/fonts";
+import { barlow, montserrat } from "@/lib/fonts";
 import { Button } from "@/components/ui/button";
 import useFetch from "@/hooks/useFetch";
 import { truncateText } from "@/utils/trucateText";
-import { formatCurrency } from "@/utils/formatCurrency";
 import Link from "next/link";
 import SkeletonLoader from "../Loader";
 
@@ -45,7 +44,7 @@ export function CarCarousa() {
                   alt={car?.vehicle_name}
                   className="object-cover w-full h-[150px] "
                 />
-                <div className="w-full p-3 bg-[whitesmoke]">
+                <div className="w-full p-3 bg-[whitesmoke] h-fit md:h-[300px] relative">
                   <div className="flex justify-center text-center flex-col">
                     <h1
                       className={cn(
@@ -69,11 +68,14 @@ export function CarCarousa() {
                       ))}
                     </ul>
                   </div>
-                  <div className="w-full flex justify-between items-start md:items-center mt-5 mb-2 flex-col md:flex-row">
+                  <div className="w-full flex justify-between items-start mt-5 mb-2 flex-col space-y-3 md:absolute md:bottom-5">
                     <h1
-                      className={cn(`${syne.className} font-[600] text-[18px]`)}
+                      className={cn(
+                        `${montserrat.className} font-[600] text-[18px]`
+                      )}
                     >
-                      {formatCurrency(car?.amount)}
+                      &#8358;
+                      {new Intl.NumberFormat().format(car?.amount)}
                     </h1>
                     <Link href={`/cars/${car?.id}`}>
                       <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">

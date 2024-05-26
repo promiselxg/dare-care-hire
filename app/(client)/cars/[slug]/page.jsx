@@ -125,371 +125,377 @@ const CarDetails = ({ params }) => {
 
   return (
     <>
-      <div className="relative">
-        <section className="w-full flex bg-[url('/images/page-img.jpg')] bg-cover pt-[80px] pb-10 bg-fixed bg-right-top relative">
-          <span className="bg-[#20262f] absolute top-0 bottom-0 w-full inline-block h-full opacity-0 "></span>
-          <div className="container mx-auto flex text-white z-10 md:w-[80%]">
-            <div className="text-left">
-              <h1
-                className={cn(
-                  `${raleway.className} md:text-[40px] capitalize font-[500] `
-                )}
-              >
-                {data?.vehicle_name}
-              </h1>
-              <Breadcrumb>
-                <BreadcrumbList
-                  className={cn(
-                    `${raleway.className} font-[400] text-[12px] text-[whitesmoke]`
-                  )}
-                >
-                  <BreadcrumbItem>
-                    <Link href="/">Home</Link>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <Link href="/cars">Auto Listing</Link>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage className="capitalize">
-                      {data?.vehicle_name}
-                    </BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </div>
-          </div>
-        </section>
-        <section className="w-full flex">
-          <div className="container w-full md:w-[80%] flex mx-auto py-20 px-5 md:px-0 flex-col md:flex-row gap-5">
-            <div className="w-full md:w-3/4 ">
-              <h1
-                className={cn(
-                  `${raleway.className} text-[20px] md:text-[30px] font-[700] capitalize mb-5`
-                )}
-              >
-                {data?.vehicle_name}
-              </h1>
-              <div className="w-full">
-                {loading ? (
-                  <SkeletonLoader />
-                ) : (
-                  data?.imgUrl && (
-                    <ImageGallery
-                      items={images}
-                      showFullscreenButton={false}
-                      showPlayButton={false}
-                    />
-                  )
-                )}
-              </div>
-              <div className="w-full py-5">
-                <Tabs defaultValue="description" className="w-full md:w-[90%]">
-                  <TabsList className=" bg-[#f7f7f7] w-full justify-start text-left py-6">
-                    <TabsTrigger
-                      value="description"
-                      className={cn(`${raleway.className} uppercase tab`)}
-                    >
-                      vehicle description
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="specification"
-                      className={cn(`${raleway.className} uppercase tab`)}
-                    >
-                      specification
-                    </TabsTrigger>
-                  </TabsList>
-                  <TabsContent
-                    value="description"
-                    className="px-4 text-sm text-whitesmoke leading-6"
+      {loading ? (
+        <div className="fixed top-0 bottom-0 w-full bg-[rgba(0,0,0,.8)] z-[999] h-screen overflow-hidden text-white flex items-center justify-center flex-col gap-y-2">
+          <Loader2 className="animate-spin" size={50} />
+          loading...
+        </div>
+      ) : (
+        <>
+          <div className="relative">
+            <section className="w-full flex bg-[url('/images/page-img.jpg')] bg-cover pt-[80px] pb-10 bg-fixed bg-right-top relative">
+              <span className="bg-[#20262f] absolute top-0 bottom-0 w-full inline-block h-full opacity-0 "></span>
+              <div className="container mx-auto flex text-white z-10 md:w-[80%]">
+                <div className="text-left">
+                  <h1
+                    className={cn(
+                      `${raleway.className} md:text-[40px] capitalize font-[500] `
+                    )}
                   >
-                    {data?.description}
-                  </TabsContent>
-                  <TabsContent value="specification" className="px-4">
-                    <ul className="w-full grid md:grid-cols-4 grid-cols-2 gap-2 text-[12px] my-5">
-                      {data?.features?.split(",")?.map((feature, i) => (
-                        <li
-                          className="flex items-center mb-[4px] gap-1"
-                          key={i}
+                    {data?.vehicle_name}
+                  </h1>
+                  <Breadcrumb>
+                    <BreadcrumbList
+                      className={cn(
+                        `${raleway.className} font-[400] text-[12px] text-[whitesmoke]`
+                      )}
+                    >
+                      <BreadcrumbItem>
+                        <Link href="/">Home</Link>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <Link href="/cars">Auto Listing</Link>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage className="capitalize">
+                          {data?.vehicle_name}
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </BreadcrumbList>
+                  </Breadcrumb>
+                </div>
+              </div>
+            </section>
+            <section className="w-full flex">
+              <div className="container w-full md:w-[80%] flex mx-auto py-20 px-5 md:px-0 flex-col md:flex-row gap-5">
+                <div className="w-full md:w-3/4 ">
+                  <h1
+                    className={cn(
+                      `${raleway.className} text-[20px] md:text-[30px] font-[700] capitalize mb-5`
+                    )}
+                  >
+                    {data?.vehicle_name}
+                  </h1>
+                  <div className="w-full">
+                    {loading ? (
+                      <SkeletonLoader />
+                    ) : (
+                      data?.imgUrl && (
+                        <ImageGallery
+                          items={images}
+                          showFullscreenButton={false}
+                          showPlayButton={false}
+                        />
+                      )
+                    )}
+                  </div>
+                  <div className="w-full py-5">
+                    <Tabs
+                      defaultValue="description"
+                      className="w-full md:w-[90%]"
+                    >
+                      <TabsList className=" bg-[#f7f7f7] w-full justify-start text-left py-6">
+                        <TabsTrigger
+                          value="description"
+                          className={cn(`${raleway.className} uppercase tab`)}
                         >
-                          <ShieldCheck size={20} />
-                          <span className="capitalize">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </TabsContent>
-                </Tabs>
+                          vehicle description
+                        </TabsTrigger>
+                        <TabsTrigger
+                          value="specification"
+                          className={cn(`${raleway.className} uppercase tab`)}
+                        >
+                          specification
+                        </TabsTrigger>
+                      </TabsList>
+                      <TabsContent
+                        value="description"
+                        className="px-4 text-sm text-whitesmoke leading-6"
+                      >
+                        {data?.description}
+                      </TabsContent>
+                      <TabsContent value="specification" className="px-4">
+                        <ul className="w-full grid md:grid-cols-4 grid-cols-2 gap-2 text-[12px] my-5">
+                          {data?.features?.split(",")?.map((feature, i) => (
+                            <li
+                              className="flex items-center mb-[4px] gap-1"
+                              key={i}
+                            >
+                              <ShieldCheck size={20} />
+                              <span className="capitalize">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </TabsContent>
+                    </Tabs>
+                  </div>
+                </div>
+                <div className="w-full md:w-1/4 bg-[#f7f7f7] h-fit">
+                  <div
+                    className={cn(
+                      `${raleway.className} w-full p-5 bg-black text-white flex justify-center text-center font-[700] text-[20px]`
+                    )}
+                  >
+                    {formatCurrency(data?.amount)}
+                  </div>
+                  <div className="w-full p-5 flex-col flex gap-y-1">
+                    <div className="w-full flex flex-col my-2">
+                      <label
+                        htmlFor="pickup_location"
+                        className={cn(
+                          `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
+                        )}
+                      >
+                        Pick-up location
+                      </label>
+                      <input
+                        type="text"
+                        name="pickup_location"
+                        placeholder="Pick-up Location"
+                        value={inputValues.name}
+                        onChange={handleInputChange}
+                        className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px]  text-[--primary-bg] "
+                      />
+                    </div>
+                    <div className="w-full flex flex-col my-2">
+                      <label
+                        htmlFor="dropoff_location"
+                        className={cn(
+                          `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
+                        )}
+                      >
+                        drop-off location
+                      </label>
+                      <input
+                        type="text"
+                        name="dropoff_location"
+                        placeholder="drop-off Location"
+                        value={inputValues.name}
+                        onChange={handleInputChange}
+                        className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px] "
+                      />
+                    </div>
+                    <div className="w-full flex flex-col my-2">
+                      <label
+                        htmlFor="pickup_date"
+                        className={cn(
+                          `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
+                        )}
+                      >
+                        pick-up date
+                      </label>
+                      <input
+                        type="datetime-local"
+                        name="pickup_date"
+                        value={inputValues.name}
+                        onChange={handleInputChange}
+                        min={new Date().toISOString().slice(0, 16)}
+                        className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px] uppercase"
+                      />
+                    </div>
+                    <div className="w-full flex flex-col my-2">
+                      <label
+                        htmlFor="dropoff_date"
+                        className={cn(
+                          `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
+                        )}
+                      >
+                        drop-off date
+                      </label>
+                      <input
+                        type="datetime-local"
+                        name="dropoff_date"
+                        value={inputValues.name}
+                        onChange={handleInputChange}
+                        min={new Date().toISOString().slice(0, 16)}
+                        className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px] uppercase"
+                      />
+                    </div>
+                    <div className="w-full flex flex-col my-2 gap-2">
+                      <label
+                        htmlFor="extra_resources"
+                        className={cn(
+                          `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
+                        )}
+                      >
+                        Purpose
+                      </label>
+                      <div
+                        className={cn(
+                          `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                        )}
+                      >
+                        <span className="flex items-center gap-3">
+                          <input
+                            type="radio"
+                            name="purpose"
+                            id="purpose"
+                            value="airport_pickup"
+                            onChange={handleInputChange}
+                          />
+                          Airport Pickup
+                        </span>
+                        <span>&nbsp;</span>
+                      </div>
+                      <div
+                        className={cn(
+                          `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                        )}
+                      >
+                        <span className="flex items-center gap-3">
+                          <input
+                            type="radio"
+                            name="purpose"
+                            id="purpose"
+                            value="airport_dropoff"
+                            onChange={handleInputChange}
+                          />
+                          Airport Drop-off
+                        </span>
+                        <span>&nbsp;</span>
+                      </div>
+                      <div
+                        className={cn(
+                          `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                        )}
+                      >
+                        <span className="flex items-center gap-3">
+                          <input
+                            type="radio"
+                            name="purpose"
+                            id="purpose"
+                            value="full_day"
+                            onChange={handleInputChange}
+                          />
+                          Full Day Hire
+                        </span>
+                        <span>&nbsp;</span>
+                      </div>
+                    </div>
+                    <div className="w-full flex flex-col my-2 gap-2">
+                      <label
+                        htmlFor="extra_resources"
+                        className={cn(
+                          `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
+                        )}
+                      >
+                        Trip type
+                      </label>
+                      <div
+                        className={cn(
+                          `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                        )}
+                      >
+                        <span className="flex items-center gap-3">
+                          <input
+                            type="radio"
+                            name="trip_type"
+                            id="trip_type"
+                            value="inter_state"
+                            onChange={handleInputChange}
+                          />
+                          Inter State
+                        </span>
+                        <span>&nbsp;</span>
+                      </div>
+                      <div
+                        className={cn(
+                          `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                        )}
+                      >
+                        <span className="flex items-center gap-3">
+                          <input
+                            type="radio"
+                            name="trip_type"
+                            id="trip_type"
+                            value="within_fct"
+                            onChange={handleInputChange}
+                          />
+                          Within the FCT
+                        </span>
+                        <span>&nbsp;</span>
+                      </div>
+                    </div>
+                    <div className="w-full flex flex-col my-2 gap-2">
+                      <label
+                        htmlFor="extra_resources"
+                        className={cn(
+                          `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
+                        )}
+                      >
+                        Extra resources
+                      </label>
+                      <div
+                        className={cn(
+                          `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                        )}
+                      >
+                        <span className="flex items-center gap-3">
+                          <input
+                            type="checkbox"
+                            name="police_escort"
+                            id="police_escort"
+                            value="5000"
+                            onChange={handleInputChange}
+                          />
+                          Police Escort
+                        </span>
+                        <span>&#8358;5,000</span>
+                      </div>
+                      <div
+                        className={cn(
+                          `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                        )}
+                      >
+                        <span className="flex items-center gap-3">
+                          <input
+                            type="checkbox"
+                            name="child_seat"
+                            id="child_seat"
+                            value="2000"
+                            onChange={handleInputChange}
+                          />
+                          Child Seat
+                        </span>
+                        <span>&#8358;2,000</span>
+                      </div>
+                    </div>
+                    <div className="w-full bg-[#eeeeee] p-5 my-3">
+                      <div className="py-3">
+                        <p className={cn(`${raleway.className} text-sm`)}>
+                          An overtime fee is applicable to every trip that is
+                          over 10hrs
+                        </p>
+                      </div>
+                    </div>
+                    <div className="w-full my-5">
+                      <Button
+                        className={cn(
+                          `${raleway.className} w-full bg-[--button-bg] font-[500] hover:scale-[1.1] hover:bg-[--button-bg] rounded-[5px] py-6 px-8 text-white transition-all delay-75 uppercase`
+                        )}
+                        disabled={
+                          isloading ||
+                          !inputValues.pickup_location ||
+                          !inputValues.dropoff_location ||
+                          !inputValues.pickup_date ||
+                          !inputValues.dropoff_date ||
+                          !inputValues.purpose ||
+                          !inputValues.trip_type
+                        }
+                        onClick={handleAddToCart}
+                      >
+                        rent this car
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="w-full md:w-1/4 bg-[#f7f7f7] h-fit">
-              <div
-                className={cn(
-                  `${raleway.className} w-full p-5 bg-black text-white flex justify-center text-center font-[700] text-[20px]`
-                )}
-              >
-                {formatCurrency(data?.amount)}
-              </div>
-              <div className="w-full p-5 flex-col flex gap-y-1">
-                <div className="w-full flex flex-col my-2">
-                  <label
-                    htmlFor="pickup_location"
-                    className={cn(
-                      `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
-                    )}
-                  >
-                    Pick-up location
-                  </label>
-                  <input
-                    type="text"
-                    name="pickup_location"
-                    placeholder="Pick-up Location"
-                    value={inputValues.name}
-                    onChange={handleInputChange}
-                    className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px]  text-[--primary-bg] "
-                  />
-                </div>
-                <div className="w-full flex flex-col my-2">
-                  <label
-                    htmlFor="dropoff_location"
-                    className={cn(
-                      `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
-                    )}
-                  >
-                    drop-off location
-                  </label>
-                  <input
-                    type="text"
-                    name="dropoff_location"
-                    placeholder="drop-off Location"
-                    value={inputValues.name}
-                    onChange={handleInputChange}
-                    className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px] "
-                  />
-                </div>
-                <div className="w-full flex flex-col my-2">
-                  <label
-                    htmlFor="pickup_date"
-                    className={cn(
-                      `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
-                    )}
-                  >
-                    pick-up date
-                  </label>
-                  <input
-                    type="datetime-local"
-                    name="pickup_date"
-                    value={inputValues.name}
-                    onChange={handleInputChange}
-                    min={new Date().toISOString().slice(0, 16)}
-                    className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px] uppercase"
-                  />
-                </div>
-                <div className="w-full flex flex-col my-2">
-                  <label
-                    htmlFor="dropoff_date"
-                    className={cn(
-                      `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
-                    )}
-                  >
-                    drop-off date
-                  </label>
-                  <input
-                    type="datetime-local"
-                    name="dropoff_date"
-                    value={inputValues.name}
-                    onChange={handleInputChange}
-                    min={new Date().toISOString().slice(0, 16)}
-                    className="w-full  p-2 bg-white outline-none border border-[#eee] rounded-[5px] uppercase"
-                  />
-                </div>
-                <div className="w-full flex flex-col my-2 gap-2">
-                  <label
-                    htmlFor="extra_resources"
-                    className={cn(
-                      `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
-                    )}
-                  >
-                    Purpose
-                  </label>
-                  <div
-                    className={cn(
-                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
-                    )}
-                  >
-                    <span className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="purpose"
-                        id="purpose"
-                        value="airport_pickup"
-                        onChange={handleInputChange}
-                      />
-                      Airport Pickup
-                    </span>
-                    <span>&nbsp;</span>
-                  </div>
-                  <div
-                    className={cn(
-                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
-                    )}
-                  >
-                    <span className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="purpose"
-                        id="purpose"
-                        value="airport_dropoff"
-                        onChange={handleInputChange}
-                      />
-                      Airport Drop-off
-                    </span>
-                    <span>&nbsp;</span>
-                  </div>
-                  <div
-                    className={cn(
-                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
-                    )}
-                  >
-                    <span className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="purpose"
-                        id="purpose"
-                        value="full_day"
-                        onChange={handleInputChange}
-                      />
-                      Full Day Hire
-                    </span>
-                    <span>&nbsp;</span>
-                  </div>
-                </div>
-                <div className="w-full flex flex-col my-2 gap-2">
-                  <label
-                    htmlFor="extra_resources"
-                    className={cn(
-                      `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
-                    )}
-                  >
-                    Trip type
-                  </label>
-                  <div
-                    className={cn(
-                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
-                    )}
-                  >
-                    <span className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="trip_type"
-                        id="trip_type"
-                        value="inter_state"
-                        onChange={handleInputChange}
-                      />
-                      Inter State
-                    </span>
-                    <span>&nbsp;</span>
-                  </div>
-                  <div
-                    className={cn(
-                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
-                    )}
-                  >
-                    <span className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="trip_type"
-                        id="trip_type"
-                        value="within_fct"
-                        onChange={handleInputChange}
-                      />
-                      Within the FCT
-                    </span>
-                    <span>&nbsp;</span>
-                  </div>
-                </div>
-                <div className="w-full flex flex-col my-2 gap-2">
-                  <label
-                    htmlFor="extra_resources"
-                    className={cn(
-                      `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
-                    )}
-                  >
-                    Extra resources
-                  </label>
-                  <div
-                    className={cn(
-                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
-                    )}
-                  >
-                    <span className="flex items-center gap-3">
-                      <input
-                        type="checkbox"
-                        name="police_escort"
-                        id="police_escort"
-                        value="5000"
-                        onChange={handleInputChange}
-                      />
-                      Police Escort
-                    </span>
-                    <span>&#8358;5,000</span>
-                  </div>
-                  <div
-                    className={cn(
-                      `${raleway.className} uppercase text-[12px] flex items-center justify-between`
-                    )}
-                  >
-                    <span className="flex items-center gap-3">
-                      <input
-                        type="checkbox"
-                        name="child_seat"
-                        id="child_seat"
-                        value="2000"
-                        onChange={handleInputChange}
-                      />
-                      Child Seat
-                    </span>
-                    <span>&#8358;2,000</span>
-                  </div>
-                </div>
-                <div className="w-full bg-[#eeeeee] p-5 my-3">
-                  <div className="py-3">
-                    <p className={cn(`${raleway.className} text-sm`)}>
-                      An overtime fee is applicable to every trip that is over
-                      10hrs
-                    </p>
-                  </div>
-                </div>
-                <div className="w-full my-5">
-                  <Button
-                    className={cn(
-                      `${raleway.className} w-full bg-[--button-bg] font-[500] hover:scale-[1.1] hover:bg-[--button-bg] rounded-[5px] py-6 px-8 text-white transition-all delay-75 uppercase`
-                    )}
-                    disabled={
-                      isloading ||
-                      !inputValues.pickup_location ||
-                      !inputValues.dropoff_location ||
-                      !inputValues.pickup_date ||
-                      !inputValues.dropoff_date ||
-                      !inputValues.purpose ||
-                      !inputValues.trip_type
-                    }
-                    onClick={handleAddToCart}
-                  >
-                    rent this car
-                  </Button>
-                </div>
-              </div>
-            </div>
+            </section>
           </div>
-        </section>
-        {loading && (
-          <div className="fixed top-0 bottom-0 w-full bg-[rgba(0,0,0,.8)] z-[999] h-screen overflow-hidden text-white flex items-center justify-center flex-col gap-y-2">
-            <Loader2 className="animate-spin" size={50} />
-            loading...
-          </div>
-        )}
-      </div>
+        </>
+      )}
     </>
   );
 };

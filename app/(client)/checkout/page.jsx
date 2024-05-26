@@ -359,7 +359,7 @@ const CheckoutPage = () => {
                                 </FormItem>
                                 <FormItem className="flex items-center space-x-3 space-y-0">
                                   <FormControl>
-                                    <RadioGroupItem value="online" />
+                                    <RadioGroupItem value="online" readonly />
                                   </FormControl>
                                   <FormLabel className="font-normal">
                                     Pay Online (10% Discount)
@@ -367,7 +367,7 @@ const CheckoutPage = () => {
                                 </FormItem>
                                 {selectedValue === "online" && (
                                   <div className="hidden-div p-5 my-5 transition-all delay-75 border">
-                                    Pay Online
+                                    coming soon
                                   </div>
                                 )}
                               </RadioGroup>
@@ -380,6 +380,7 @@ const CheckoutPage = () => {
                         type="submit"
                         className="my-5 w-full md:w-fit"
                         id="submitBtn"
+                        disabled={selectedValue === "online"}
                       >
                         Complete Checkout
                       </Button>

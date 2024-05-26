@@ -3,42 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --primary-bg: #212136;
-    --secondary-bg: #171726;
-    --primary-text-color: #9596ab;
-    --header-bg: #0d0d16;
-    --text-hover: #c22ef7;
-    --text-brown: #e97688;
-    --admin-primary-bg: #007eff;
-    --button-bg: #da1c36;
-  }
-  .imageBtn {
-    transition: all 0.3s ease-in;
-  }
-  .imageBtn:hover {
-    box-shadow: 0px 0px 10px 0px
-      rgba(207.39999999999998, 193.42304347826087, 193.42304347826087, 0.5);
-    transition: all 0.3s ease-in;
-  }
-  .icon {
-    fill: #ffffff;
-    color: #ffffff;
-    border-color: #ffffff;
-  }
-  .carousel-item:hover button {
-    background-color: #da1c36 !important;
-    border-color: #da1c36 !important;
-    color: #fff;
-    transition: all 0.3s ease-in;
-    border: 1px solid #da1c36;
-  }
-  .carousel-item button {
-    transition: all 0.3s ease-in;
-    border: 1px solid #222 !important;
-    color: #0d0d16 !important;
-    border-radius: 5px !important;
-  }
   .dark {
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;
@@ -68,6 +32,49 @@
     --input: 215 27.9% 16.9%;
     --ring: 216 12.2% 83.9%;
   }
+  :root {
+    --primary-bg: #212136;
+    --secondary-bg: #171726;
+    --primary-text-color: #9596ab;
+    --header-bg: #0d0d16;
+    --text-hover: #c22ef7;
+    --text-brown: #e97688;
+    --admin-primary-bg: #007eff;
+    --button-bg: #da1c36;
+  }
+  .navbar {
+    transition: all 0.3s ease-in;
+  }
+  .active {
+    color: var(--text-hover);
+  }
+  .imageBtn {
+    transition: all 0.3s ease-in;
+  }
+  .imageBtn:hover {
+    box-shadow: 0px 0px 10px 0px
+      rgba(207.39999999999998, 193.42304347826087, 193.42304347826087, 0.5);
+    transition: all 0.3s ease-in;
+  }
+  .icon {
+    fill: #ffffff;
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+  .carousel-item:hover button {
+    background-color: #da1c36 !important;
+    border-color: #da1c36 !important;
+    color: #fff;
+    transition: all 0.3s ease-in;
+    border: 1px solid #da1c36;
+  }
+  .carousel-item button {
+    transition: all 0.3s ease-in;
+    border: 1px solid #222 !important;
+    color: #0d0d16 !important;
+    border-radius: 5px !important;
+  }
+
   .option {
     position: relative;
     overflow: hidden;
@@ -97,6 +104,7 @@
 html {
   scroll-behavior: smooth !important;
 }
+
 @layer base {
   * {
     @apply border-border;

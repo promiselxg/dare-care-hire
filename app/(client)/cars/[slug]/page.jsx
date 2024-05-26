@@ -196,7 +196,7 @@ const CarDetails = ({ params }) => {
                       defaultValue="description"
                       className="w-full md:w-[90%]"
                     >
-                      <TabsList className=" bg-[#f7f7f7] w-full justify-start text-left py-6">
+                      <TabsList className=" bg-[#f7f7f7] w-full justify-start text-left py-6 flex-col md:flex-row h-fit">
                         <TabsTrigger
                           value="description"
                           className={cn(`${raleway.className} uppercase tab`)}

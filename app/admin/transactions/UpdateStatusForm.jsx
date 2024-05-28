@@ -39,6 +39,7 @@ export function UpdateStatus({ transaction_id, id }) {
     if (!value) return false;
     const fieldName = __(field);
     fieldName.innerHTML = "Updating...";
+    fieldName.disabled = true;
     try {
       const response = await axios.put("/api/transaction", {
         id,
@@ -60,6 +61,7 @@ export function UpdateStatus({ transaction_id, id }) {
       console.log(error);
     } finally {
       fieldName.innerHTML = "Update";
+      fieldName.disabled = false;
     }
   };
 

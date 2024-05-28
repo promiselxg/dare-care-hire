@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import { raleway } from "@/lib/fonts";
-import { User } from "lucide-react";
 import DashboardCard from "../_components/stats/Card";
 import "../../admin/dashboard.css";
 import { useContext } from "react";
@@ -45,6 +44,7 @@ const TransactionPage = () => {
               bg="whitesmoke"
               desc="Total Count"
               loading={loading}
+              bgColor="purple"
             />
 
             <DashboardCard
@@ -70,7 +70,7 @@ const TransactionPage = () => {
               }
               bg="whitesmoke"
               loading={loading}
-              bgColor="red"
+              bgColor="darkred"
               desc="Cancelled count"
             />
             <DashboardCard
@@ -84,6 +84,7 @@ const TransactionPage = () => {
               bg="whitesmoke"
               loading={loading}
               desc="pending count"
+              bgColor="#221"
             />
           </div>
         </div>

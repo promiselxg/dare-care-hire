@@ -11,10 +11,7 @@ import {
 import { barlow, open_sans, raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/utils/formatCurrency";
-import {
-  formatDateTime,
-  formatDateWithoutTime,
-} from "@/utils/getDateDifference";
+import { formatDateTime } from "@/utils/getDateDifference";
 
 import { ArrowUpDown, Edit2, Eye, MoreHorizontal } from "lucide-react";
 import { FiTrash2 } from "react-icons/fi";
@@ -148,7 +145,7 @@ export const columns = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const { organization_name, id } = row.original;
+      const { organization_name, id, pickup_date, dropoff_date } = row.original;
 
       return (
         <DropdownMenu>
@@ -197,7 +194,7 @@ export const columns = [
                       </div>
                       <div className=" justify-start items-start border p-5 w-full ">
                         <div className={cn(`${raleway.className} font-bold`)}>
-                          {formatDateWithoutTime(row?.original?.pickup_date)}
+                          {pickup_date}
                         </div>
                       </div>
                       <div className=" items-start border p-5 w-full bg-[whitesmoke]">
@@ -207,7 +204,7 @@ export const columns = [
                       </div>
                       <div className=" justify-start items-start border p-5 w-full ">
                         <div className={cn(`${raleway.className} font-bold`)}>
-                          {formatDateWithoutTime(row?.original?.pickup_date)}
+                          {dropoff_date}
                         </div>
                       </div>
                       <div className=" items-start border p-5 w-full bg-[whitesmoke]">

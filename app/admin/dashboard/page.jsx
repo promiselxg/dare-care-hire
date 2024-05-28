@@ -12,6 +12,7 @@ import { raleway } from "@/lib/fonts";
 import { columns } from "../_components/table/transactions/columns";
 import { useContext } from "react";
 import { TransactionContext } from "@/context/transactionSortContext";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 const Dashboard = () => {
   const { data, loading } = useContext(TransactionContext);
@@ -24,29 +25,53 @@ const Dashboard = () => {
             <DashboardCard
               title="Revenue"
               icon={<Database color="green" />}
-              value="&#8358;5,000"
+              value={formatCurrency(
+                data
+                  ?.filter(
+                    (transaction) =>
+                      transaction.transaction_status.toLowerCase() ===
+                      "completed"
+                  )
+                  .reduce(
+                    (total, transaction) =>
+                      total + transaction.transaction_amount,
+                    0
+                  )
+              )}
               bg="whitesmoke"
-              desc="+5.5% since last week"
+              loading={loading}
             />
             <DashboardCard
-              title="Total Booking"
+              title="Transaction count"
               icon={<BookA color="orange" />}
-              value="400"
+              value={data?.length}
               bg="whitesmoke"
-              desc="+40 since last week"
+              loading={loading}
             />
             <DashboardCard
-              title="Vehicles"
-              icon={<Car color="brown" />}
-              value="600"
+              title="Pending Transactions"
+              value={
+                data?.filter(
+                  (transaction) =>
+                    transaction.transaction_status.toLowerCase() === "pending"
+                ).length
+              }
               bg="whitesmoke"
+              loading={loading}
+              bgColor="darkred"
             />
             <DashboardCard
-              title="Customers"
-              icon={<UsersRound color="green" />}
-              value="1000"
+              title="Completed Transactions"
+              value={
+                data?.filter(
+                  (transaction) =>
+                    transaction.transaction_status.toLowerCase() === "completed"
+                ).length
+              }
               bg="whitesmoke"
-              desc="+200 since last week"
+              bgColor="green"
+              desc="Completed count"
+              loading={loading}
             />
           </div>
         </div>

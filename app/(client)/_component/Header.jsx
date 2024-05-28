@@ -23,10 +23,10 @@ const Header = () => {
               <Link href="/home">
                 <Image
                   src="/images/logo.png"
-                  width="150"
+                  width={150}
                   height={50}
                   alt="logo"
-                  className="py-2"
+                  className="py-2  object-contain h-[140px]"
                 />
               </Link>
             </div>

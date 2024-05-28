@@ -2,10 +2,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { montserrat, raleway, syne } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
-const DashboardCard = ({ loading, title, icon, desc, value, bg }) => {
+const DashboardCard = ({ loading, title, icon, desc, value, bg, bgColor }) => {
   return (
     <>
-      <div className="w-full p-5 rounded-[12px] bg-[white]">
+      <div
+        className={cn(
+          `${
+            bgColor ? `bg-[${bgColor}] text-white` : "bg-[white]"
+          } w-full p-5 rounded-[12px]`
+        )}
+      >
         <h1 className={cn(`${syne.className} capitalize font-[600] text-sm `)}>
           {loading ? (
             <Skeleton className="h-[6px] w-1/2 rounded-[5px] bg-[--primary-text-color]" />
@@ -18,7 +24,7 @@ const DashboardCard = ({ loading, title, icon, desc, value, bg }) => {
             `${montserrat.className} flex justify-between items-center`
           )}
         >
-          <h1 className="text-[30px] font-[600]">
+          <h1 className="text-[30px] font-[600] text-wrap">
             {loading ? (
               <Skeleton className="h-12 w-12 rounded-full bg-[--primary-text-color]" />
             ) : (

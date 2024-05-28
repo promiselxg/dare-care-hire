@@ -1,4 +1,7 @@
 import prisma from "@/utils/dbConnect";
+import { errorResponse, successResponse } from "@/utils/errorMessage";
+import host from "@/utils/host";
+import { logger } from "@/utils/logger";
 import { NextResponse } from "next/server";
 
 export const GET = async (req) => {
@@ -26,6 +29,38 @@ export const GET = async (req) => {
       JSON.stringify({ message: "Something went wrong!" }),
       { status: 500 }
     );
+  }
+};
+
+export const PUT = async (req) => {
+  const userAgent = req.headers.get("user-agent");
+  const urlPath = req.headers.get("referer").split(host.host_url)[1];
+  try {
+    const body = await req.json();
+    // Update Transaction Status
+    await prisma.reservationInfo.update({
+      where: { id: body?.id },
+      data: {
+        [body.field]: body?.value?.toUpperCase(),
+      },
+    });
+    logger(
+      userAgent,
+      urlPath,
+      "success",
+      "PUT",
+      `Updated ${body?.id} transaction status`
+    );
+    return successResponse("Success");
+  } catch (error) {
+    logger(
+      userAgent,
+      urlPath,
+      "failed",
+      "PUT",
+      `Unable to updated ${body?.id} transaction status`
+    );
+    return errorResponse("Error occurred", 500);
   }
 };
 

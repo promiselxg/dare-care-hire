@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function VehicleDataTable({ columns, data, loading }) {
-  const [columnFilters, setColumnFilters] = useState();
+  const [columnFilters, setColumnFilters] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
 
@@ -77,15 +77,17 @@ export function VehicleDataTable({ columns, data, loading }) {
         </TableHeader>
         {loading ? (
           <>
-            <tr>
-              <td colSpan="7">
-                <div className="p-5 w-full space-y-2">
-                  <Skeleton className="h-2 w-full bg-[#171726] rounded-full" />
-                  <Skeleton className="h-2 w-2/3 bg-[#212136] rounded-full" />
-                  <Skeleton className="h-2 w-1/3 bg-[#0d0d16] rounded-full" />
-                </div>
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td colSpan="7">
+                  <div className="p-5 w-full space-y-2">
+                    <Skeleton className="h-2 w-full bg-[#171726] rounded-full" />
+                    <Skeleton className="h-2 w-2/3 bg-[#212136] rounded-full" />
+                    <Skeleton className="h-2 w-1/3 bg-[#0d0d16] rounded-full" />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
           </>
         ) : (
           <TableBody className="border">

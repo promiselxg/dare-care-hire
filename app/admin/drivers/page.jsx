@@ -44,7 +44,7 @@ const DriverPage = () => {
               `${raleway.className} text-[16px] uppercase font-[600] my-4 md:my-0`
             )}
           >
-            Drivers
+            View/Manage Drivers
           </h1>
           <Link href="/admin/drivers/add">
             <Button className="flex gap-2 items-center border-none outline-none bg-[--button-bg] hover:bg-[--button-bg-hover] text-white transition-all delay-75 rounded-[5px]">

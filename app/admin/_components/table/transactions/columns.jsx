@@ -1,5 +1,6 @@
 "use client";
 
+import { UpdateStatus } from "@/app/admin/transactions/UpdateStatusForm";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,7 +13,9 @@ import { barlow } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { formatDateTime } from "@/utils/getDateDifference";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import host from "@/utils/host";
+import { ArrowUpDown, Eye, MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 import { FiTrash2 } from "react-icons/fi";
 
 export const columns = [
@@ -24,7 +27,7 @@ export const columns = [
           className="cursor-pointer flex items-center"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Driver&apos;s Name
+          Customer&apos;s Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </span>
       );
@@ -125,6 +128,8 @@ export const columns = [
         (status = "Pending"), (color = "text-[--text-brown]");
       if (transaction_status?.toLowerCase() === "completed")
         (status = "completed"), (color = "text-[green]");
+      if (transaction_status?.toLowerCase() === "cancelled")
+        (status = "cancelled"), (color = "text-[black]");
       return (
         <>
           <div>
@@ -139,9 +144,9 @@ export const columns = [
     },
   },
   {
-    id: "actions",
+    id: "action",
     cell: ({ row }) => {
-      const { mediaType, id, mediaUrl, publicId } = row.original;
+      const { id, transaction_status, transaction_id } = row.original;
 
       return (
         <DropdownMenu>
@@ -153,11 +158,20 @@ export const columns = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="bg-white">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => handleRemove(mediaType, id, mediaUrl, publicId)}
-              className="text-red-400 flex items-center gap-2 cursor-pointer"
-            >
-              <FiTrash2 /> Delete Item
+            {transaction_status?.toLowerCase() !== "completed" && (
+              <div className="px-2 w-full">
+                <UpdateStatus transaction_id={transaction_id} id={id} />
+              </div>
+            )}
+
+            <DropdownMenuItem className="text-red-400 flex items-center gap-2 cursor-pointer">
+              <Link
+                href={`${host.host_url}/checkout/${transaction_id}`}
+                target="_blank"
+                className="flex items-center gap-1"
+              >
+                <Eye size={16} /> View Transaction
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { raleway } from "@/lib/fonts";
-import { Cross, User, Users } from "lucide-react";
+import { Cross, User } from "lucide-react";
 import DashboardCard from "../_components/stats/Card";
 import { Button } from "@/components/ui/button";
 import "../../admin/dashboard.css";

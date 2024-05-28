@@ -145,11 +145,14 @@ const SideNav = () => {
 
               <li
                 className={`${
-                  currentRoute === "/admin" && "active"
+                  (currentRoute === "/admin/transactions" && "active") ||
+                  (currentRoute === "/admin/transactions/add" && "active") ||
+                  (currentRoute.includes("/admin/transactions/edit/") &&
+                    "active")
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin"
+                  href="/admin/transactions"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>

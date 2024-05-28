@@ -20,7 +20,7 @@ const Footer = () => {
                 width={300}
                 height={50}
                 alt="logo"
-                className="w-[200px] h-[200px] object-contain"
+                className="w-[250px] h-[300px] object-contain"
               />
               <div className="my-5">
                 <p

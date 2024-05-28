@@ -23,12 +23,10 @@ const SuccessfullOrderPage = ({ params }) => {
   if (data?.message === "No Record found with the ID Provided") {
     redirect("/cars");
   }
-
   const subtotal = data?.reduce(
     (acc, current) => acc + current.transaction_amount,
     0
   );
-
   useEffect(() => {
     const checkTransactionID = () => {
       if (!params.orderid || params.orderid === "") {

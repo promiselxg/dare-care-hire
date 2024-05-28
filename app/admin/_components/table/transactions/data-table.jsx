@@ -8,7 +8,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
 import {
   Table,
   TableBody,
@@ -39,7 +38,7 @@ const formSchema = z.object({
 });
 
 export function TransactionDataTable({ columns, data, loading }) {
-  const [columnFilters, setColumnFilters] = useState();
+  const [columnFilters, setColumnFilters] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [transactionID, setTransactionID] = useState("");
   const { handleSortTransactionTable, handleResetSort } =
@@ -63,11 +62,14 @@ export function TransactionDataTable({ columns, data, loading }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
-  async function onSubmit(values) {}
+
+  async function onSubmit(values) {
+    // Handle form submission logic here
+  }
 
   return (
     <div className="rounded-md border my-5 p-5">
-      <div className="flex items-center py-4 justify-between w-full flex-col md:flex-row space-y-3 ">
+      <div className="flex items-center py-4 justify-between w-full flex-col md:flex-row space-y-3">
         <Input
           placeholder="Search Table"
           value={table.getColumn("customer_name")?.getFilterValue() ?? ""}
@@ -80,7 +82,7 @@ export function TransactionDataTable({ columns, data, loading }) {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="flex items-center gap-2 flex-col md:flex-row w-3/4"
+              className="flex items-center gap-2 flex-col md:flex-row w-full"
             >
               <FormField
                 control={form.control}
@@ -113,7 +115,7 @@ export function TransactionDataTable({ columns, data, loading }) {
                 Search
               </Button>
               <Button
-                onClick={() => handleResetSort()}
+                onClick={handleResetSort}
                 className="md:w-fit w-full"
                 disabled={loading}
               >
@@ -127,23 +129,21 @@ export function TransactionDataTable({ columns, data, loading }) {
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id} className="border">
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id} className="border">
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </TableHead>
+              ))}
             </TableRow>
           ))}
         </TableHeader>
         {loading ? (
-          <>
+          <tbody>
             <tr>
               <td colSpan="7">
                 <div className="p-5 w-full space-y-2">
@@ -153,7 +153,7 @@ export function TransactionDataTable({ columns, data, loading }) {
                 </div>
               </td>
             </tr>
-          </>
+          </tbody>
         ) : (
           <TableBody className="border">
             {table.getRowModel().rows?.length ? (

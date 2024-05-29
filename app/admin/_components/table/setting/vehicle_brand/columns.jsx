@@ -14,19 +14,19 @@ import { formatDateWithoutTime } from "@/utils/getDateDifference";
 
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { FiTrash2 } from "react-icons/fi";
-import { UpdateVehicleTypeForm } from "./UpdateForm";
+import { UpdateVehicleBrandForm } from "./UpdateForm";
 import { handleDeleteBtn } from "@/utils/deleteItemFromDb";
 
-export const columns = [
+export const VehicleBrandColumns = [
   {
-    accessorKey: "vehicle_type",
+    accessorKey: "vehicle_brand",
     cell: ({ row }) => {
-      const { vehicle_type } = row.original;
+      const { vehicle_brand } = row.original;
       return (
         <>
           <div>
             <h1 className={cn(`${raleway.className} capitalize font-[600]`)}>
-              {vehicle_type}
+              {vehicle_brand}
             </h1>
           </div>
         </>
@@ -38,7 +38,7 @@ export const columns = [
           className="cursor-pointer flex items-center"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Vehicle Type
+          Vehicle Brand
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </span>
       );
@@ -67,7 +67,7 @@ export const columns = [
   {
     id: "action",
     cell: ({ row }) => {
-      const { id, vehicle_type } = row.original;
+      const { id, vehicle_brand } = row.original;
 
       return (
         <DropdownMenu>
@@ -80,11 +80,11 @@ export const columns = [
           <DropdownMenuContent align="end" className="bg-white">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <div className="px-2 w-full">
-              <UpdateVehicleTypeForm id={id} vehicle_type={vehicle_type} />
+              <UpdateVehicleBrandForm id={id} vehicle_type={vehicle_brand} />
             </div>
 
             <DropdownMenuItem
-              onClick={() => handleDeleteBtn(id, "setting/vehicle_type")}
+              onClick={() => handleDeleteBtn(id, "setting/vehicle_brand")}
               className="text-red-400 flex items-center gap-2 cursor-pointer"
             >
               <FiTrash2 /> Delete Record

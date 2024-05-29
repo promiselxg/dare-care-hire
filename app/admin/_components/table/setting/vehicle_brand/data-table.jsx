@@ -21,9 +21,9 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { NewVehicleTypeForm } from "./CreateForm";
+import { NewVehicleBrandForm } from "./CreateForm";
 
-export function SettingVehicleTypeDataTable({ columns, data, loading }) {
+export function SettingVehicleBrandDataTable({ columns, data, loading }) {
   const [columnFilters, setColumnFilters] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -57,7 +57,7 @@ export function SettingVehicleTypeDataTable({ columns, data, loading }) {
           className="w-full md:w-1/2"
         />
         <div className="w-full md:w-1/2 items-center">
-          <NewVehicleTypeForm />
+          <NewVehicleBrandForm />
         </div>
       </div>
       <Table className="border w-full">

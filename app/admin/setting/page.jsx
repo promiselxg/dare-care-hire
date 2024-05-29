@@ -8,11 +8,17 @@ import { Button } from "@/components/ui/button";
 import { Cross } from "lucide-react";
 import { useState } from "react";
 import { CustomerDataTable } from "../_components/table/customers/data-table";
+import { columns as VehicleTypeColumns } from "../_components/table/setting/vehicle_type/columns";
 import { columns } from "../_components/table/setting/vehicle_type/columns";
 import { SettingVehicleTypeDataTable } from "../_components/table/setting/vehicle_type/data-table";
+import { SettingVehicleBrandDataTable } from "../_components/table/setting/vehicle_brand/data-table";
+import { VehicleBrandColumns } from "../_components/table/setting/vehicle_brand/columns";
 
 const SettingsPage = () => {
-  const { loading, data } = useFetch("/transaction");
+  const { loading, data } = useFetch("/setting/vehicle_type");
+  const { loading: brandLoading, data: brandData } = useFetch(
+    "/setting/vehicle_brand"
+  );
   const [currentRoute, setCurrentRoute] = useState("vehicle_type");
   return (
     <>
@@ -58,7 +64,7 @@ const SettingsPage = () => {
         </div>
         {currentRoute === "vehicle_type" && (
           <SettingVehicleTypeDataTable
-            columns={columns}
+            columns={VehicleTypeColumns}
             data={data}
             loading={loading}
           />
@@ -67,7 +73,11 @@ const SettingsPage = () => {
           <CustomerDataTable columns={columns} data={data} loading={loading} />
         )}
         {currentRoute === "vehicle_brand" && (
-          <CustomerDataTable columns={columns} data={data} loading={loading} />
+          <SettingVehicleBrandDataTable
+            columns={VehicleBrandColumns}
+            data={brandData}
+            loading={brandLoading}
+          />
         )}
         {currentRoute === "image_slider" && (
           <CustomerDataTable columns={columns} data={data} loading={loading} />

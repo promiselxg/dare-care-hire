@@ -21,14 +21,13 @@ const FormSchema = z.object({
   vehicle_type: z.string().min(2),
 });
 
-export function UpdateVehicleTypeForm({ id, vehicle_type }) {
+export function UpdateVehicleBrandForm({ id, vehicle_type }) {
   const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(FormSchema),
   });
 
   function onSubmit() {}
-
   const handleFormUpdate = async (field, value, id) => {
     if (!field || !value || !id) {
       return false;
@@ -72,12 +71,12 @@ export function UpdateVehicleTypeForm({ id, vehicle_type }) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-1">
         <FormField
           control={form.control}
-          name="vehicle_type"
+          name="vehicle_brand"
           render={({ field }) => (
             <FormItem>
               <FormControl>
                 <Input
-                  placeholder="Vehicle type"
+                  placeholder="Brand"
                   {...field}
                   className="form-input"
                   defaultValue={vehicle_type}
@@ -86,9 +85,9 @@ export function UpdateVehicleTypeForm({ id, vehicle_type }) {
               <Button
                 type="button"
                 disabled={!field.value}
-                id="vehicle_type"
+                id="vehicle_brand"
                 onClick={() =>
-                  handleFormUpdate("vehicle_type", field?.value, id)
+                  handleFormUpdate("vehicle_brand", field?.value, id)
                 }
                 className="w-full"
               >

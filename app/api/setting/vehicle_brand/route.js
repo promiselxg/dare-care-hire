@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export const GET = async (req) => {
   try {
-    const response = await prisma.vehicleType.findMany({
+    const response = await prisma.vehicleBrand.findMany({
       orderBy: {
         createdAt: "desc",
       },
@@ -22,17 +22,17 @@ export const POST = async (req) => {
     if (!formData) {
       return errorResponse("Please fill out the form.", 404);
     }
-    const itemExist = await prisma.vehicleType.count({
+    const itemExist = await prisma.vehicleBrand.count({
       where: {
-        vehicle_type: formData,
+        vehicle_brand: formData,
       },
     });
     if (itemExist) {
-      return errorResponse("Vehicle Type already exist.", 400);
+      return errorResponse("Vehicle Brand already exist.", 400);
     } else {
-      await prisma.vehicleType.create({
+      await prisma.vehicleBrand.create({
         data: {
-          vehicle_type: formData,
+          vehicle_brand: formData,
         },
       });
       return successResponse("success", 201);
@@ -48,7 +48,7 @@ export const PUT = async (req) => {
     return errorResponse("Please fill out the form.", 403);
   }
   try {
-    await prisma.vehicleType.update({
+    await prisma.vehicleBrand.update({
       where: { id: formData?.id },
       data: {
         [formData.field]: formData.value,

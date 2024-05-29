@@ -5,7 +5,7 @@ export const DELETE = async (req, { params }) => {
     return errorResponse("Invalid Request ID", 200);
   }
   try {
-    const deleteItem = await prisma.vehicleType.delete({
+    const deleteItem = await prisma.vehicleBrand.delete({
       where: { id: params.id },
     });
     if (deleteItem) {

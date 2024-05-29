@@ -94,7 +94,6 @@ export function UpdateVehicleTypeForm({ id, vehicle_type }) {
               >
                 Update
               </Button>
-              <FormMessage />
             </FormItem>
           )}
         />

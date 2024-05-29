@@ -13,11 +13,16 @@ import { columns } from "../_components/table/setting/vehicle_type/columns";
 import { SettingVehicleTypeDataTable } from "../_components/table/setting/vehicle_type/data-table";
 import { SettingVehicleBrandDataTable } from "../_components/table/setting/vehicle_brand/data-table";
 import { VehicleBrandColumns } from "../_components/table/setting/vehicle_brand/columns";
+import { VehicleExtraFeatures } from "../_components/table/setting/extra_features/columns";
+import { SettingVehicleFeaturesDataTable } from "../_components/table/setting/extra_features/data-table";
 
 const SettingsPage = () => {
   const { loading, data } = useFetch("/setting/vehicle_type");
   const { loading: brandLoading, data: brandData } = useFetch(
     "/setting/vehicle_brand"
+  );
+  const { loading: featureLoading, data: featureData } = useFetch(
+    "/setting/extra_feature"
   );
   const [currentRoute, setCurrentRoute] = useState("vehicle_type");
   return (
@@ -70,7 +75,11 @@ const SettingsPage = () => {
           />
         )}
         {currentRoute === "extra_features" && (
-          <CustomerDataTable columns={columns} data={data} loading={loading} />
+          <SettingVehicleFeaturesDataTable
+            columns={VehicleExtraFeatures}
+            data={featureData}
+            loading={featureLoading}
+          />
         )}
         {currentRoute === "vehicle_brand" && (
           <SettingVehicleBrandDataTable

@@ -21,9 +21,9 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { NewVehicleBrandForm } from "./CreateForm";
+import { VehicleExtraFeaturesForm } from "./CreateForm";
 
-export function SettingVehicleBrandDataTable({ columns, data, loading }) {
+export function SettingVehicleFeaturesDataTable({ columns, data, loading }) {
   const [columnFilters, setColumnFilters] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -50,14 +50,14 @@ export function SettingVehicleBrandDataTable({ columns, data, loading }) {
       <div className="flex items-center py-4 justify-between w-full gap-5 flex-col md:flex-row">
         <Input
           placeholder="Search Table"
-          value={table.getColumn("vehicle_brand")?.getFilterValue() ?? ""}
+          value={table.getColumn("extra_feature")?.getFilterValue() ?? ""}
           onChange={(event) =>
-            table.getColumn("vehicle_brand")?.setFilterValue(event.target.value)
+            table.getColumn("extra_feature")?.setFilterValue(event.target.value)
           }
           className="w-full md:w-1/2"
         />
         <div className="w-full md:w-1/2 items-center">
-          <NewVehicleBrandForm />
+          <VehicleExtraFeaturesForm />
         </div>
       </div>
       <Table className="border w-full">

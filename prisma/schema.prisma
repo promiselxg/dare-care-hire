@@ -102,6 +102,37 @@ model reservationInfo {
   updatedAt           DateTime       @updatedAt
 }
 
+model vehicleType {
+  id            String   @id @default(cuid()) @map("_id")
+  vehicle_type  String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model vehicleBrand {
+  id              String   @id @default(cuid()) @map("_id")
+  vehicle_brand   String   @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ExtraFeatures {
+  id             String   @id @default(cuid()) @map("_id")
+  extra_feature  String   @unique
+  amount         Float
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Slider {
+  id            String   @id @default(cuid()) @map("_id")
+  description   String?
+  mediaUrl      String
+  publicId      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
 enum Status {
   PENDING
   COMPLETED

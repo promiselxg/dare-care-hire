@@ -180,11 +180,13 @@ const SideNav = () => {
               <span className="my-2 px-3 ">Settings</span>
               <li
                 className={`${
-                  currentRoute === "/admin" && "active"
+                  (currentRoute === "/admin/setting" && "active") ||
+                  (currentRoute === "/admin/setting/add" && "active") ||
+                  (currentRoute.includes("/admin/setting/edit/") && "active")
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin"
+                  href="/admin/setting"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>

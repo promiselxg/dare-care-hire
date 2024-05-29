@@ -44,7 +44,6 @@ export const POST = async (req) => {
       return errorResponse("Error creating new driver", 500);
     }
   } catch (error) {
-    console.log(error);
     logger(userAgent, urlPath, "failed", "POST", "Error creating new driver");
     return errorResponse("Error creating new driver", 500);
   }

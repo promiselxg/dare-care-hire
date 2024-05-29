@@ -34,7 +34,7 @@ const SideNav = () => {
         className={cn(
           `${
             barlow.className
-          }  bg-[#191919] text-[#757575] h-screen navbar  hidden md:flex ${
+          }  bg-[#191919] text-[#757575] sticky top-0 bottom-0 md:relative h-screen navbar  md:flex ${
             openNavBar ? "w-[5%]" : "w-[20%]"
           }`
         )}

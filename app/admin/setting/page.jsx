@@ -45,7 +45,7 @@ const SettingsPage = () => {
             className="flex gap-2 items-center border-none outline-none bg-[--button-bg] hover:bg-[--button-bg-hover] text-white transition-all delay-75 rounded-[5px]"
             onClick={() => setCurrentRoute("vehicle_brand")}
           >
-            <Cross size={13} /> Manage Vehicle Brands
+            <Cross size={13} /> Manage Vehicle Model
           </Button>
           <Button
             className="flex gap-2 items-center border-none outline-none bg-[--button-bg] hover:bg-[--button-bg-hover] text-white transition-all delay-75 rounded-[5px]"
@@ -63,7 +63,7 @@ const SettingsPage = () => {
             {currentRoute === "vehicle_type" && "Manage Vehicle Types"}
             {currentRoute === "extra_features" &&
               "Manage Vehicle Extra Features"}
-            {currentRoute === "vehicle_brand" && "Manage Vehicle Brands"}
+            {currentRoute === "vehicle_brand" && "Manage Vehicle Model"}
             {currentRoute === "image_slider" && "Manage Image Sliders"}
           </h1>
         </div>

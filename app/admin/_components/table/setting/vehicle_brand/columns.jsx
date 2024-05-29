@@ -38,7 +38,7 @@ export const VehicleBrandColumns = [
           className="cursor-pointer flex items-center"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Vehicle Brand
+          Vehicle Model
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </span>
       );

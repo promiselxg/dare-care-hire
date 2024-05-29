@@ -354,7 +354,7 @@ const CheckoutPage = () => {
                                     <RadioGroupItem value="on_delivery" />
                                   </FormControl>
                                   <FormLabel className="font-normal">
-                                    Pay On Delivery
+                                    Pay during pickup
                                   </FormLabel>
                                 </FormItem>
                                 <FormItem className="flex items-center space-x-3 space-y-0">

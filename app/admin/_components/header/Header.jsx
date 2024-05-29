@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { BellDot } from "lucide-react";
 
 const Header = () => {
   return (
@@ -20,19 +19,6 @@ const Header = () => {
             <h1 className={cn(`${raleway.className} font-[600]`)}>Dashboard</h1>
           </div>
           <div className="flex gap-5 items-center leading-tight">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-2 outline-none border-none active:outline-none active:border-none">
-                <BellDot size={25} />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
-                <DropdownMenuItem>Subscription</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-2 outline-none border-none active:outline-none active:border-none">
                 <Avatar>

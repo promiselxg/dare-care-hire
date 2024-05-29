@@ -33,6 +33,7 @@ import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { acceptNumbersOnly } from "@/utils/regExpression";
 import { __ } from "@/utils/getElementById";
+import useFetch from "@/hooks/useFetch";
 
 const formSchema = z.object({
   vehicle_name: z.string().min(2, {
@@ -53,6 +54,10 @@ const AddCar = () => {
   const [slug, setSlug] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const { data, loading: loadingData } = useFetch("/setting/vehicle_type");
+  const { data: brandData, loading: loadingBrand } = useFetch(
+    "/setting/vehicle_brand"
+  );
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -192,7 +197,6 @@ const AddCar = () => {
       });
     }
   }
-
   return (
     <>
       <div className="h-screen w-full flex flex-col  overflow-y-scroll">
@@ -304,6 +308,7 @@ const AddCar = () => {
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
+                          disabled={loadingData}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -314,9 +319,18 @@ const AddCar = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="peogout">PEOGOUT</SelectItem>
-                            <SelectItem value="bus">BUS</SelectItem>
-                            <SelectItem value="suv">SUV</SelectItem>
+                            {data?.map((item) => {
+                              return (
+                                <SelectItem
+                                  value={item?.vehicle_type
+                                    ?.toLowerCase()
+                                    .replace(" ", "_")}
+                                  key={item.id}
+                                >
+                                  {item?.vehicle_type?.toUpperCase()}
+                                </SelectItem>
+                              );
+                            })}
                           </SelectContent>
                         </Select>
 
@@ -333,6 +347,7 @@ const AddCar = () => {
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
+                          disabled={loadingBrand}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -343,8 +358,18 @@ const AddCar = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="toyota">Toyota</SelectItem>
-                            <SelectItem value="mbw">BMW</SelectItem>
+                            {brandData?.map((item) => {
+                              return (
+                                <SelectItem
+                                  value={item?.vehicle_brand
+                                    ?.toLowerCase()
+                                    .replace(" ", "_")}
+                                  key={item?.id}
+                                >
+                                  {item?.vehicle_brand?.toUpperCase()}
+                                </SelectItem>
+                              );
+                            })}
                           </SelectContent>
                         </Select>
 

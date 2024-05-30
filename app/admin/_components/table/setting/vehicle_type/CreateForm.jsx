@@ -78,7 +78,7 @@ export function NewVehicleTypeForm() {
             <FormItem className="flex items-center w-full">
               <FormControl>
                 <Input
-                  placeholder="Vehicle type"
+                  placeholder="Vehicle Make"
                   {...field}
                   className="form-input"
                   defaultValue={field?.value}
@@ -92,6 +92,7 @@ export function NewVehicleTypeForm() {
         <Button
           id="submitBtn"
           type="button"
+          disabled={!formData}
           className="md:w-fit w-full"
           onClick={() => handleFormSubmit("vehicle_type")}
         >

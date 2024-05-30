@@ -14,6 +14,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/admin/setting",
+        destination: "/admin/setting/type",
+        permanent: true,
+      },
+      {
         source: "/admin/cars/edit",
         destination: "/admin/cars",
         permanent: true,
@@ -22,10 +27,6 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "autostar.pro-theme.info",
-      },
       {
         protocol: "https",
         hostname: "res.cloudinary.com",

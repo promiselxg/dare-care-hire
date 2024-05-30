@@ -304,7 +304,7 @@ const AddCar = () => {
                     name="vehicle_type"
                     render={({ field }) => (
                       <FormItem className="md:w-1/2 w-full">
-                        <FormLabel>Vehicle type</FormLabel>
+                        <FormLabel>Car Make</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -313,7 +313,7 @@ const AddCar = () => {
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue
-                                placeholder="Vehicle Type"
+                                placeholder="Car Make"
                                 className="form-input"
                               />
                             </SelectTrigger>

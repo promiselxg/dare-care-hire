@@ -103,6 +103,7 @@ const CheckoutPage = () => {
       values,
       subTotalWithExtraResource,
     };
+
     try {
       __("submitBtn").innerHTML = "Please wait...";
       __("submitBtn").disabled = true;

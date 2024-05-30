@@ -15,7 +15,6 @@ export const POST = async (req) => {
 
   try {
     const reservationData = await addReservation(body);
-
     const createPromises = reservationData.map((data) =>
       prisma.reservationInfo.create({
         data: {
@@ -33,6 +32,7 @@ export const POST = async (req) => {
           pickup_location: data.pickup_location,
           dropoff_location: data.dropoff_location,
           total_days: data.total_days,
+          order_note: data?.order_note,
           customer_name: data.customer_name,
           customer_email: data.customer_email,
           customer_phone: data.customer_phone,
@@ -41,14 +41,10 @@ export const POST = async (req) => {
             vehicle_name: data.vehicle_info.vehicle_name,
             vehicle_img_url: data.vehicle_info.vehicle_img_url,
           },
-          extra_resources: {
-            police_escort: data.extra_resources.police_escort,
-            child_seat: data.extra_resources.child_seat,
-          },
+          extra_resources: data?.extra_resources,
         },
       })
     );
-
     const result = await Promise.all(createPromises);
     logger(userAgent, urlPath, "success", "POST", "Vehicle reservation");
     return new NextResponse(
@@ -81,6 +77,7 @@ async function addReservation(cart) {
     pickup_location: item.rideInfo.pickup_location,
     dropoff_location: item.rideInfo.dropoff_location,
     total_days: item.days,
+    order_note: values?.order_notes,
     customer_name: `${values.first_name} ${values.last_name}`,
     customer_email: values.email_address,
     customer_phone: values.phone,
@@ -89,10 +86,7 @@ async function addReservation(cart) {
       vehicle_name: item.vehicle_name,
       vehicle_img_url: item.imgUrl || "",
     },
-    extra_resources: {
-      police_escort: item.extra_resource.police_escort || "",
-      child_seat: item.extra_resource.child_seat || "",
-    },
+    extra_resources: item?.extra_resource,
   }));
 
   return reservationData;

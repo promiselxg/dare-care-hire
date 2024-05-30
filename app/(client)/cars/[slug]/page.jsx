@@ -28,7 +28,9 @@ import { dateDiffInDays } from "@/utils/getDateDifference";
 
 const CarDetails = ({ params }) => {
   const { loading, data } = useFetch(`/car/${params?.slug}`);
+  const { data: featureData } = useFetch("/setting/extra_feature");
   const { addItemToCart, isloading, setLoading } = useCart();
+  const [extraResources, setExtraResources] = useState({});
   const router = useRouter();
   const { toast } = useToast();
   const [inputValues, setInputValues] = useState({
@@ -36,23 +38,26 @@ const CarDetails = ({ params }) => {
     dropoff_location: "",
     pickup_date: "",
     dropoff_date: "",
-    police_escort: "",
-    child_seat: "",
     purpose: "",
     trip_type: "",
   });
 
   const handleInputChange = (event) => {
-    const { name, value, checked, type } = event.target;
-    if (type === "checkbox") {
-      setInputValues((prevValues) => ({
-        ...prevValues,
-        [name]: checked ? value : "",
-      }));
-    } else {
-      setInputValues((prevValues) => ({ ...prevValues, [name]: value }));
-    }
+    const { name, value } = event.target;
+    setInputValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
+
+  const handleExtraResources = (event) => {
+    const { name, checked } = event.target;
+    setExtraResources((prev) => ({
+      ...prev,
+      [name]: checked ? event.target.value : null,
+    }));
+  };
+  // Remove null values
+  const filteredExtraResources = Object.fromEntries(
+    Object.entries(extraResources).filter(([key, value]) => value !== null)
+  );
 
   const images = data?.imgUrl?.map((url, index) => {
     return {
@@ -100,10 +105,7 @@ const CarDetails = ({ params }) => {
           purpose: inputValues.purpose,
           trip_type: inputValues.trip_type,
         },
-        extra_resource: {
-          police_escort: inputValues.police_escort,
-          child_seat: inputValues.child_seat,
-        },
+        extra_resource: filteredExtraResources,
       });
 
       setLoading(false);
@@ -119,6 +121,7 @@ const CarDetails = ({ params }) => {
       setLoading(false);
     }
   };
+
   if (data?.message === "No Record found with the ID Provided") {
     redirect("/cars");
   }
@@ -418,50 +421,49 @@ const CarDetails = ({ params }) => {
                         <span>&nbsp;</span>
                       </div>
                     </div>
-                    <div className="w-full flex flex-col my-2 gap-2">
-                      <label
-                        htmlFor="extra_resources"
-                        className={cn(
-                          `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
-                        )}
-                      >
-                        Extra resources
-                      </label>
-                      <div
-                        className={cn(
-                          `${raleway.className} uppercase text-[12px] flex items-center justify-between`
-                        )}
-                      >
-                        <span className="flex items-center gap-3">
-                          <input
-                            type="checkbox"
-                            name="police_escort"
-                            id="police_escort"
-                            value="5000"
-                            onChange={handleInputChange}
-                          />
-                          Police Escort
-                        </span>
-                        <span>&#8358;5,000</span>
+                    {featureData.length > 0 && (
+                      <div className="w-full flex flex-col my-2 gap-2">
+                        <label
+                          htmlFor="extra_resources"
+                          className={cn(
+                            `${raleway.className} uppercase mb-2 font-[600] text-[13px]`
+                          )}
+                        >
+                          Extra resources
+                        </label>
+                        {featureData?.map((feature) => {
+                          const featureName = feature.extra_feature
+                            .replace(" ", "_")
+                            .toLowerCase();
+                          return (
+                            <div
+                              className={cn(
+                                `${raleway.className} uppercase text-[12px] flex items-center justify-between`
+                              )}
+                              key={feature.id}
+                            >
+                              <span className="flex items-center gap-3">
+                                <input
+                                  type="checkbox"
+                                  name={featureName}
+                                  id={featureName}
+                                  value={feature.amount}
+                                  onChange={handleExtraResources}
+                                />
+                                {feature.extra_feature}
+                              </span>
+                              <span>
+                                &#8358;
+                                {new Intl.NumberFormat().format(
+                                  feature?.amount
+                                )}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
-                      <div
-                        className={cn(
-                          `${raleway.className} uppercase text-[12px] flex items-center justify-between`
-                        )}
-                      >
-                        <span className="flex items-center gap-3">
-                          <input
-                            type="checkbox"
-                            name="child_seat"
-                            id="child_seat"
-                            value="2000"
-                            onChange={handleInputChange}
-                          />
-                          Child Seat
-                        </span>
-                        <span>&#8358;2,000</span>
-                      </div>
-                    </div>
+                    )}
+
                     <div className="w-full bg-[#eeeeee] p-5 my-3">
                       <div className="py-3">
                         <p className={cn(`${raleway.className} text-sm`)}>

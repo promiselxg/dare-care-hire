@@ -17,7 +17,7 @@ import { FiTrash2 } from "react-icons/fi";
 import { UpdateVehicleTypeForm } from "./UpdateForm";
 import { handleDeleteBtn } from "@/utils/deleteItemFromDb";
 
-export const columns = [
+export const VehicleTypeColumns = [
   {
     accessorKey: "vehicle_type",
     cell: ({ row }) => {
@@ -38,7 +38,7 @@ export const columns = [
           className="cursor-pointer flex items-center"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Vehicle Type
+          Vehicle Make
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </span>
       );

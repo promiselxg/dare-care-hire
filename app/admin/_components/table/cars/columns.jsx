@@ -89,7 +89,7 @@ export const columns = [
 
   {
     accessorKey: "vehicle_type",
-    header: "Vehicle Type",
+    header: "Car Make",
     cell: ({ row }) => {
       const { vehicle_type } = row.original;
       return (

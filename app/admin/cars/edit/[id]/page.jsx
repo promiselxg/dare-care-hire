@@ -34,6 +34,7 @@ import axios from "axios";
 import { acceptNumbersOnly } from "@/utils/regExpression";
 import { __ } from "@/utils/getElementById";
 import { useRouter } from "next/navigation";
+import useFetch from "@/hooks/useFetch";
 
 const formSchema = z.object({
   vehicle_name: z.string().min(2, {
@@ -52,8 +53,13 @@ const EditCar = ({ params }) => {
   const [selectedImages, setselectedImages] = useState([]);
   const [files, setFiles] = useState([]);
   const [slug, setSlug] = useState("");
-  const [loadingData, setLoadingData] = useState(false);
   const [data, setData] = useState([]);
+  const { data: vehicleData, loading: loadingData } = useFetch(
+    "/setting/vehicle_type"
+  );
+  const { data: brandData, loading: loadingBrand } = useFetch(
+    "/setting/vehicle_brand"
+  );
 
   const { toast } = useToast();
   const router = useRouter();
@@ -210,15 +216,12 @@ const EditCar = ({ params }) => {
         router.push("/admin/cars");
       }
       try {
-        setLoadingData(true);
         const { data } = await axios.get(`/api/car/${params?.id}`);
         if (data?.message === "No Record found with the ID Provided") {
           router.push("/admin/cars");
         }
         setData(data);
-        setLoadingData(false);
       } catch (error) {
-        setLoadingData(false);
         console.log(error);
       }
     };
@@ -364,23 +367,33 @@ const EditCar = ({ params }) => {
                     name="vehicle_type"
                     render={({ field }) => (
                       <FormItem className="md:w-1/2 w-full">
-                        <FormLabel>Vehicle type</FormLabel>
+                        <FormLabel>Car Make</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
+                          disabled={loadingData}
                         >
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue
-                                placeholder="Vehicle Type"
+                                placeholder="Car Make"
                                 className="form-input"
                               />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="peogout">PEOGOUT</SelectItem>
-                            <SelectItem value="bus">BUS</SelectItem>
-                            <SelectItem value="suv">SUV</SelectItem>
+                            {vehicleData?.map((item) => {
+                              return (
+                                <SelectItem
+                                  value={item?.vehicle_type
+                                    ?.toLowerCase()
+                                    .replace(" ", "_")}
+                                  key={item.id}
+                                >
+                                  {item?.vehicle_type?.toUpperCase()}
+                                </SelectItem>
+                              );
+                            })}
                           </SelectContent>
                         </Select>
                         <Button
@@ -406,6 +419,7 @@ const EditCar = ({ params }) => {
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
+                          disabled={loadingBrand}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -416,8 +430,18 @@ const EditCar = ({ params }) => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="toyota">Toyota</SelectItem>
-                            <SelectItem value="mbw">BMW</SelectItem>
+                            {brandData?.map((item) => {
+                              return (
+                                <SelectItem
+                                  value={item?.vehicle_brand
+                                    ?.toLowerCase()
+                                    .replace(" ", "_")}
+                                  key={item?.id}
+                                >
+                                  {item?.vehicle_brand?.toUpperCase()}
+                                </SelectItem>
+                              );
+                            })}
                           </SelectContent>
                         </Select>
                         <Button

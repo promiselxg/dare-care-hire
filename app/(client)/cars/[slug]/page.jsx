@@ -126,6 +126,7 @@ const CarDetails = ({ params }) => {
     redirect("/cars");
   }
 
+  console.log(data);
   return (
     <>
       {loading ? (
@@ -230,6 +231,16 @@ const CarDetails = ({ params }) => {
                               <span className="capitalize">{feature}</span>
                             </li>
                           ))}
+                          <li className="flex items-center mb-[4px] gap-1">
+                            <ShieldCheck size={20} />
+                            <span className="capitalize">{data?.model}</span>
+                          </li>
+                          <li className="flex items-center mb-[4px] gap-1">
+                            <ShieldCheck size={20} />
+                            <span className="capitalize">
+                              {data?.vehicle_type}
+                            </span>
+                          </li>
                         </ul>
                       </TabsContent>
                     </Tabs>

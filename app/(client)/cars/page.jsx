@@ -9,7 +9,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2, ShieldCheck } from "lucide-react";
 import Image from "next/image";
@@ -20,7 +19,7 @@ import SkeletonLoader from "../_component/Loader";
 import { Helmet } from "react-helmet";
 
 const Page = () => {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const { data, loading } = useFetch("/car");
 
   return (
@@ -69,7 +68,7 @@ const Page = () => {
             <div className="mx-auto md:w-[85%]  flex ">
               <div className="p-10 w-full  flex flex-col gap-y-3">
                 {" "}
-                <div className="w-full flex items-center gap-5 mb-5">
+                {/* <div className="w-full flex items-center gap-5 mb-5">
                   <div
                     className={cn(
                       `${raleway.className} uppercase font-[600] text-sm flex items-center gap-2`
@@ -108,7 +107,7 @@ const Page = () => {
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-5">
                   {loading ? (
                     <SkeletonLoader />

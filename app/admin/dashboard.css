@@ -78,7 +78,8 @@
   }
 }
 
-.navbar {
+.navbar,
+.showDropDown {
   transition: all 0.3s ease-in;
 }
 .active {

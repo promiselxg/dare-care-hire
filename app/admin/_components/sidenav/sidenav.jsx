@@ -8,6 +8,7 @@ import {
   CarFront,
   CarIcon,
   LayoutDashboard,
+  Plus,
   Power,
   Settings,
   StickyNote,
@@ -196,7 +197,9 @@ const SideNav = () => {
                 </Link>
               </li> */}
               <li
-                className="my-[2px] h-10 nav w-full"
+                className={cn(
+                  `${openDropDown ? "active" : ""} my-[2px] h-10 nav w-full`
+                )}
                 onClick={() => setOpenDropDown(!openDropDown)}
               >
                 <div className="flex gap-2 items-center py-2  h-8 leading-tight relative">
@@ -206,19 +209,69 @@ const SideNav = () => {
                 </div>
               </li>
             </ul>
-            <ul>
-              <li className="my-[2px] h-10 nav">
+            <ul
+              className={cn(
+                `${
+                  openDropDown
+                    ? "showDropDown w-full md:h-[175px] bg-[--header-bg] text-white border border-[rgba(255,255,255,0.3)] py-1"
+                    : "h-0 overflow-hidden"
+                } transition-all delay-75`
+              )}
+            >
+              <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <Link
-                  href="/admin/setting"
-                  className="flex gap-2 items-center py-2  h-8 leading-tight relative"
+                  href="/admin/setting/type"
+                  className={`${
+                    currentRoute === "/admin/setting/type" &&
+                    "text-[--text-brown]"
+                  } flex gap-2 items-center py-2  h-8 leading-tight relative`}
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
-                  <Settings size={18} />
-                  Settings
+                  <Plus size={18} />
+                  Vehicle Type
+                </Link>
+              </li>
+              <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
+                <Link
+                  href="/admin/setting/model"
+                  className={`${
+                    currentRoute === "/admin/setting/model" &&
+                    "text-[--text-brown]"
+                  } flex gap-2 items-center py-2  h-8 leading-tight relative`}
+                >
+                  <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
+                  <Plus size={18} />
+                  Vehicle Model
+                </Link>
+              </li>
+              <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
+                <Link
+                  href="/admin/setting/feature"
+                  className={`${
+                    currentRoute === "/admin/setting/feature" &&
+                    "text-[--text-brown]"
+                  } flex gap-2 items-center py-2  h-8 leading-tight relative`}
+                >
+                  <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
+                  <Plus size={18} />
+                  Vehicle Features
+                </Link>
+              </li>
+              <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
+                <Link
+                  href="/admin/setting/banner"
+                  className={`${
+                    currentRoute === "/admin/setting/banner" &&
+                    "text-[--text-brown]"
+                  } flex gap-2 items-center py-2  h-8 leading-tight relative`}
+                >
+                  <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
+                  <Plus size={18} />
+                  Manage Site Banner
                 </Link>
               </li>
             </ul>
-            <div className="absolute bottom-0 w-full">
+            <div className="w-full py-5">
               <Button className="bg-[#474747] w-full  justify-start flex items-center gap-2 rounded-[8px] text-white font-[600] p-2 hover:bg-[rgb(71,71,71,.8)]">
                 <Power size={18} />
                 Logout

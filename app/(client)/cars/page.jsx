@@ -22,13 +22,6 @@ import { Helmet } from "react-helmet";
 const Page = () => {
   const [open, setOpen] = useState(false);
   const { data, loading } = useFetch("/car");
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  }, []);
 
   return (
     <>

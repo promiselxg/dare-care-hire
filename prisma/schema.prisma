@@ -97,7 +97,7 @@ model reservationInfo {
   customer_email      String?
   customer_phone      String
   vehicle_info        vehicleDetail
-  extra_resources     ExtraResource?
+  extra_resources     Json?
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
 }
@@ -138,12 +138,6 @@ enum Status {
   COMPLETED
   CANCELLED
 }
-
-type ExtraResource {
-  police_escort String?
-  child_seat    String?
-}
-
 type vehicleDetail {
   vehicle_id String
   vehicle_name String

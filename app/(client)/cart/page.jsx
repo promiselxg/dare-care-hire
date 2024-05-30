@@ -125,9 +125,6 @@ const CartPage = () => {
                 <tbody>
                   {subTotalWithExtraResource &&
                     subTotalWithExtraResource?.map((item) => {
-                      const showExtraResources =
-                        item?.extra_resource?.police_escort ||
-                        item?.extra_resource?.child_seat;
                       return (
                         <tr key={item.id}>
                           <td
@@ -179,39 +176,31 @@ const CartPage = () => {
 
                               {item?.extra_resource && (
                                 <div className="w-full inline-block text-left my-5">
-                                  {showExtraResources ? (
-                                    <h1
-                                      key={item.id}
-                                      className={cn(
-                                        `${raleway.className} font-[600] text-sm`
-                                      )}
+                                  <h1
+                                    key={item.id}
+                                    className={cn(
+                                      `${raleway.className} font-[600] text-sm`
+                                    )}
+                                  >
+                                    Extra Resources
+                                  </h1>
+                                  {Object.entries(
+                                    item?.extra_resource || {}
+                                  ).map(([key, value]) => (
+                                    <div
+                                      key={key}
+                                      className="flex gap-3 text-[12px] capitalize"
                                     >
-                                      Extra Resources
-                                    </h1>
-                                  ) : null}
-                                  {item?.extra_resource?.police_escort && (
-                                    <div className="flex gap-3  text-[12px]  capitalize">
-                                      <span>Police Escort</span>-
+                                      <span className="uppercase">
+                                        {key.replace(/_/g, " ")}
+                                      </span>{" "}
+                                      -
                                       <span className="font-bold">
                                         &#8358;
-                                        {new Intl.NumberFormat().format(
-                                          item?.extra_resource?.police_escort
-                                        )}
+                                        {new Intl.NumberFormat().format(value)}
                                       </span>
                                     </div>
-                                  )}
-
-                                  {item?.extra_resource?.child_seat && (
-                                    <div className="flex gap-3  text-[12px] capitalize">
-                                      <span>Child seat</span>-
-                                      <span className="font-bold">
-                                        &#8358;
-                                        {new Intl.NumberFormat().format(
-                                          item?.extra_resource?.child_seat
-                                        )}
-                                      </span>
-                                    </div>
-                                  )}
+                                  ))}
                                 </div>
                               )}
                             </div>

@@ -22,6 +22,7 @@ import { usePathname } from "next/navigation";
 
 const SideNav = () => {
   const [openNavBar, setOpenNavBar] = useState(false);
+  const [openDropDown, setOpenDropDown] = useState(false);
   const currentRoute = usePathname();
 
   const hanldeOpenNav = () => {
@@ -34,7 +35,7 @@ const SideNav = () => {
         className={cn(
           `${
             barlow.className
-          }  bg-[#191919] text-[#757575] sticky top-0 bottom-0 md:relative h-screen navbar  md:flex ${
+          }  bg-[#191919] text-[#757575] hidden sticky top-0 bottom-0 md:relative h-screen navbar md:flex ${
             openNavBar ? "w-[5%]" : "w-[20%]"
           }`
         )}
@@ -178,13 +179,35 @@ const SideNav = () => {
                 orientation="horizontal"
               />
               <span className="my-2 px-3 ">Settings</span>
-              <li
+              {/* <li
                 className={`${
                   (currentRoute === "/admin/setting" && "active") ||
                   (currentRoute === "/admin/setting/add" && "active") ||
                   (currentRoute.includes("/admin/setting/edit/") && "active")
                 } my-[2px] h-10 nav`}
               >
+                <Link
+                  href="/admin/setting"
+                  className="flex gap-2 items-center py-2  h-8 leading-tight relative"
+                >
+                  <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
+                  <Settings size={18} />
+                  Settings
+                </Link>
+              </li> */}
+              <li
+                className="my-[2px] h-10 nav w-full"
+                onClick={() => setOpenDropDown(!openDropDown)}
+              >
+                <div className="flex gap-2 items-center py-2  h-8 leading-tight relative">
+                  <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
+                  <Settings size={18} />
+                  Settings
+                </div>
+              </li>
+            </ul>
+            <ul>
+              <li className="my-[2px] h-10 nav">
                 <Link
                   href="/admin/setting"
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"

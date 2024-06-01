@@ -32,7 +32,7 @@ const Page = () => {
       setLoading(true);
       __("submitBtn").innerHTML = "Authenticating...";
       const { data } = await axios.post("/api/auth/login", formData);
-      if (data?.message !== "Login Successfull") {
+      if (data?.message !== "Login Successful") {
         toast({
           description: data?.message,
           variant: "destructive",
@@ -41,6 +41,7 @@ const Page = () => {
         router.push(`/admin/dashboard?q=${data?.userInfo?.token}`);
       }
     } catch (error) {
+      console.log(error);
       toast({
         description:
           "An unknown error occured while trying to sign you in, our Engineers have been contacted concerning the error",

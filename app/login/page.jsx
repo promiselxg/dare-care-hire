@@ -25,6 +25,9 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData?.username || !formData.password) {
+      return false;
+    }
     try {
       setLoading(true);
       __("submitBtn").innerHTML = "Authenticating...";

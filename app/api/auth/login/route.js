@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { generateCookieResponse } from "@/utils/authUtils";
-import { jwtDecode } from "jwt-decode";
 import prisma from "@/utils/dbConnect";
 
 export const POST = async (req) => {
@@ -50,11 +49,10 @@ export const POST = async (req) => {
 };
 
 export const PUT = async (req) => {
-  const { confirm_password, password, user, password1 } = await req.json();
-  const username = jwtDecode(user)?.username;
+  const { confirm_password, password, username, password1 } = await req.json();
 
   //  check user credentials
-  if (!confirm_password || !password || !user || !password1) {
+  if (!confirm_password || !password || !username || !password1) {
     return new NextResponse(
       JSON.stringify({ message: "Please fill out the form." }, { status: 400 })
     );

@@ -5,46 +5,51 @@ import { jwtDecode } from "jwt-decode";
 import prisma from "@/utils/dbConnect";
 
 export const POST = async (req) => {
-  const { username, password } = await req.json();
+  try {
+    const { username, password } = await req.json();
 
-  //  check user credentials
-  if (!username || !password) {
-    return new NextResponse(
-      JSON.stringify(
-        { message: "Please enter your username or password." },
+    // Check user credentials
+    if (!username || !password) {
+      return new NextResponse(
+        JSON.stringify({ message: "Please enter your username or password." }),
         { status: 400 }
-      )
-    );
-  }
-  const user = await await prisma.user.findUnique({
-    where: {
-      username: username,
-    },
-  });
+      );
+    }
 
-  if (user && (await bcrypt.compare(password, user.password))) {
-    const roles = Object.values(user.role);
-    const token = await generateCookieResponse(
-      user.id,
-      roles,
-      user.admin,
-      username
-    );
-    return new NextResponse(
-      JSON.stringify(
-        {
-          message: "Login Successfull",
+    const user = await prisma.user.findUnique({
+      where: {
+        username: username,
+      },
+    });
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      const roles = Object.values(user.role);
+      const token = await generateCookieResponse(
+        user.id,
+        roles,
+        user.admin,
+        username
+      );
+      return new NextResponse(
+        JSON.stringify({
+          message: "Login Successful",
           userInfo: { token, id: user.id, isAdmin: user.admin, username },
-        },
+        }),
+        { status: 200 }
+      );
+    } else {
+      return new NextResponse(
+        JSON.stringify({ message: "Incorrect username or password." }),
         { status: 400 }
-      )
-    );
-  } else {
+      );
+    }
+  } catch (error) {
+    console.error("Error during login process:", error);
     return new NextResponse(
-      JSON.stringify(
-        { message: "Incorrect username or password." },
-        { status: 400 }
-      )
+      JSON.stringify({
+        message: "An error occurred during the login process.",
+      }),
+      { status: 500 }
     );
   }
 };

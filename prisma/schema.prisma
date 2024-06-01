@@ -6,7 +6,18 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-
+model User {
+  id                    String     @id @default(cuid()) @map("_id")
+  username              String     @unique
+  password              String
+  role                  Int[]   
+  admin                 Boolean    @default(false)
+  resetPasswordToken    String?
+  resetPasswordExpire   DateTime?
+  activated             Boolean    @default(true)
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+}
 model vehicleInfo {
   id           String   @id @default(cuid()) @map("_id")
   vehicle_name String   @unique

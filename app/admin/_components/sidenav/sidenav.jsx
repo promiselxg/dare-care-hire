@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import {
   AtSign,
@@ -19,16 +19,24 @@ import { cn } from "@/lib/utils";
 import { barlow } from "@/lib/fonts";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import AuthContext from "@/context/authContext";
+import { getCookie } from "@/utils/verifyToken";
 
 const SideNav = () => {
-  const [openNavBar, setOpenNavBar] = useState(false);
   const [openDropDown, setOpenDropDown] = useState(false);
+  const [token, setToken] = useState(null);
   const currentRoute = usePathname();
+  const router = useRouter();
+  const { openNavBar, handleLogOut, hanldeOpenNav } = useContext(AuthContext);
 
-  const hanldeOpenNav = () => {
-    setOpenNavBar(!openNavBar);
-  };
+  useEffect(() => {
+    const getToken = async () => {
+      const res = await getCookie();
+      setToken(res);
+    };
+    getToken();
+  }, [router]);
 
   return (
     <>
@@ -53,7 +61,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin/dashboard"
+                  href={`/admin/dashboard?q=${token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -69,7 +77,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin/drivers"
+                  href={`/admin/drivers?q=${token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -83,7 +91,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin/customers"
+                  href={`/admin/customers?q=${token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -99,7 +107,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin/outsourced"
+                  href={`/admin/outsourced?q=${token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -115,7 +123,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin/vendors"
+                  href={`/admin/vendors?q=${token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -131,7 +139,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin/cars"
+                  href={`/admin/cars?q=${token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -154,7 +162,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin/transactions"
+                  href={`/admin/transactions?q=${token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -167,7 +175,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href="/admin/report/log"
+                  href={`/admin/report/log?q=${token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -220,7 +228,7 @@ const SideNav = () => {
             >
               <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <Link
-                  href="/admin/setting/type"
+                  href={`/admin/setting/type?q=${token}`}
                   className={`${
                     currentRoute === "/admin/setting/type" &&
                     "text-[--text-brown]"
@@ -233,7 +241,7 @@ const SideNav = () => {
               </li>
               <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <Link
-                  href="/admin/setting/model"
+                  href={`/admin/setting/model?q=${token}`}
                   className={`${
                     currentRoute === "/admin/setting/model" &&
                     "text-[--text-brown]"
@@ -246,7 +254,7 @@ const SideNav = () => {
               </li>
               <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <Link
-                  href="/admin/setting/feature"
+                  href={`/admin/setting/feature?q=${token}`}
                   className={`${
                     currentRoute === "/admin/setting/feature" &&
                     "text-[--text-brown]"
@@ -259,7 +267,7 @@ const SideNav = () => {
               </li>
               <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <Link
-                  href="/admin/setting/banner"
+                  href={`/admin/setting/banner?q=${token}`}
                   className={`${
                     currentRoute === "/admin/setting/banner" &&
                     "text-[--text-brown]"
@@ -272,7 +280,10 @@ const SideNav = () => {
               </li>
             </ul>
             <div className="w-full py-5">
-              <Button className="bg-[#474747] w-full  justify-start flex items-center gap-2 rounded-[8px] text-white font-[600] p-2 hover:bg-[rgb(71,71,71,.8)]">
+              <Button
+                className="bg-[#474747] w-full  justify-start flex items-center gap-2 rounded-[8px] text-white font-[600] p-2 hover:bg-[rgb(71,71,71,.8)]"
+                onClick={() => handleLogOut()}
+              >
                 <Power size={18} />
                 Logout
               </Button>

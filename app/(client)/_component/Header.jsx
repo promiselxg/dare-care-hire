@@ -38,35 +38,35 @@ const Header = () => {
               >
                 <li
                   className={`${
-                    currentRoute === "/home" && "active"
+                    currentRoute === "/home" && "isactive"
                   } hover:text-[--text-hover] transition-all delay-75`}
                 >
                   <Link href="/home">Home</Link>
                 </li>
                 <li
                   className={`${
-                    currentRoute === "/cars" && "active"
+                    currentRoute === "/cars" && "isactive"
                   } hover:text-[--text-hover] transition-all delay-75`}
                 >
                   <Link href="/cars">Auto Listing</Link>
                 </li>
                 <li
                   className={`${
-                    currentRoute === "/cart" && "active"
+                    currentRoute === "/cart" && "isactive"
                   } hover:text-[--text-hover] transition-all delay-75`}
                 >
                   <Link href="/cart">Auto Cart</Link>
                 </li>
                 <li
                   className={`${
-                    currentRoute === "/" && "active"
+                    currentRoute === "/" && "isactive"
                   } hover:text-[--text-hover] transition-all delay-75`}
                 >
                   <Link href="/">About Us</Link>
                 </li>
                 <li
                   className={`${
-                    currentRoute === "/" && "active"
+                    currentRoute === "/" && "isactive"
                   } hover:text-[--text-hover] transition-all delay-75`}
                 >
                   <Link href="/">Contact Us</Link>
@@ -106,35 +106,35 @@ const Header = () => {
           >
             <li
               className={`${
-                currentRoute === "/home" && "active"
+                currentRoute === "/home" && "isactive"
               } hover:text-[--text-hover] transition-all delay-75 text-[18px]`}
             >
               <Link href="/">Home</Link>
             </li>
             <li
               className={`${
-                currentRoute === "/cars" && "active"
+                currentRoute === "/cars" && "isactive"
               } hover:text-[--text-hover] transition-all delay-75 text-[18px]`}
             >
               <Link href="/cars">Auto Listing</Link>
             </li>
             <li
               className={`${
-                currentRoute === "/cart" && "active"
+                currentRoute === "/cart" && "isactive"
               } hover:text-[--text-hover] transition-all delay-75 text-[18px]`}
             >
               <Link href="/cart">Auto Cart</Link>
             </li>
             <li
               className={`${
-                currentRoute === "/" && "active"
+                currentRoute === "/" && "isactive"
               } hover:text-[--text-hover] transition-all delay-75 text-[18px]`}
             >
               <Link href="/">About Us</Link>
             </li>
             <li
               className={`${
-                currentRoute === "/" && "active"
+                currentRoute === "/" && "isactive"
               } hover:text-[--text-hover] transition-all delay-75 text-[18px]`}
             >
               <Link href="/">Contact Us</Link>

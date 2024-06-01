@@ -1,7 +1,7 @@
 "use client";
 import { clearCookies } from "@/utils/verifyToken";
 import { useRouter } from "next/navigation";
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState } from "react";
 
 const INITIAL_STATE = {
   user: null,
@@ -44,6 +44,7 @@ const AuthContext = createContext(INITIAL_STATE);
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
+  const [openNavBar, setOpenNavBar] = useState(false);
   const router = useRouter();
 
   const handleLogOut = async () => {
@@ -56,6 +57,9 @@ export const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   };
+  const hanldeOpenNav = () => {
+    setOpenNavBar(!openNavBar);
+  };
 
   return (
     <AuthContext.Provider
@@ -63,8 +67,10 @@ export const AuthContextProvider = ({ children }) => {
         user: state.user,
         loading: state.loading,
         error: state.error,
+        openNavBar,
         dispatch,
         handleLogOut,
+        hanldeOpenNav,
       }}
     >
       {children}

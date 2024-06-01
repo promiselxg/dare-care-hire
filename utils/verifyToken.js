@@ -1,17 +1,18 @@
 "use server";
-import jwt from "jsonwebtoken";
+import { jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
 export const verifyToken = async (token) => {
   try {
-    const userToken = cookies().get("token").value;
+    const userToken = cookies().get("token")?.value;
     if (!token || !userToken || token !== userToken) {
       return {
         message: "Invalid Token",
       };
     }
-    jwt.verify(token, process.env.JWT_SECRET);
-    // If verification succeeds, return success message
+    // Verify the token with the secret
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    await jwtVerify(token, secret);
     return {
       message: "success",
     };
@@ -53,7 +54,7 @@ export const clearCookies = () => {
 
 export const getCookie = async () => {
   try {
-    const token = cookies().get("token").value;
+    const token = cookies().get("token")?.value;
     return token;
   } catch (error) {
     return error;

@@ -59,6 +59,7 @@ const Page = () => {
             height={200}
             alt="logo"
             className="md:mb-5"
+            priority={true}
           />
           <form
             onSubmit={handleSubmit}

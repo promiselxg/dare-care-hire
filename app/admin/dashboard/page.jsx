@@ -24,7 +24,6 @@ const Dashboard = () => {
           <div className="w-full grid md:grid-cols-4  grid-cols-1 gap-3">
             <DashboardCard
               title="Revenue"
-              icon={<Database color="green" />}
               value={formatCurrency(
                 data
                   ?.filter(

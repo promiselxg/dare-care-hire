@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import {
   AtSign,
@@ -20,12 +20,13 @@ import { barlow } from "@/lib/fonts";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
+import AuthContext from "@/context/authContext";
 
 const SideNav = () => {
   const [openNavBar, setOpenNavBar] = useState(false);
   const [openDropDown, setOpenDropDown] = useState(false);
   const currentRoute = usePathname();
-
+  const { handleLogOut } = useContext(AuthContext);
   const hanldeOpenNav = () => {
     setOpenNavBar(!openNavBar);
   };
@@ -272,7 +273,10 @@ const SideNav = () => {
               </li>
             </ul>
             <div className="w-full py-5">
-              <Button className="bg-[#474747] w-full  justify-start flex items-center gap-2 rounded-[8px] text-white font-[600] p-2 hover:bg-[rgb(71,71,71,.8)]">
+              <Button
+                className="bg-[#474747] w-full  justify-start flex items-center gap-2 rounded-[8px] text-white font-[600] p-2 hover:bg-[rgb(71,71,71,.8)]"
+                onClick={() => handleLogOut()}
+              >
                 <Power size={18} />
                 Logout
               </Button>

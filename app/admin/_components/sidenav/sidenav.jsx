@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import AuthContext from "@/context/authContext";
 import { getCookie } from "@/utils/verifyToken";
+import AuthModal from "../modal/authModal";
 
 const SideNav = () => {
   const [openDropDown, setOpenDropDown] = useState(false);
@@ -221,7 +222,7 @@ const SideNav = () => {
               className={cn(
                 `${
                   openDropDown
-                    ? "showDropDown w-full md:h-[175px] bg-[--header-bg] text-white border border-[rgba(255,255,255,0.3)] py-1"
+                    ? "showDropDown w-full bg-[--header-bg] text-white border border-[rgba(255,255,255,0.3)] py-1"
                     : "h-0 overflow-hidden"
                 } transition-all delay-75`
               )}
@@ -277,6 +278,9 @@ const SideNav = () => {
                   <Plus size={18} />
                   Manage Site Banner
                 </Link>
+              </li>
+              <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
+                <AuthModal />
               </li>
             </ul>
             <div className="w-full py-5">

@@ -1,15 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
 import { __ } from "@/utils/getElementById";
+import AuthContext from "@/context/authContext";
 
 const Page = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
+  const [isloading, setLoading] = useState(false);
+  const { dispatch } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -38,6 +40,7 @@ const Page = () => {
           variant: "destructive",
         });
       } else {
+        dispatch({ type: "LOGIN_SUCCESS", payload: data.userInfo });
         router.push(`/admin/dashboard?q=${data?.userInfo?.token}`);
       }
     } catch (error) {
@@ -87,7 +90,7 @@ const Page = () => {
             />
 
             <button
-              disabled={loading}
+              disabled={isloading}
               type="submit"
               id="submitBtn"
               className="border-none outline-none bg-[--admin-primary-bg] p-3 rounded-md uppercase text-white font-[600] hover:opacity-[0.8] transition-all delay-75 hover:text-[#000]  disabled:cursor-not-allowed mt-5"

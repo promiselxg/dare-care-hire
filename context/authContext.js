@@ -1,10 +1,13 @@
 "use client";
 import { clearCookies } from "@/utils/verifyToken";
 import { useRouter } from "next/navigation";
-import { createContext, useReducer, useState } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 
 const INITIAL_STATE = {
-  user: null,
+  user:
+    (typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem("userInfo"))) ||
+    null,
   loading: false,
   error: null,
 };
@@ -60,6 +63,12 @@ export const AuthContextProvider = ({ children }) => {
   const hanldeOpenNav = () => {
     setOpenNavBar(!openNavBar);
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("userInfo", JSON.stringify(state.user));
+    }
+  }, [state.user]);
 
   return (
     <AuthContext.Provider

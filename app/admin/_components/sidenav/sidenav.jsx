@@ -22,14 +22,17 @@ import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import AuthContext from "@/context/authContext";
 import { getCookie } from "@/utils/verifyToken";
-import AuthModal from "../modal/authModal";
+import AuthModal from "../modal/passwordModal";
+import UsernameModal from "../modal/usernameModal";
+import { truncateText } from "@/utils/trucateText";
 
 const SideNav = () => {
   const [openDropDown, setOpenDropDown] = useState(false);
   const [token, setToken] = useState(null);
   const currentRoute = usePathname();
   const router = useRouter();
-  const { openNavBar, handleLogOut, hanldeOpenNav } = useContext(AuthContext);
+  const { user, openNavBar, handleLogOut, hanldeOpenNav } =
+    useContext(AuthContext);
 
   useEffect(() => {
     const getToken = async () => {
@@ -282,6 +285,9 @@ const SideNav = () => {
               <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <AuthModal />
               </li>
+              <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
+                <UsernameModal />
+              </li>
             </ul>
             <div className="w-full py-5">
               <Button
@@ -289,7 +295,7 @@ const SideNav = () => {
                 onClick={() => handleLogOut()}
               >
                 <Power size={18} />
-                Logout
+                Logout ({user && truncateText(user?.username, 15)})
               </Button>
             </div>
           </div>

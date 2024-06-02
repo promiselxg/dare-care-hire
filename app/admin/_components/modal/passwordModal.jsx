@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { barlow } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/components/ui/use-toast";
@@ -26,6 +26,7 @@ import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { KeyRound } from "lucide-react";
 import AuthContext from "@/context/authContext";
+import { __ } from "@/utils/getElementById";
 
 const FormSchema = z.object({
   password: z.string({
@@ -41,23 +42,23 @@ const FormSchema = z.object({
 
 const AuthModal = () => {
   const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user, handleLogOut } = useContext(AuthContext);
   const form = useForm({
     resolver: zodResolver(FormSchema),
   });
 
   async function onSubmit({ password1, password, confirm_password }) {
-    setLoading(true);
     const formData = {
       confirm_password,
       password,
       password1,
       username: user.username,
+      type: "password",
     };
     try {
-      const resp = await axios.put("/api/auth/login", formData);
-      setLoading(false);
+      __("submitBtn").innerHTML = "please wait...";
+      __("submitBtn").disabled = true;
+      const resp = await axios.put("/api/auth/setting", formData);
       if (resp?.data?.message !== "success") {
         toast({
           title: resp.data.message,
@@ -69,14 +70,16 @@ const AuthModal = () => {
           description:
             "Your password has been updated successfully, changes will take effect when next you login.",
         });
-        window.location = window.location;
+        handleLogOut();
       }
       //console.log(resp.data.message);
     } catch (error) {
-      setLoading(false);
       toast({
         title: error,
       });
+    } finally {
+      __("submitBtn").innerHTML = "Update Password";
+      __("submitBtn").disabled = false;
     }
   }
   return (
@@ -163,7 +166,7 @@ const AuthModal = () => {
                 <div>
                   <Button
                     type="submit"
-                    disabled={loading}
+                    id="submitBtn"
                     className="bg-[--admin-primary-bg] hover:bg-[#04315f] w-fit transition-all delay-75"
                   >
                     Update Password

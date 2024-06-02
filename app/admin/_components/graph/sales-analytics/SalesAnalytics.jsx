@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -32,21 +31,21 @@ const SalesAnalytics = ({ label, data }) => {
         <div className="h-[250px] md:h-[350px] mt-5">
           <ResponsiveBar
             data={data}
-            keys={["hot dog", "burger", "sandwich", "kebab", "fries", "donut"]}
-            indexBy="country"
+            keys={["completed", "pending", "cancelled"]}
+            indexBy="month"
             margin={{ top: 10, right: 130, bottom: 50, left: 30 }}
             padding={0.3}
             groupMode="grouped"
             valueScale={{ type: "linear" }}
             indexScale={{ type: "band", round: true }}
-            colors={{ scheme: "nivo" }}
+            colors={{ scheme: "category10" }}
             axisTop={null}
             axisRight={null}
             axisBottom={{
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "Vehicles",
+              legend: "Monthly Transactions",
               legendPosition: "middle",
               legendOffset: 32,
               truncateTickAt: 0,

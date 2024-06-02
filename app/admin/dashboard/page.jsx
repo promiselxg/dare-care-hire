@@ -1,11 +1,9 @@
 "use client";
-import { BookA, Car, Database, UsersRound } from "lucide-react";
+import { BookA } from "lucide-react";
 import Header from "../_components/header/Header";
 import DashboardCard from "../_components/stats/Card";
 import SalesAnalytics from "../_components/graph/sales-analytics/SalesAnalytics";
 import SalesReport from "../_components/graph/sales-report/SalesReport";
-import salesAnalytics from "@/data/salesAnalytics.json";
-import salesReport from "@/data/salesReport.json";
 import { TransactionDataTable } from "../_components/table/transactions/data-table";
 import { cn } from "@/lib/utils";
 import { raleway } from "@/lib/fonts";
@@ -13,9 +11,15 @@ import { columns } from "../_components/table/transactions/columns";
 import { useContext } from "react";
 import { TransactionContext } from "@/context/transactionSortContext";
 import { formatCurrency } from "@/utils/formatCurrency";
+import {
+  categorizeTransactionsByMonth,
+  countTransactionStatus,
+} from "@/utils/categorizeTransactions";
 
 const Dashboard = () => {
-  const { data, loading } = useContext(TransactionContext);
+  const { sortedData, data, loading } = useContext(TransactionContext);
+  const salesAnalytics = categorizeTransactionsByMonth(sortedData);
+  const salesReport = countTransactionStatus(data);
   return (
     <>
       <section className="w-full flex h-screen flex-col gap-y-5 p-5 overflow-y-scroll bg-[whitesmoke]">

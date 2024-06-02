@@ -48,7 +48,10 @@ export const POST = async (req) => {
 
     if (user) {
       return new NextResponse(
-        JSON.stringify({ message: "Registration successful." }, { status: 200 })
+        JSON.stringify(
+          { message: "Registration successful.", user },
+          { status: 200 }
+        )
       );
     } else {
       return new NextResponse(

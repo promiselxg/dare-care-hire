@@ -12,6 +12,7 @@ import {
   Power,
   Settings,
   StickyNote,
+  User2Icon,
   Users,
   UsersRound,
 } from "lucide-react";
@@ -149,6 +150,24 @@ const SideNav = () => {
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
                   <CarIcon size={18} />
                   Vehicles
+                </Link>
+              </li>
+              <Separator
+                className="my-2 w-full bg-[rgba(255,255,255,0.1)] "
+                orientation="horizontal"
+              />
+              <li
+                className={`${
+                  currentRoute === "/admin/users" && "active"
+                } my-[2px] h-10 nav`}
+              >
+                <Link
+                  href={`/admin/users?q=${token}`}
+                  className="flex gap-2 items-center py-2  h-8 leading-tight relative"
+                >
+                  <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
+                  <User2Icon size={18} />
+                  Users
                 </Link>
               </li>
               <Separator

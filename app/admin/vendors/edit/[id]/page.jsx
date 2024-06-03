@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarIcon, ChevronLeft, CloudUpload, X } from "lucide-react";
+import { CalendarIcon, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,7 +11,6 @@ import "../../../cars/cars.css";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { acceptNumbersOnly } from "@/utils/regExpression";
@@ -40,6 +39,10 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import AuthContext from "@/context/authContext";
+import { verifyToken } from "@/utils/verifyToken";
+import host from "@/utils/host";
+import useFetch from "@/hooks/useFetch";
 
 const formSchema = z.object({
   organization_name: z.string().min(10, {
@@ -71,7 +74,15 @@ const formSchema = z.object({
 const EditCar = ({ params }) => {
   const [data, setData] = useState([]);
   const { toast } = useToast();
+  const { user } = useContext(AuthContext);
   const router = useRouter();
+  const { data: vehicleData, loading: loadingData } = useFetch(
+    "/setting/vehicle_type"
+  );
+  const { data: brandData, loading: loadingBrand } = useFetch(
+    "/setting/vehicle_brand"
+  );
+
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
@@ -111,12 +122,12 @@ const EditCar = ({ params }) => {
   useEffect(() => {
     const getRecord = async () => {
       if (!params?.id || params.id === "") {
-        router.push("/admin/vendors");
+        router.push(`/admin/vendors?q=${user?.token}`);
       }
       try {
         const { data } = await axios.get(`/api/vendor/${params?.id}`);
         if (data?.message === "No Record found with the ID Provided") {
-          router.push("/admin/vendors");
+          router.push(`/admin/outsourced?q=${user?.token}`);
         }
         setData(data);
       } catch (error) {
@@ -124,7 +135,17 @@ const EditCar = ({ params }) => {
       }
     };
     getRecord();
-  }, [params.id, router]);
+  }, [params.id, router, user]);
+
+  useEffect(() => {
+    const verifyServerToken = async () => {
+      const res = await verifyToken(user?.token);
+      if (res.message !== "success") {
+        window.location = `${host.host_url}/login`;
+      }
+    };
+    verifyServerToken();
+  }, [user?.token]);
 
   return (
     <>
@@ -132,18 +153,18 @@ const EditCar = ({ params }) => {
         <div className="w-full bg-white h-[60px] p-5 flex items-center border-[#eee] border-b-[1px]">
           <div className="w-fit flex  h-[60px]">
             <Link
-              href="/admin/vendors"
+              href={`/admin/vendors?q=${user?.token}`}
               className="border-r-[1px] border-[#eee] w-fit flex items-center pr-5"
             >
               <ChevronLeft size={30} />
             </Link>
           </div>
         </div>
-        <div className="w-full my-5 bg-[whitesmoke] px-5 flex flex-col h-screen ">
+        <div className="w-full my-5 bg-[whitesmoke] px-5 flex flex-col h-screen">
           <div className=" p-5">
             <h1>Edit Vendor Information</h1>
           </div>
-          <div className="p-5 bg-white container w-full">
+          <div className="p-5 bg-white container w-full mb-20">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -167,6 +188,7 @@ const EditCar = ({ params }) => {
                         type="button"
                         disabled={!field.value}
                         id="organization_name"
+                        className="w-full md:w-fit"
                         onClick={() =>
                           handleFormUpdate("organization_name", field?.value)
                         }
@@ -195,6 +217,7 @@ const EditCar = ({ params }) => {
                         type="button"
                         disabled={!field.value}
                         id="client_name"
+                        className="w-full md:w-fit"
                         onClick={() =>
                           handleFormUpdate("client_name", field?.value)
                         }
@@ -223,6 +246,7 @@ const EditCar = ({ params }) => {
                         type="button"
                         disabled={!field.value}
                         id="driver_name"
+                        className="w-full md:w-fit"
                         onClick={() =>
                           handleFormUpdate("driver_name", field?.value)
                         }
@@ -251,6 +275,7 @@ const EditCar = ({ params }) => {
                         type="button"
                         disabled={!field.value}
                         id="job_description"
+                        className="w-full md:w-fit"
                         onClick={() =>
                           handleFormUpdate("job_description", field?.value)
                         }
@@ -298,23 +323,33 @@ const EditCar = ({ params }) => {
                     name="vehicle_type"
                     render={({ field }) => (
                       <FormItem className="md:w-1/5 w-full">
-                        <FormLabel>Vehicle type</FormLabel>
+                        <FormLabel>Car Make</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value || data?.vehicle_type}
+                          disabled={loadingData}
                         >
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue
-                                placeholder="Vehicle Type"
+                                placeholder="Car Make"
                                 className="form-input"
                               />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="peogout">PEOGOUT</SelectItem>
-                            <SelectItem value="bus">BUS</SelectItem>
-                            <SelectItem value="suv">SUV</SelectItem>
+                            {vehicleData?.map((item) => {
+                              return (
+                                <SelectItem
+                                  value={item?.vehicle_type
+                                    ?.toLowerCase()
+                                    .replace(" ", "_")}
+                                  key={item.id}
+                                >
+                                  {item?.vehicle_type?.toUpperCase()}
+                                </SelectItem>
+                              );
+                            })}
                           </SelectContent>
                         </Select>
                         <Button
@@ -341,6 +376,7 @@ const EditCar = ({ params }) => {
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value || data?.vehicle_model}
+                          disabled={loadingBrand}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -351,8 +387,18 @@ const EditCar = ({ params }) => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="toyota">Toyota</SelectItem>
-                            <SelectItem value="mbw">BMW</SelectItem>
+                            {brandData?.map((item) => {
+                              return (
+                                <SelectItem
+                                  value={item?.vehicle_brand
+                                    ?.toLowerCase()
+                                    .replace(" ", "_")}
+                                  key={item?.id}
+                                >
+                                  {item?.vehicle_brand?.toUpperCase()}
+                                </SelectItem>
+                              );
+                            })}
                           </SelectContent>
                         </Select>
                         <Button
@@ -495,6 +541,7 @@ const EditCar = ({ params }) => {
                         type="button"
                         disabled={!field.value}
                         id="pickup_location"
+                        className="w-full md:w-fit"
                         onClick={() =>
                           handleFormUpdate("pickup_location", field?.value)
                         }
@@ -523,6 +570,7 @@ const EditCar = ({ params }) => {
                         type="button"
                         disabled={!field.value}
                         id="dropoff_location"
+                        className="w-full md:w-fit"
                         onClick={() =>
                           handleFormUpdate("dropoff_location", field?.value)
                         }
@@ -551,6 +599,7 @@ const EditCar = ({ params }) => {
                         type="button"
                         disabled={!field.value}
                         id="additional_note"
+                        className="w-full md:w-fit"
                         onClick={() =>
                           handleFormUpdate("additional_note", field?.value)
                         }

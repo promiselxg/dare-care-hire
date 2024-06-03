@@ -11,7 +11,7 @@ const Header = () => {
         <div className="p-5 flex items-center justify-between w-full">
           <div>
             <h1 className={cn(`${raleway.className} font-[600] text-[16px]`)}>
-              Welcome back, <span className="capitalize">{user?.username}</span>
+              Welcome back, <span className="capitalize">{user?.userN}</span>
             </h1>
           </div>
         </div>

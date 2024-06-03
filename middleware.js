@@ -18,5 +18,14 @@ export async function middleware(request) {
   return NextResponse.next();
 }
 export const config = {
-  matcher: "/admin/:path*",
+  matcher: [
+    "/admin/cars",
+    "/admin/customers",
+    "/admin/dashboard",
+    "/admin/drivers",
+    "/admin/outsourced",
+    "/admin/setting",
+    "/admin/transactions",
+    "/admin/users",
+  ],
 };

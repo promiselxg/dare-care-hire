@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { montserrat, raleway } from "@/lib/fonts";
+import { barlow, raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { formatDateWithoutTime } from "@/utils/getDateDifference";
 
@@ -24,7 +24,7 @@ export const UsersColumn = [
       return (
         <>
           <div>
-            <h1 className={cn(`${montserrat.className} capitalize font-[600]`)}>
+            <h1 className={cn(`${barlow.className} uppercase font-[600]`)}>
               {username}
             </h1>
           </div>

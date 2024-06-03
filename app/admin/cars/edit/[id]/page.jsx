@@ -26,7 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { generateSlug } from "@/utils/generateSlug";
 import { useToast } from "@/components/ui/use-toast";
@@ -35,6 +35,9 @@ import { acceptNumbersOnly } from "@/utils/regExpression";
 import { __ } from "@/utils/getElementById";
 import { useRouter } from "next/navigation";
 import useFetch from "@/hooks/useFetch";
+import AuthContext from "@/context/authContext";
+import { verifyToken } from "@/utils/verifyToken";
+import host from "@/utils/host";
 
 const formSchema = z.object({
   vehicle_name: z.string().min(2, {
@@ -51,6 +54,7 @@ const formSchema = z.object({
 
 const EditCar = ({ params }) => {
   const [selectedImages, setselectedImages] = useState([]);
+  const { user } = useContext(AuthContext);
   const [files, setFiles] = useState([]);
   const [slug, setSlug] = useState("");
   const [data, setData] = useState([]);
@@ -213,12 +217,12 @@ const EditCar = ({ params }) => {
   useEffect(() => {
     const getRecord = async () => {
       if (!params?.id || params.id === "") {
-        router.push("/admin/cars");
+        router.push(`/admin/cars?q=${user?.token}`);
       }
       try {
         const { data } = await axios.get(`/api/car/${params?.id}`);
         if (data?.message === "No Record found with the ID Provided") {
-          router.push("/admin/cars");
+          router.push(`/admin/cars?q=${user?.token}`);
         }
         setData(data);
       } catch (error) {
@@ -226,7 +230,17 @@ const EditCar = ({ params }) => {
       }
     };
     getRecord();
-  }, [params.id, router]);
+  }, [params.id, router, user]);
+
+  useEffect(() => {
+    const verifyServerToken = async () => {
+      const res = await verifyToken(user?.token);
+      if (res.message !== "success") {
+        window.location = `${host.host_url}/login`;
+      }
+    };
+    verifyServerToken();
+  }, [user?.token]);
 
   return (
     <>
@@ -234,7 +248,7 @@ const EditCar = ({ params }) => {
         <div className="w-full bg-white h-[60px] p-5 flex items-center border-[#eee] border-b-[1px]">
           <div className="w-fit flex  h-[60px]">
             <Link
-              href="/admin/cars"
+              href={`/admin/cars?q=${user?.token}`}
               className="border-r-[1px] border-[#eee] w-fit flex items-center pr-5"
             >
               <ChevronLeft size={30} />

@@ -192,7 +192,7 @@ const SideNav = () => {
                   <h1 className="text-[20px]">&#8358;</h1>Transactions
                 </Link>
               </li>
-              <li
+              {/* <li
                 className={`${
                   currentRoute === "/admin/report/log" && "active"
                 } my-[2px] h-10 nav`}
@@ -205,7 +205,7 @@ const SideNav = () => {
                   <StickyNote size={18} />
                   Logs
                 </Link>
-              </li>
+              </li> */}
               <Separator
                 className="my-2 w-full bg-[rgba(255,255,255,0.1)] "
                 orientation="horizontal"
@@ -314,7 +314,7 @@ const SideNav = () => {
                 onClick={() => handleLogOut()}
               >
                 <Power size={18} />
-                Logout ({user && truncateText(user?.username, 15)})
+                Logout ({user && truncateText(user?.userN, 15)})
               </Button>
             </div>
           </div>

@@ -43,7 +43,12 @@ export const POST = async (req) => {
     const isAdmin = role.includes(2200);
 
     const user = await prisma.user.create({
-      data: { username, password: hashedPassword, role, admin: isAdmin },
+      data: {
+        username: username?.toLowerCase(),
+        password: hashedPassword,
+        role,
+        admin: isAdmin,
+      },
     });
 
     if (user) {

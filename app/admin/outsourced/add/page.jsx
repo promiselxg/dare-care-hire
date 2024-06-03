@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { acceptNumbersOnly } from "@/utils/regExpression";
@@ -39,6 +39,9 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import AuthContext from "@/context/authContext";
+import { verifyToken } from "@/utils/verifyToken";
+import host from "@/utils/host";
 
 const formSchema = z.object({
   driver_name: z
@@ -56,6 +59,7 @@ const formSchema = z.object({
 
 const AddOutsourcedDriver = () => {
   const [loading, setLoading] = useState(false);
+  const { user } = useContext(AuthContext);
   const { toast } = useToast();
   const router = useRouter();
   const form = useForm({
@@ -110,13 +114,24 @@ const AddOutsourcedDriver = () => {
       field.vehicle_type
     );
   };
+
+  useEffect(() => {
+    const verifyServerToken = async () => {
+      const res = await verifyToken(user?.token);
+      if (res.message !== "success") {
+        window.location = `${host.host_url}/login`;
+      }
+    };
+    verifyServerToken();
+  }, [user?.token]);
+
   return (
     <>
       <div className="h-screen w-full flex flex-col  overflow-y-scroll">
         <div className="w-full bg-white h-[60px] p-5 flex items-center border-[#eee] border-b-[1px]">
           <div className="w-fit flex  h-[60px]">
             <Link
-              href="/admin/outsourced"
+              href={`/admin/outsourced?q=${user?.token}`}
               className="border-r-[1px] border-[#eee] w-fit flex items-center pr-5"
             >
               <ChevronLeft size={30} />

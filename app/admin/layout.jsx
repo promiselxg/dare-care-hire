@@ -20,7 +20,11 @@ export default function RootLayout({ children }) {
       <AuthContextProvider>
         <DriverProvider>
           <TransactionSortProvider>
-            <body className={cn(`${raleway.className} w-full flex h-screen`)}>
+            <body
+              className={cn(
+                `${raleway.className} w-full flex h-screen overflow-hidden`
+              )}
+            >
               <SideNav />
               <div className="bg-[whitesmoke] h-screen rounded-[8px] w-full">
                 {children}

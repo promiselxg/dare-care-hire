@@ -1,22 +1,10 @@
 "use client";
-
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { barlow, raleway } from "@/lib/fonts";
+import { raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
-import { handleDeleteBtn } from "@/utils/deleteItemFromDb";
-import { formatCurrency } from "@/utils/formatCurrency";
+
 import { formatDateTime } from "@/utils/getDateDifference";
 
-import { ArrowUpDown, Edit2, MoreHorizontal } from "lucide-react";
-import Link from "next/link";
-import { FiTrash2 } from "react-icons/fi";
+import { ArrowUpDown } from "lucide-react";
 
 export const columns = [
   {

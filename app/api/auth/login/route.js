@@ -5,9 +5,9 @@ import prisma from "@/utils/dbConnect";
 
 export const POST = async (req) => {
   const { username, password } = await req.json();
-
+  const userN = username.toLowerCase();
   //  check user credentials
-  if (!username || !password) {
+  if (!userN || !password) {
     return new NextResponse(
       JSON.stringify(
         { message: "Please enter your username or password." },
@@ -17,7 +17,7 @@ export const POST = async (req) => {
   }
   const user = await await prisma.user.findUnique({
     where: {
-      username: username,
+      username: userN,
     },
   });
 
@@ -27,13 +27,13 @@ export const POST = async (req) => {
       user.id,
       roles,
       user.admin,
-      username
+      userN
     );
     return new NextResponse(
       JSON.stringify(
         {
           message: "Login Successful",
-          userInfo: { token, id: user.id, isAdmin: user.admin, username },
+          userInfo: { token, id: user.id, isAdmin: user.admin, userN },
         },
         { status: 400 }
       )
@@ -50,9 +50,9 @@ export const POST = async (req) => {
 
 export const PUT = async (req) => {
   const { confirm_password, password, username, password1 } = await req.json();
-
+  const userN = username.toLowerCase();
   //  check user credentials
-  if (!confirm_password || !password || !username || !password1) {
+  if (!confirm_password || !password || !userN || !password1) {
     return new NextResponse(
       JSON.stringify({ message: "Please fill out the form." }, { status: 400 })
     );
@@ -66,7 +66,7 @@ export const PUT = async (req) => {
   //  check if logged in user exist
   const userExist = await prisma.user.findUnique({
     where: {
-      username: username,
+      username: userN,
     },
   });
 
@@ -88,7 +88,7 @@ export const PUT = async (req) => {
   const hashedPassword = await bcrypt.hash(confirm_password, salt);
   //  update DB
   const updatedRecord = await prisma.user.update({
-    where: { username },
+    where: { username: userN },
     data: {
       password: hashedPassword,
     },

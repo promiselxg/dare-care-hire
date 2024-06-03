@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { acceptNumbersOnly } from "@/utils/regExpression";
@@ -39,6 +39,10 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import AuthContext from "@/context/authContext";
+import { verifyToken } from "@/utils/verifyToken";
+import host from "@/utils/host";
+import useFetch from "@/hooks/useFetch";
 
 const formSchema = z.object({
   organization_name: z.string().min(10, {
@@ -71,6 +75,12 @@ const AddVendor = () => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
+  const { user } = useContext(AuthContext);
+  const { data, loading: loadingData } = useFetch("/setting/vehicle_type");
+  const { data: brandData, loading: loadingBrand } = useFetch(
+    "/setting/vehicle_brand"
+  );
+
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
@@ -112,6 +122,15 @@ const AddVendor = () => {
       __("submitBtn").innerHTML = "Submit";
     }
   }
+  useEffect(() => {
+    const verifyServerToken = async () => {
+      const res = await verifyToken(user?.token);
+      if (res.message !== "success") {
+        window.location = `${host.host_url}/login`;
+      }
+    };
+    verifyServerToken();
+  }, [user?.token]);
 
   const isInputFieldsValid = (field) => {
     return (
@@ -134,7 +153,7 @@ const AddVendor = () => {
         <div className="w-full bg-white h-[60px] p-5 flex items-center border-[#eee] border-b-[1px]">
           <div className="w-fit flex  h-[60px]">
             <Link
-              href="/admin/vendors"
+              href={`/admin/vendors?q=${user?.token}`}
               className="border-r-[1px] border-[#eee] w-fit flex items-center pr-5"
             >
               <ChevronLeft size={30} />
@@ -245,23 +264,33 @@ const AddVendor = () => {
                     name="vehicle_type"
                     render={({ field }) => (
                       <FormItem className="md:w-1/5 w-full">
-                        <FormLabel>Vehicle type</FormLabel>
+                        <FormLabel>Car Make</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
+                          disabled={loadingData}
                         >
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue
-                                placeholder="Vehicle Type"
+                                placeholder="Car Make"
                                 className="form-input"
                               />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="peogout">PEOGOUT</SelectItem>
-                            <SelectItem value="bus">BUS</SelectItem>
-                            <SelectItem value="suv">SUV</SelectItem>
+                            {data?.map((item) => {
+                              return (
+                                <SelectItem
+                                  value={item?.vehicle_type
+                                    ?.toLowerCase()
+                                    .replace(" ", "_")}
+                                  key={item.id}
+                                >
+                                  {item?.vehicle_type?.toUpperCase()}
+                                </SelectItem>
+                              );
+                            })}
                           </SelectContent>
                         </Select>
 
@@ -278,6 +307,7 @@ const AddVendor = () => {
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
+                          disabled={loadingBrand}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -288,8 +318,18 @@ const AddVendor = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="toyota">Toyota</SelectItem>
-                            <SelectItem value="mbw">BMW</SelectItem>
+                            {brandData?.map((item) => {
+                              return (
+                                <SelectItem
+                                  value={item?.vehicle_brand
+                                    ?.toLowerCase()
+                                    .replace(" ", "_")}
+                                  key={item?.id}
+                                >
+                                  {item?.vehicle_brand?.toUpperCase()}
+                                </SelectItem>
+                              );
+                            })}
                           </SelectContent>
                         </Select>
 
@@ -433,7 +473,12 @@ const AddVendor = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" id="submitBtn" disabled={loading}>
+                <Button
+                  type="submit"
+                  id="submitBtn"
+                  disabled={loading}
+                  className="w-full md:w-fit"
+                >
                   Submit
                 </Button>
               </form>

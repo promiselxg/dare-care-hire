@@ -231,7 +231,7 @@ const AddCar = () => {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-5"
+                className="space-y-5 mb-20"
               >
                 <FormField
                   control={form.control}

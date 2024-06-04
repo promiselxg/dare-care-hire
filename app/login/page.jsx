@@ -1,14 +1,12 @@
 "use client";
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
 import { __ } from "@/utils/getElementById";
 import AuthContext from "@/context/authContext";
 
 const Page = () => {
-  const router = useRouter();
   const { toast } = useToast();
   const [isloading, setLoading] = useState(false);
   const { dispatch } = useContext(AuthContext);
@@ -41,7 +39,7 @@ const Page = () => {
         });
       } else {
         dispatch({ type: "LOGIN_SUCCESS", payload: data.userInfo });
-        router.push(`/admin/dashboard?q=${data?.userInfo?.token}`);
+        window.location = `/admin/dashboard?q=${data?.userInfo?.token}`;
       }
     } catch (error) {
       console.log(error);

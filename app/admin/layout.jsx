@@ -8,6 +8,7 @@ import SideNav from "./_components/sidenav/sidenav";
 import { DriverProvider } from "@/context/sortContext";
 import { TransactionSortProvider } from "@/context/transactionSortContext";
 import { AuthContextProvider } from "@/context/authContext";
+import ToggleSideNav from "./_components/sidenav/toggle";
 
 export const metadata = {
   title: "Dashboard |  Rofad91 logistic services ltd",
@@ -22,11 +23,12 @@ export default function RootLayout({ children }) {
           <TransactionSortProvider>
             <body
               className={cn(
-                `${raleway.className} w-full flex h-screen overflow-hidden`
+                `${raleway.className} w-full h-fit flex md:h-screen overflow-hidden`
               )}
             >
               <SideNav />
-              <div className="bg-[whitesmoke] h-screen rounded-[8px] w-full">
+              <div className="bg-[whitesmoke] h-screen rounded-[8px] w-full overflow-hidden relative">
+                <ToggleSideNav />
                 {children}
               </div>
               <Toaster />

@@ -7,6 +7,7 @@ import {
   AtSign,
   CarFront,
   CarIcon,
+  ChevronLeft,
   LayoutDashboard,
   Plus,
   Power,
@@ -20,44 +21,30 @@ import { cn } from "@/lib/utils";
 import { barlow } from "@/lib/fonts";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import AuthContext from "@/context/authContext";
-import { getCookie } from "@/utils/verifyToken";
 import AuthModal from "../modal/passwordModal";
 import UsernameModal from "../modal/usernameModal";
 import { truncateText } from "@/utils/trucateText";
 
 const SideNav = () => {
   const [openDropDown, setOpenDropDown] = useState(false);
-  const [token, setToken] = useState(null);
+
   const currentRoute = usePathname();
-  const router = useRouter();
-  const { user, openNavBar, handleLogOut, hanldeOpenNav } =
-    useContext(AuthContext);
-
-  useEffect(() => {
-    const getToken = async () => {
-      const res = await getCookie();
-      setToken(res);
-    };
-    getToken();
-  }, [router]);
-
+  const { user, openNavBar, handleLogOut } = useContext(AuthContext);
   return (
     <>
       <ScrollArea
         className={cn(
           `${
             barlow.className
-          }  bg-[#191919] text-[#757575] hidden sticky top-0 bottom-0 md:relative h-screen navbar md:flex ${
-            openNavBar ? "w-[5%]" : "w-[20%]"
+          }  bg-[#191919] text-[#757575]  sticky top-0 bottom-0 md:relative h-screen navbar md:flex ${
+            !openNavBar ? "w-[70%] md:w-[0%]" : "w-[0%] md:w-[20%]"
           }`
         )}
       >
         <div className="p-5 w-full">
-          <h1 className="p-2 my-[2px] uppercase" onClick={hanldeOpenNav}>
-            Dare Autos
-          </h1>
+          <h1 className="p-2 my-[2px] uppercase">Dare Autos</h1>
           <div className="relative h-[calc(100vh-100px)]">
             <ul className="flex flex-col ">
               <li
@@ -66,7 +53,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href={`/admin/dashboard?q=${token}`}
+                  href={`/admin/dashboard?q=${user?.token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -82,7 +69,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href={`/admin/drivers?q=${token}`}
+                  href={`/admin/drivers?q=${user?.token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -96,7 +83,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href={`/admin/customers?q=${token}`}
+                  href={`/admin/customers?q=${user?.token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -112,7 +99,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href={`/admin/outsourced?q=${token}`}
+                  href={`/admin/outsourced?q=${user?.token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -128,7 +115,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href={`/admin/vendors?q=${token}`}
+                  href={`/admin/vendors?q=${user?.token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -144,7 +131,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href={`/admin/cars?q=${token}`}
+                  href={`/admin/cars?q=${user?.token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -162,7 +149,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href={`/admin/users?q=${token}`}
+                  href={`/admin/users?q=${user?.token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -185,7 +172,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href={`/admin/transactions?q=${token}`}
+                  href={`/admin/transactions?q=${user?.token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -198,7 +185,7 @@ const SideNav = () => {
                 } my-[2px] h-10 nav`}
               >
                 <Link
-                  href={`/admin/report/log?q=${token}`}
+                  href={`/admin/report/log?q=${user?.token}`}
                   className="flex gap-2 items-center py-2  h-8 leading-tight relative"
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
@@ -251,7 +238,7 @@ const SideNav = () => {
             >
               <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <Link
-                  href={`/admin/setting/type?q=${token}`}
+                  href={`/admin/setting/type?q=${user?.token}`}
                   className={`${
                     currentRoute === "/admin/setting/type" &&
                     "text-[--text-brown]"
@@ -264,7 +251,7 @@ const SideNav = () => {
               </li>
               <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <Link
-                  href={`/admin/setting/model?q=${token}`}
+                  href={`/admin/setting/model?q=${user?.token}`}
                   className={`${
                     currentRoute === "/admin/setting/model" &&
                     "text-[--text-brown]"
@@ -277,7 +264,7 @@ const SideNav = () => {
               </li>
               <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <Link
-                  href={`/admin/setting/feature?q=${token}`}
+                  href={`/admin/setting/feature?q=${user?.token}`}
                   className={`${
                     currentRoute === "/admin/setting/feature" &&
                     "text-[--text-brown]"
@@ -290,7 +277,7 @@ const SideNav = () => {
               </li>
               <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <Link
-                  href={`/admin/setting/banner?q=${token}`}
+                  href={`/admin/setting/banner?q=${user?.token}`}
                   className={`${
                     currentRoute === "/admin/setting/banner" &&
                     "text-[--text-brown]"

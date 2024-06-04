@@ -46,7 +46,7 @@ const AuthContext = createContext(INITIAL_STATE);
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
-  const [openNavBar, setOpenNavBar] = useState(false);
+  const [openNavBar, setOpenNavBar] = useState(true);
 
   const handleLogOut = async () => {
     try {

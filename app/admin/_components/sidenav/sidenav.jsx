@@ -301,7 +301,7 @@ const SideNav = () => {
                 onClick={() => handleLogOut()}
               >
                 <Power size={18} />
-                Logout ({user && truncateText(user?.userN, 15)})
+                Logout ({user && truncateText(user?.username, 15)})
               </Button>
             </div>
           </div>

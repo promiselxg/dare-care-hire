@@ -33,7 +33,12 @@ export const POST = async (req) => {
       JSON.stringify(
         {
           message: "Login Successful",
-          userInfo: { token, id: user.id, isAdmin: user.admin, userN },
+          userInfo: {
+            token,
+            id: user.id,
+            isAdmin: user.admin,
+            username: userN,
+          },
         },
         { status: 400 }
       )

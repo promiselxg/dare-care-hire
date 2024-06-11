@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { open_sans, syne } from "@/lib/fonts";
+import { barlow, montserrat, open_sans, syne } from "@/lib/fonts";
 import {
   AtSign,
   ChevronRight,
@@ -88,60 +88,82 @@ export default function Home() {
             </div>
           </div>
         </section> */}
-        <section className="w-full py-20">
-          <div className="container w-full md:w-[1100px] mx-auto  h-fit pb-10 ">
-            <div className="w-full justify-center flex flex-col text-center">
-              <h1
-                className={cn(
-                  `${syne.className} font-[600] text-[15px] md:text-[30px] mt-4 uppercase`
-                )}
-              >
-                OUR PREMIUM BRANDS
-              </h1>
-              <p className={cn(`${syne.className} text-sm`)}>
-                Luxury Rental Services
-              </p>
-              <div className="w-full grid md:grid-cols-5 grid-cols-2 gap-5 my-8">
-                <div className="border border-[rgba(0,0,0,0.1)] p-5 rounded-[4px] hover:cursor-pointer imageBtn">
-                  <Image
-                    src="/images/audi.jpg"
-                    width={200}
-                    height={100}
-                    alt="audi"
-                  />
-                </div>
-                <div className="border border-[rgba(0,0,0,0.1)] p-5 rounded-[4px] hover:cursor-pointer imageBtn">
-                  <Image
-                    src="/images/bmw.jpg"
-                    width={200}
-                    height={100}
-                    alt="audi"
-                  />
-                </div>
-                <div className="border border-[rgba(0,0,0,0.1)] p-5 rounded-[4px] hover:cursor-pointer imageBtn">
-                  <Image
-                    src="/images/ferrari.jpg"
-                    width={200}
-                    height={100}
-                    alt="audi"
-                  />
-                </div>
-                <div className="border border-[rgba(0,0,0,0.1)] p-5 rounded-[4px] hover:cursor-pointer imageBtn">
-                  <Image
-                    src="/images/pegeout.jpg"
-                    width={230}
-                    height={100}
-                    alt="audi"
-                  />
-                </div>
-                <div className="border border-[rgba(0,0,0,0.1)] p-5 rounded-[4px] hover:cursor-pointer imageBtn">
-                  <Image
-                    src="/images/ford.jpg"
-                    width={230}
-                    height={100}
-                    alt="audi"
-                  />
-                </div>
+        <section className="w-full pt-20">
+          <div className="container w-full md:w-[1100px] mx-auto h-fit pb-10">
+            <h1
+              className={cn(
+                `${barlow.className} font-[600] text-[15px] md:text-[30px] uppercase text-center mb-8`
+              )}
+            >
+              What We Do
+            </h1>
+            <h1>
+              <b>Rofad91 logistic services ltd</b> guarantees a punctual and
+              luxurious transportation experience. Our seasoned staff provides
+              tailored support to elevate any celebration or corporate event.
+              Enjoy the assurance of a pristine, picture-perfect vehicle
+              awaiting you for special occasions and corporate ground
+              transportation needs.
+            </h1>
+          </div>
+        </section>
+        <section className="w-full my-10 md:w-[1100px] mx-auto">
+          <div className="container w-full pb-10">
+            <h1
+              className={cn(
+                `${barlow.className} font-[600] text-[15px] md:text-[30px] uppercase text-center mb-8`
+              )}
+            >
+              Our Services
+            </h1>
+            <div className="grid md:grid-cols-3 grid-cols-1 gap-4">
+              <div className="p-10 bg-[whitesmoke]">
+                <h1
+                  className={cn(
+                    `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize`
+                  )}
+                >
+                  Airport Pick-up/Drop-off
+                </h1>
+                <p className="text-[14px]">
+                  We provide pick up and drop off and shuttle service to and
+                  from all major local airports in surrounding areas in one of
+                  our comfortable luxury sedans. We can assist you with airport
+                  transfers for stress-free travel and take you to all your
+                  desired destinations.
+                </p>
+              </div>
+              <div className="p-10 bg-[whitesmoke]">
+                <h1
+                  className={cn(
+                    `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize`
+                  )}
+                >
+                  Inter-state Travels
+                </h1>
+                <p className="text-[14px]">
+                  We provide pick up and drop off and shuttle service to and
+                  from all major local airports in surrounding areas in one of
+                  our comfortable luxury sedans. We can assist you with airport
+                  transfers for stress-free travel and take you to all your
+                  desired destinations.
+                </p>
+              </div>
+              <div className="p-10 bg-[whitesmoke]">
+                <h1
+                  className={cn(
+                    `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize`
+                  )}
+                >
+                  Reservations
+                </h1>
+                <p className="text-[14px]">
+                  We also provide customized service for your special event such
+                  as your wedding day, corporate, night out on the town,
+                  bachelor/bachelorette party, concert, and more. We also
+                  provide high-quality private car service for your business
+                  meetings or corporate affairs.
+                </p>
               </div>
             </div>
           </div>

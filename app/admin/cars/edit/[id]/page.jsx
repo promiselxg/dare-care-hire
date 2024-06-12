@@ -202,7 +202,7 @@ const EditCar = ({ params }) => {
           toast({
             title: "Vehicle Images updated successfully.",
           });
-          window.location = "/admin/cars/";
+          window.location.reload();
         }
       }
     } catch (error) {
@@ -241,6 +241,14 @@ const EditCar = ({ params }) => {
     };
     verifyServerToken();
   }, [user?.token]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   return (
     <>

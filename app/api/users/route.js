@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export const GET = async (req) => {
   try {
-    const response = await prisma.user.findMany({
+    const response = await prisma.registeredUser.findMany({
       select: {
         id: true,
         username: true,

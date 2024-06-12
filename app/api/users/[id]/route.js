@@ -6,10 +6,10 @@ export const DELETE = async (req, { params }) => {
     return errorResponse("Invalid Request ID", 200);
   }
   try {
-    await prisma.user.findUnique({
+    await prisma.registeredUser.findUnique({
       where: { id: params.id },
     });
-    const deleteItem = await prisma.user.delete({
+    const deleteItem = await prisma.registeredUser.delete({
       where: { id: params.id },
     });
     if (deleteItem) {

@@ -23,8 +23,12 @@ const Page = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post("/api/auth/register", formRecord);
-    console.log(data?.message);
+    try {
+      const { data } = await axios.post("/api/auth/register", formRecord);
+      console.log(data?.message);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

@@ -15,7 +15,7 @@ export const POST = async (req) => {
       )
     );
   }
-  const user = await await prisma.user.findUnique({
+  const user = await await prisma.registeredUser.findUnique({
     where: {
       username: userN,
     },
@@ -69,7 +69,7 @@ export const PUT = async (req) => {
     );
   }
   //  check if logged in user exist
-  const userExist = await prisma.user.findUnique({
+  const userExist = await prisma.registeredUser.findUnique({
     where: {
       username: userN,
     },
@@ -92,7 +92,7 @@ export const PUT = async (req) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(confirm_password, salt);
   //  update DB
-  const updatedRecord = await prisma.user.update({
+  const updatedRecord = await prisma.registeredUser.update({
     where: { username: userN },
     data: {
       password: hashedPassword,

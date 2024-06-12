@@ -45,7 +45,7 @@ export const PUT = async (req) => {
   }
 
   // Check if logged in user exists
-  const userExist = await prisma.user.findUnique({
+  const userExist = await prisma.registeredUser.findUnique({
     where: {
       username: username,
     },
@@ -69,7 +69,7 @@ export const PUT = async (req) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(confirm_password, salt);
     // Update DB
-    const updatedRecord = await prisma.user.update({
+    const updatedRecord = await prisma.registeredUser.update({
       where: { username },
       data: {
         password: hashedPassword,
@@ -84,7 +84,7 @@ export const PUT = async (req) => {
   // Handle username update
   if (type === "username") {
     // Check if new username already exists
-    const newUserExist = await prisma.user.findUnique({
+    const newUserExist = await prisma.registeredUser.findUnique({
       where: {
         username: new_username,
       },
@@ -97,7 +97,7 @@ export const PUT = async (req) => {
     }
 
     // Update DB
-    const updatedRecord = await prisma.user.update({
+    const updatedRecord = await prisma.registeredUser.update({
       where: { username },
       data: {
         username: new_username,

@@ -66,11 +66,11 @@ export const UsersColumn = [
   {
     id: "action",
     cell: ({ row }) => {
-      const { id, role } = row.original;
-      const isAdmin = role.includes("Administrator");
+      const { id, admin } = row.original;
+
       return (
         <DropdownMenu>
-          {!isAdmin && (
+          {!admin && (
             <>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">

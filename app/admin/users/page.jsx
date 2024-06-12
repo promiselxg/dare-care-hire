@@ -9,6 +9,7 @@ import { UsersColumn } from "../_components/table/users/columns";
 
 const SettingsPage = () => {
   const { loading, data } = useFetch("/users");
+  console.log(data);
   return (
     <>
       <section className="w-full flex h-screen flex-col gap-y-5 p-5 overflow-y-scroll bg-[whitesmoke]">

@@ -63,9 +63,7 @@ export const UsersColumn = [
                       key={i}
                       className={`${cn(
                         `${
-                          r.toLowerCase() === "moderator"
-                            ? "bg-[#000]"
-                            : "bg-[#007eff]"
+                          r === "1500" ? "bg-[#000]" : "bg-[#007eff]"
                         } rounded-[5px] px-2 md:py-1 md:px-2 text-white text-[10px] md:text-[12px]`
                       )}`}
                     >

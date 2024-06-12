@@ -11,7 +11,8 @@ const useFetch = (url) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`${API_URL}${url}`);
+        const uniqueUrl = `${API_URL}${url}?_=${new Date().getTime()}`;
+        const res = await axios.get(uniqueUrl);
         setData(res.data);
       } catch (err) {
         setError(err);

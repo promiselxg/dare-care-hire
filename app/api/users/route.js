@@ -15,7 +15,7 @@ export const GET = async (req) => {
       },
     });
     const res = await updateRoles(response);
-    return new NextResponse(JSON.stringify(response, { status: 200 }));
+    return new NextResponse(JSON.stringify(res, { status: 200 }));
   } catch (err) {
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })

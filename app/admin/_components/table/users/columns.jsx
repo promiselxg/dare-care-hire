@@ -44,41 +44,6 @@ export const UsersColumn = [
     },
   },
   {
-    accessorKey: "role",
-    header: "Assigned Privilage",
-    cell: ({ row }) => {
-      const { role } = row.original;
-      return (
-        <>
-          <div>
-            <h1
-              className={cn(
-                `${raleway.className} text-[--text-hover] font-[600]`
-              )}
-            >
-              <ul className="flex gap-2">
-                {role.map((r, i) => {
-                  return (
-                    <li
-                      key={i}
-                      className={`${cn(
-                        `${
-                          r === "moderator" ? "bg-[#000]" : "bg-[#007eff]"
-                        } rounded-[5px] px-2 md:py-1 md:px-2 text-white text-[10px] md:text-[12px]`
-                      )}`}
-                    >
-                      {r}
-                    </li>
-                  );
-                })}
-              </ul>
-            </h1>
-          </div>
-        </>
-      );
-    },
-  },
-  {
     accessorKey: "createdAt",
     header: "Created Date",
     cell: ({ row }) => {

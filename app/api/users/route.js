@@ -7,14 +7,13 @@ export const GET = async (req) => {
       select: {
         id: true,
         username: true,
-        role: true,
         createdAt: true,
+        admin: true,
       },
       orderBy: {
         createdAt: "desc",
       },
     });
-    const res = await updateRoles(response);
     return new NextResponse(JSON.stringify(response, { status: 200 }));
   } catch (err) {
     return new NextResponse(
@@ -23,16 +22,16 @@ export const GET = async (req) => {
   }
 };
 
-const updateRoles = async (users) => {
-  return users.map((user) => {
-    const updatedRoles = user.role.map(
-      (roleId) => roleMapping[roleId] || roleId
-    );
-    return { ...user, role: updatedRoles };
-  });
-};
+// const updateRoles = async (users) => {
+//   return users.map((user) => {
+//     const updatedRoles = user.role.map(
+//       (roleId) => roleMapping[roleId] || roleId
+//     );
+//     return { ...user, role: updatedRoles };
+//   });
+// };
 
-const roleMapping = {
-  1500: "Moderator",
-  2200: "Administrator",
-};
+// const roleMapping = {
+//   1500: "Moderator",
+//   2200: "Administrator",
+// };

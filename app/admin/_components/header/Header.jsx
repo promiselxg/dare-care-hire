@@ -1,3 +1,4 @@
+"use client";
 import AuthContext from "@/context/authContext";
 import { raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
@@ -11,7 +12,7 @@ const Header = () => {
         <div className="p-5 flex items-center justify-between w-full">
           <div>
             <h1 className={cn(`${raleway.className} font-[600] text-[16px]`)}>
-              Welcome back, <span className="capitalize">{user?.username}</span>
+              Welcome back,{user?.username}
             </h1>
           </div>
         </div>

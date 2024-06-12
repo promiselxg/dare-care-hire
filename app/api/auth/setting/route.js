@@ -12,7 +12,6 @@ export const PUT = async (req) => {
     password,
   } = await req.json();
 
-  console.log(username);
   if (type === "password") {
     // Check user credentials
     if (!confirm_password || !password || !password1) {

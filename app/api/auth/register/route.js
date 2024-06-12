@@ -4,68 +4,63 @@ import prisma from "@/utils/dbConnect";
 
 export const POST = async (req) => {
   try {
-    let { username, password, roles, confirm_password } = await req.json();
-    const role = [];
+    const { username, password, roles, confirm_password } = await req.json();
 
-    roles.forEach((r) => {
-      role.push(parseInt(r));
-    });
-
-    if (!username || !role) {
-      return new NextResponse(
-        JSON.stringify(
-          { message: "Please fill out the required fields!" },
-          { status: 500 }
-        )
+    // Validate required fields
+    if (!username || !roles) {
+      return NextResponse.json(
+        { message: "Please fill out the required fields!" },
+        { status: 400 }
       );
     }
 
+    // Validate password confirmation
     if (password !== confirm_password) {
-      return new NextResponse(
-        JSON.stringify({ message: "Password Mismatch!" }, { status: 400 })
+      return NextResponse.json(
+        { message: "Password Mismatch!" },
+        { status: 400 }
       );
     }
 
-    const userExist = await prisma.user.findUnique({
-      where: {
-        username: username,
-      },
+    // Check if username already exists
+    const userExist = await prisma.registeredUser.findUnique({
+      where: { username },
     });
 
     if (userExist) {
-      return new NextResponse(
-        JSON.stringify({ message: "Username  already exist." }, { status: 400 })
+      return NextResponse.json(
+        { message: "Username already exists." },
+        { status: 400 }
       );
     }
 
+    // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const isAdmin = role.includes(2200);
 
-    const user = await prisma.user.create({
+    // Parse roles and check if user is admin
+    const parsedRoles = roles.map((r) => parseInt(r));
+    const isAdmin = parsedRoles.includes(2200);
+
+    // Create new user
+    const user = await prisma.registeredUser.create({
       data: {
-        username: username?.toLowerCase(),
+        username: username.toLowerCase(),
         password: hashedPassword,
-        role,
+        role: parsedRoles,
         admin: isAdmin,
       },
     });
 
-    if (user) {
-      return new NextResponse(
-        JSON.stringify(
-          { message: "Registration successful.", user },
-          { status: 200 }
-        )
-      );
-    } else {
-      return new NextResponse(
-        JSON.stringify({ message: "Invalid Credentials." }, { status: 400 })
-      );
-    }
+    // Return success response
+    return NextResponse.json(
+      { message: "Registration successful.", user },
+      { status: 201 }
+    );
   } catch (error) {
-    return new NextResponse(
-      JSON.stringify({ message: error.message }, { status: 401 })
+    return NextResponse.json(
+      { message: "Something went wrong!", error: error.message },
+      { status: 500 }
     );
   }
 };

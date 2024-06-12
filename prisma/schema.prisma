@@ -6,7 +6,7 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-model User {
+model registeredUser {
   id                    String     @id @default(cuid()) @map("_id")
   username              String     @unique
   password              String
@@ -135,7 +135,7 @@ model ExtraFeatures {
   updatedAt      DateTime @updatedAt
 }
 
-model Slider {
+model slider {
   id            String   @id @default(cuid()) @map("_id")
   description   String?
   mediaUrl      String

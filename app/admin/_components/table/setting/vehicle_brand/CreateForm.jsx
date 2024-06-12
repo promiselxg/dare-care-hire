@@ -60,7 +60,7 @@ export function NewVehicleBrandForm() {
           field.replace("_", " "),
       });
     } finally {
-      __("submitBtn").innerHTML = "Submit";
+      __("submitBtn").innerHTML = "Create Model";
       __("submitBtn").disabled = false;
     }
   };
@@ -96,7 +96,7 @@ export function NewVehicleBrandForm() {
           disabled={!formData}
           onClick={() => handleFormSubmit("vehicle_brand")}
         >
-          Submit
+          Create Model
         </Button>
       </form>
     </Form>

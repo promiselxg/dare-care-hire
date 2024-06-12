@@ -8,7 +8,7 @@ import { UsersDataTable } from "../_components/table/users/data-table";
 import { UsersColumn } from "../_components/table/users/columns";
 
 const SettingsPage = () => {
-  const { loading, data } = useFetch("/users");
+  const { loading, data: users } = useFetch("/users");
   console.log(data);
   return (
     <>
@@ -22,7 +22,7 @@ const SettingsPage = () => {
             Manage Users
           </h1>
         </div>
-        <UsersDataTable columns={UsersColumn} data={data} loading={loading} />
+        <UsersDataTable columns={UsersColumn} data={users} loading={loading} />
       </section>
     </>
   );

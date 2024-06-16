@@ -34,7 +34,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center text-[--primary-text-color] mb-5 gap-4">
                 <a
-                  href="https://www.youtube.com/@Djzaddy"
+                  href="#"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-all delay-75 hover:text-[--text-brown] cursor-pointer"
@@ -42,7 +42,7 @@ const Footer = () => {
                   <Youtube size={40} />
                 </a>
                 <a
-                  href="https://open.spotify.com/user/jg47bne0dyy3hnj0wb882b3qs?si=TjEelt1VTnGIXCuPqm_qgQ "
+                  href="#"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-all delay-75 hover:text-[--text-brown] cursor-pointer"
@@ -50,20 +50,12 @@ const Footer = () => {
                   <SlSocialSpotify size={40} />
                 </a>
                 <a
-                  href="https://www.instagram.com/deejay_zaddy/?igsh=bG54dnNudWh2ZjIz"
+                  href="#"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-all delay-75 hover:text-[--text-brown] cursor-pointer"
                 >
                   <FiInstagram size={40} />
-                </a>
-                <a
-                  href="https://www.tiktok.com/@bidexibile?_t=8lYEdBiZYMz&_r=1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-all delay-75 hover:text-[--text-brown] cursor-pointer"
-                >
-                  <PiTiktokLogoLight size={40} />
                 </a>
               </div>
               <p

@@ -57,19 +57,21 @@ const Header = () => {
                 >
                   <Link href="/cart">Auto Cart</Link>
                 </li>
-                <li
+                {/* <li
                   className={`${
                     currentRoute === "/" && "isactive"
                   } hover:text-[--text-hover] transition-all delay-75`}
                 >
                   <Link href="/">About Us</Link>
-                </li>
+                </li> */}
                 <li
                   className={`${
                     currentRoute === "/" && "isactive"
                   } hover:text-[--text-hover] transition-all delay-75`}
                 >
-                  <Link href="/">Contact Us</Link>
+                  <Link href="https://rofad91globalservicesltd.tawk.help">
+                    Contact Us
+                  </Link>
                 </li>
               </ul>
               {!openNavBar ? (
@@ -125,19 +127,21 @@ const Header = () => {
             >
               <Link href="/cart">Auto Cart</Link>
             </li>
-            <li
+            {/* <li
               className={`${
                 currentRoute === "/" && "isactive"
               } hover:text-[--text-hover] transition-all delay-75 text-[18px]`}
             >
               <Link href="/">About Us</Link>
-            </li>
+            </li> */}
             <li
               className={`${
                 currentRoute === "/" && "isactive"
               } hover:text-[--text-hover] transition-all delay-75 text-[18px]`}
             >
-              <Link href="/">Contact Us</Link>
+              <Link href="https://rofad91globalservicesltd.tawk.help">
+                Contact Us
+              </Link>
             </li>
           </ul>
         </div>

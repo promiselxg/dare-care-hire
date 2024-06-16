@@ -28,8 +28,7 @@ const Footer = () => {
                     `${open_sans.className} font-[400] text-sm text-[--primary-text-color] leading-[1.7]`
                   )}
                 >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Et,
-                  odio!
+                  Rofad91 Global Service Limited All rights reserved.
                 </p>
               </div>
               <div className="flex items-center text-[--primary-text-color] mb-5 gap-4">

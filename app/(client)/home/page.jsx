@@ -15,6 +15,7 @@ import {
 import Hero from "../_component/Hero";
 import { CarCarousa } from "../_component/carousel/carCard";
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
   useEffect(() => {
@@ -89,7 +90,7 @@ export default function Home() {
           </div>
         </section> */}
         <section className="w-full pt-20">
-          <div className="container w-full md:w-[1100px] mx-auto h-fit pb-10">
+          <div className="container w-full md:w-[1100px] mx-auto h-fit pb-10 text-center">
             <h1
               className={cn(
                 `${barlow.className} font-[600] text-[15px] md:text-[30px] uppercase text-center mb-8`
@@ -98,12 +99,10 @@ export default function Home() {
               What We Do
             </h1>
             <h1>
-              <b>Rofad91 logistic services ltd</b> guarantees a punctual and
-              luxurious transportation experience. Our seasoned staff provides
-              tailored support to elevate any celebration or corporate event.
-              Enjoy the assurance of a pristine, picture-perfect vehicle
-              awaiting you for special occasions and corporate ground
-              transportation needs.
+              <b>At ROFAD</b>, We have standard cars and SUVs for airport pick
+              up and drop off, point to point car hire services, 18 seater bus
+              and Coaster bus services. We are also into Haulage services,
+              relocation and arrangement of properties.
             </h1>
           </div>
         </section>
@@ -117,52 +116,65 @@ export default function Home() {
               Our Services
             </h1>
             <div className="grid md:grid-cols-3 grid-cols-1 gap-4">
-              <div className="p-10 bg-[whitesmoke]">
+              <div className="p-10 bg-[whitesmoke] h-fit">
                 <h1
                   className={cn(
-                    `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize`
+                    `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize text-center mb-2`
                   )}
                 >
-                  Airport Pick-up/Drop-off
+                  Airport Pick-up/Drop-off.
                 </h1>
                 <p className="text-[14px]">
-                  We provide pick up and drop off and shuttle service to and
-                  from all major local airports in surrounding areas in one of
-                  our comfortable luxury sedans. We can assist you with airport
-                  transfers for stress-free travel and take you to all your
-                  desired destinations.
+                  Do you have a flight to catch, or an appointment to meet, do
+                  you want someone to help you pick-up or drop-off someone at
+                  the airport? at <b>Rofad global services ltd</b>, we offer
+                  Airport Pick-up and Drop-off.
                 </p>
               </div>
-              <div className="p-10 bg-[whitesmoke]">
+              <div className="p-10 bg-[whitesmoke] h-fit">
                 <h1
                   className={cn(
-                    `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize`
+                    `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize text-center mb-2`
                   )}
                 >
-                  Inter-state Travels
+                  Inter-state Travels within Nigeria.
                 </h1>
                 <p className="text-[14px]">
-                  We provide pick up and drop off and shuttle service to and
-                  from all major local airports in surrounding areas in one of
-                  our comfortable luxury sedans. We can assist you with airport
-                  transfers for stress-free travel and take you to all your
-                  desired destinations.
+                  Are you planning a weekend gateway or a cross-country
+                  adventure,with our well-maintained vehicles and experienced
+                  drivers, we are ready to take you wherever you wish to visit
+                  within the country. we make inter-state travels within Nigeria
+                  easy, enjoyable,affordable, convenient and stress-free.{" "}
+                  <Link
+                    href="https://www.rofad91globalservicesltd.com/cars"
+                    className="text-red-400 font-bold"
+                  >
+                    Book a ride with us.
+                  </Link>
                 </p>
               </div>
-              <div className="p-10 bg-[whitesmoke]">
+              <div className="p-10 bg-[whitesmoke] h-fit">
                 <h1
                   className={cn(
-                    `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize`
+                    `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize text-center mb-2`
                   )}
                 >
-                  Reservations
+                  Executive Car Hire.
                 </h1>
                 <p className="text-[14px]">
-                  We also provide customized service for your special event such
-                  as your wedding day, corporate, night out on the town,
-                  bachelor/bachelorette party, concert, and more. We also
-                  provide high-quality private car service for your business
-                  meetings or corporate affairs.
+                  Rofad global services ltd executive car rentals are tailored
+                  to exceed the expectations of our professionals and corporate
+                  clients. Our{" "}
+                  <Link
+                    href="https://www.rofad91globalservicesltd.com/cars"
+                    className="text-red-400 font-bold"
+                  >
+                    fleets
+                  </Link>{" "}
+                  boast of luxurious vehicles, with our experienced drivers and
+                  well maintained vehicles, we always ensure that every
+                  executive travel needs are met with unparalled efficiency and
+                  excellence.
                 </p>
               </div>
             </div>
@@ -184,7 +196,7 @@ export default function Home() {
             </h1>
             <div className="w-full grid md:grid-cols-3 grid-cols-1 gap-5">
               <div className=" text-[whitesmoke] w-full md:w-[380px]  flex items-center gap-5">
-                <Search size={100} />
+                <Search size={160} className="text-[500px]" />
                 <div>
                   <h1
                     className={cn(
@@ -194,11 +206,11 @@ export default function Home() {
                     Find a car
                   </h1>
                   <p className={cn(`${syne.className} text-sm`)}>
-                    Discover your dream ride with our easy &apos;Find a
-                    car&apos; search tool.
+                    We have different range of vehicles for different occasions,
+                    take your time to search through our fleets of cars to
+                    discover your dream ride.
                   </p>
                 </div>
-                <ChevronRight size={80} />
               </div>
               <div className=" text-[whitesmoke]  w-full md:w-[380px] flex items-center gap-5">
                 <MapPinned size={100} />
@@ -211,14 +223,13 @@ export default function Home() {
                     Select location
                   </h1>
                   <p className={cn(`${syne.className} text-sm`)}>
-                    Provide a ride pick-up, drop-off and pick-up and drop-off
-                    time.
+                    Provide us with a ride pick-up, drop-off and pick-up and
+                    drop-off time.
                   </p>
                 </div>
-                <ChevronRight size={80} />
               </div>
               <div className=" text-[whitesmoke] w-full md:w-[380px] flex items-center gap-5">
-                <CreditCard size={80} />
+                <CreditCard size={230} />
                 <div>
                   <h1
                     className={cn(
@@ -228,8 +239,12 @@ export default function Home() {
                     Place your order
                   </h1>
                   <p className={cn(`${syne.className} text-sm`)}>
-                    Use our checkout form to submit your reservation,
-                    reservation is valid after payment is made.
+                    Use our checkout form to submit your reservation, a
+                    reservation ID will be generated which you can use to pick
+                    up your ride.
+                    <b className="text-red-400">
+                      &nbsp; your reservation is valid after payment is made.
+                    </b>
                   </p>
                 </div>
               </div>

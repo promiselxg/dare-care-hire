@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { barlow, montserrat } from "@/lib/fonts";
+import { barlow, montserrat, open_sans } from "@/lib/fonts";
 import { Button } from "@/components/ui/button";
 import useFetch from "@/hooks/useFetch";
 import { truncateText } from "@/utils/trucateText";
@@ -42,7 +42,7 @@ export function CarCarousa() {
                   width={250}
                   height={100}
                   alt={car?.vehicle_name}
-                  className="object-cover w-full h-[150px] "
+                  className="object-cover w-full h-[200px] "
                 />
                 <div className="w-full p-3 bg-[whitesmoke] h-fit md:h-[300px] relative">
                   <div className="flex justify-center text-center flex-col">
@@ -71,14 +71,16 @@ export function CarCarousa() {
                   <div className="w-full flex justify-between items-start mt-5 mb-2 flex-col space-y-3 md:absolute md:bottom-5">
                     <h1
                       className={cn(
-                        `${montserrat.className} font-[600] text-[18px]`
+                        `${open_sans.className} font-[400] text-[16px] md:text-[18px]`
                       )}
                     >
-                      &#8358;
-                      {new Intl.NumberFormat().format(car?.amount)}
+                      starting from &#8358;
+                      <span className="font-[600]">
+                        {new Intl.NumberFormat().format(car?.amount)}
+                      </span>
                     </h1>
-                    <Link href={`/cars/${car?.id}`}>
-                      <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
+                    <Link href={`/cars/${car?.id}`} className="flex w-full">
+                      <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-[90%]">
                         rent it
                       </Button>
                     </Link>

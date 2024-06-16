@@ -279,7 +279,9 @@ export default function Home() {
                   >
                     Call Us For Booking
                   </h1>
-                  <h1 className="-mt-2 text-sm font-bold">(258) 403 7961</h1>
+                  <h1 className="-mt-2 text-sm font-bold">
+                    (+234) 803 820 6971
+                  </h1>
                 </span>
               </div>
               <div className="flex items-center gap-5">
@@ -291,7 +293,7 @@ export default function Home() {
                     Email Support
                   </h1>
                   <h1 className="ml-1 -mt-2 text-sm font-bold">
-                    info@cardealer.com
+                    enquiry@rofad91globalservicesltd.com
                   </h1>
                 </span>
               </div>

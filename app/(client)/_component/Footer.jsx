@@ -5,6 +5,7 @@ import { FiInstagram } from "react-icons/fi";
 import { SlSocialSpotify } from "react-icons/sl";
 import { PiTiktokLogoLight } from "react-icons/pi";
 import { Phone, Mail, MapPin, Youtube } from "lucide-react";
+import Tawk from "@/utils/tawk";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -75,6 +76,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
+        <Tawk />
       </div>
     </>
   );

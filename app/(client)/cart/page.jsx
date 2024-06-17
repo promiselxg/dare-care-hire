@@ -158,7 +158,7 @@ const CartPage = () => {
                                 <span className="value">
                                   {formatDateTime(item?.rideInfo?.pickup_date)}
                                 </span>
-                                <span className="location-value capitalize">
+                                <span className="location-value capitalize font-[600]">
                                   {item?.rideInfo?.pickup_location}
                                 </span>
                               </div>
@@ -169,7 +169,7 @@ const CartPage = () => {
                                 <span className="value">
                                   {formatDateTime(item?.rideInfo?.dropoff_date)}
                                 </span>
-                                <span className="location-value capitalize">
+                                <span className="location-value capitalize font-[600]">
                                   {item?.rideInfo?.dropoff_location}
                                 </span>
                               </div>
@@ -184,23 +184,25 @@ const CartPage = () => {
                                   >
                                     Extra Resources
                                   </h1>
-                                  {Object.entries(
-                                    item?.extra_resource || {}
-                                  ).map(([key, value]) => (
-                                    <div
-                                      key={key}
-                                      className="flex gap-3 text-[12px] capitalize"
-                                    >
-                                      <span className="uppercase">
-                                        {key.replace(/_/g, " ")}
-                                      </span>{" "}
-                                      -
-                                      <span className="font-bold">
-                                        &#8358;
-                                        {new Intl.NumberFormat().format(value)}
-                                      </span>
-                                    </div>
-                                  ))}
+                                  {Object.entries(item.extra_resource).map(
+                                    ([key, value]) => (
+                                      <div
+                                        key={key}
+                                        className="flex gap-3 text-[12px] capitalize"
+                                      >
+                                        <span className="uppercase">
+                                          {key.replace(/_/g, " ")}
+                                        </span>{" "}
+                                        -
+                                        <span className="font-bold">
+                                          &#8358;
+                                          {new Intl.NumberFormat().format(
+                                            value
+                                          )}
+                                        </span>
+                                      </div>
+                                    )
+                                  )}
                                 </div>
                               )}
                             </div>

@@ -15,7 +15,6 @@ import { redirect } from "next/navigation";
 
 const SuccessfullOrderPage = ({ params }) => {
   const [loading, setLoading] = useState(false);
-  const [visible, setVisible] = useState(true);
   const [data, setData] = useState([]);
 
   if (data?.message === "No Record found with the ID Provided") {
@@ -35,16 +34,13 @@ const SuccessfullOrderPage = ({ params }) => {
   }, [params.orderid, data?.length]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
     const getTransaction = async () => {
       setLoading(true);
-      const response = await axios.get(`/api/checkout/${params?.orderid}`);
+      const response = await axios.get(`/api/checkout/${params?.orderid}`, {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      });
       setData(response.data);
       setLoading(false);
     };
@@ -83,15 +79,6 @@ const SuccessfullOrderPage = ({ params }) => {
           </div>
           <section className="w-full flex h-fit overflow-x-scroll md:overflow-x-hidden">
             <div className="md:container w-full md:w-[80%] flex mx-auto pt-10 px-5 md:px-0 flex-col ">
-              {visible && (
-                <h1
-                  className={cn(
-                    `${raleway.className} font-[500] text-[20px] mb-10 bg-[green] p-5 rounded-[8px] text-white`
-                  )}
-                >
-                  Thank you. Your order has been received.
-                </h1>
-              )}
               <div className="flex flex-col gap-y-3">
                 <div className="flex gap-2 items-center leading-relaxed">
                   <span className={cn(`${raleway.className} uppercase`)}>
@@ -220,9 +207,18 @@ const SuccessfullOrderPage = ({ params }) => {
                               {formatCurrency(item?.transaction_amount)}
                             </td>
                           </tr>
+                          {item?.order_note !== "" && (
+                            <tr>
+                              <td colSpan={2}>
+                                <b>Order Note: </b>
+                                {item?.order_note}
+                              </td>
+                            </tr>
+                          )}
                         </>
                       );
                     })}
+
                     <tr>
                       <th className="text-left flex uppercase bg-[#f6f6f6] font-bold">
                         total amount to pay

@@ -39,12 +39,17 @@ export default function Home() {
             >
               What We Do
             </h1>
-            <h1 className="text-[16px] text-[#333]">
-              <b>At ROFAD</b>, We have standard cars and SUVs for airport pick
-              up and drop off, point to point car hire services, 18 seater bus
-              and Coaster bus services. We are also into Haulage services,
-              relocation and arrangement of properties.
-            </h1>
+            <div className="text-[16px] text-[#333]">
+              At <b>ROFAD91</b>, we offer a comprehensive range of
+              transportation solutions designed to meet your needs:
+              <ul>
+                <li>
+                  - Airport pick-up and drop-off with standard cars, SUVs, and
+                  spacious buses
+                </li>
+                <li> - Point-to-point car hire services</li>
+              </ul>
+            </div>
           </div>
         </section>
         <section className="w-full py-20">
@@ -68,8 +73,8 @@ export default function Home() {
                 <p className="text-[14px] text-justify">
                   Do you have a flight to catch, or an appointment to meet, do
                   you want someone to help you pick-up or drop-off someone at
-                  the airport? at <b>Rofad global services ltd</b>, we offer
-                  Airport Pick-up and Drop-off.
+                  the airport? at <b>Rofad91 logistics</b>, we offer Airport
+                  Pick-up and Drop-off.
                 </p>
               </div>
               <div className="p-10 bg-fuchsia-200 h-fit text-center flex flex-col justify-center w-full items-center space-y-5">

@@ -68,7 +68,7 @@ export function TransactionDataTable({ columns, data, loading }) {
   }
 
   return (
-    <div className="rounded-md border my-5 p-5">
+    <div className="rounded-md border my-5 p-5 mb-20">
       <div className="flex items-center py-4 justify-between w-full flex-col md:flex-row space-y-3">
         <Input
           placeholder="Search Table"

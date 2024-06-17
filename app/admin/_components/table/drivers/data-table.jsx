@@ -86,7 +86,7 @@ export function DriversDataTable({ columns, data, loading }) {
   async function onSubmit(values) {}
 
   return (
-    <div className="rounded-md border md:my-5 p-5 bg-white">
+    <div className="rounded-md border md:my-5 p-5 bg-white mb-20">
       <div className="flex items-center py-4 justify-between w-full flex-col md:flex-row space-y-3 ">
         <Input
           placeholder="Search Table"

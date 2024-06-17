@@ -20,7 +20,7 @@ const Header = () => {
         <div className="md:container md:w-[80%] md:mx-auto w-full px-2 md:px-0">
           <div className="flex justify-between items-center">
             <div className="w-1/2">
-              <Link href="/home">
+              <Link href="https://www.rofad91globalservicesltd.com/">
                 <Image
                   src="/images/logo.png"
                   width={150}
@@ -57,13 +57,13 @@ const Header = () => {
                 >
                   <Link href="/cart">Auto Cart</Link>
                 </li>
-                {/* <li
+                <li
                   className={`${
-                    currentRoute === "/" && "isactive"
+                    currentRoute === "/about" && "isactive"
                   } hover:text-[--text-hover] transition-all delay-75`}
                 >
-                  <Link href="/">About Us</Link>
-                </li> */}
+                  <Link href="/about">About Us</Link>
+                </li>
                 <li
                   className={`${
                     currentRoute === "/" && "isactive"
@@ -111,7 +111,9 @@ const Header = () => {
                 currentRoute === "/home" && "isactive"
               } hover:text-[--text-hover] transition-all delay-75 text-[18px]`}
             >
-              <Link href="/">Home</Link>
+              <Link href="https://www.rofad91globalservicesltd.com/home">
+                Home
+              </Link>
             </li>
             <li
               className={`${
@@ -127,13 +129,13 @@ const Header = () => {
             >
               <Link href="/cart">Auto Cart</Link>
             </li>
-            {/* <li
+            <li
               className={`${
-                currentRoute === "/" && "isactive"
+                currentRoute === "/about" && "isactive"
               } hover:text-[--text-hover] transition-all delay-75 text-[18px]`}
             >
-              <Link href="/">About Us</Link>
-            </li> */}
+              <Link href="/about">About Us</Link>
+            </li>
             <li
               className={`${
                 currentRoute === "/" && "isactive"

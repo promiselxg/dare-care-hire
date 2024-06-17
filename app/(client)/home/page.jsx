@@ -29,76 +29,17 @@ export default function Home() {
     <>
       <div className="w-full">
         <Hero />
-        {/* <section className="w-full">
-          <div
-            className="w-[80%] py-[40px] px-[30px] bg-white mx-auto h-fit -mt-[50px] relative mb-10 z-10 flex gap-3 items-center flex-col md:flex-row"
-            style={{
-              boxShadow:
-                "0px 0px 10px 0px rgba(207.39999999999998, 193.42304347826087, 193.42304347826087, 0.5)",
-            }}
-          >
-            <div className="flex flex-col">
-              <label htmlFor="">Pick up date</label>
-              <input
-                type="datetime-local"
-                name=""
-                id=""
-                className="w-full p-2 h-[43px] bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="">Pick up date</label>
-              <input
-                type="datetime-local"
-                name=""
-                id=""
-                className="w-full p-2 h-[43px] bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
-              />
-            </div>
-            <div className="flex flex-col w-full">
-              <label htmlFor="">Car Type</label>
-              <select
-                name=""
-                id=""
-                className="w-full md:w-[200px] h-[43px] p-2 bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
-              >
-                <option value="">Toyota</option>
-                <option value="">Mercedize Benz</option>
-              </select>
-            </div>
-            <div className="flex flex-col w-full">
-              <label htmlFor="">Destination</label>
-              <select
-                name=""
-                id=""
-                className="w-full md:w-[200px] h-[43px] p-2 bg-white outline-none border border-[--primary-text-color] rounded-[5px]  text-[--primary-bg] font-[500]"
-              >
-                <option value="">Within FCT</option>
-                <option value="">Outside FCT</option>
-              </select>
-            </div>
-            <div className="flex flex-col w-full">
-              <label htmlFor="">&nbsp;</label>
-              <Button
-                className={cn(
-                  `${syne.className} w-full bg-[--button-bg] font-[500] hover:scale-[1.1] hover:bg-[--button-bg] rounded-[5px] py-5 px-8 text-white transition-all delay-75`
-                )}
-              >
-                Book Now
-              </Button>
-            </div>
-          </div>
-        </section> */}
+
         <section className="w-full pt-20">
           <div className="container w-full md:w-[1100px] mx-auto h-fit pb-10 text-center">
             <h1
               className={cn(
-                `${barlow.className} font-[600] text-[15px] md:text-[30px] uppercase text-center mb-8`
+                `${syne.className} font-[600] text-[15px] md:text-[30px] text-center`
               )}
             >
               What We Do
             </h1>
-            <h1>
+            <h1 className="text-[16px] text-[#333]">
               <b>At ROFAD</b>, We have standard cars and SUVs for airport pick
               up and drop off, point to point car hire services, 18 seater bus
               and Coaster bus services. We are also into Haulage services,
@@ -106,32 +47,38 @@ export default function Home() {
             </h1>
           </div>
         </section>
-        <section className="w-full my-10 md:w-[1100px] mx-auto">
-          <div className="container w-full pb-10">
-            <h1
-              className={cn(
-                `${barlow.className} font-[600] text-[15px] md:text-[30px] uppercase text-center mb-8`
-              )}
-            >
-              Our Services
-            </h1>
+        <section className="w-full py-20">
+          <div className="container w-full md:w-[1100px] mx-auto h-fit pb-10 text-center">
             <div className="grid md:grid-cols-3 grid-cols-1 gap-4">
-              <div className="p-10 bg-[whitesmoke] h-fit">
+              <div className="p-10 bg-red-200 h-fit text-center flex flex-col justify-center w-full items-center space-y-5">
+                <Image
+                  src="/images/thumbs.svg"
+                  alt="thumbs"
+                  width={50}
+                  height={50}
+                />
                 <h1
                   className={cn(
-                    `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize text-center mb-2`
+                    `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize text-center`
                   )}
                 >
                   Airport Pick-up/Drop-off.
                 </h1>
-                <p className="text-[14px]">
+
+                <p className="text-[14px] text-justify">
                   Do you have a flight to catch, or an appointment to meet, do
                   you want someone to help you pick-up or drop-off someone at
                   the airport? at <b>Rofad global services ltd</b>, we offer
                   Airport Pick-up and Drop-off.
                 </p>
               </div>
-              <div className="p-10 bg-[whitesmoke] h-fit">
+              <div className="p-10 bg-fuchsia-200 h-fit text-center flex flex-col justify-center w-full items-center space-y-5">
+                <Image
+                  src="/images/feedback.svg"
+                  alt="thumbs"
+                  width={50}
+                  height={50}
+                />
                 <h1
                   className={cn(
                     `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize text-center mb-2`
@@ -139,7 +86,7 @@ export default function Home() {
                 >
                   Inter-state Travels within Nigeria.
                 </h1>
-                <p className="text-[14px]">
+                <p className="text-[14px] text-justify">
                   Are you planning a weekend gateway or a cross-country
                   adventure,with our well-maintained vehicles and experienced
                   drivers, we are ready to take you wherever you wish to visit
@@ -153,7 +100,13 @@ export default function Home() {
                   </Link>
                 </p>
               </div>
-              <div className="p-10 bg-[whitesmoke] h-fit">
+              <div className="p-10 bg-blue-200 h-fit text-center flex flex-col justify-center w-full items-center space-y-5">
+                <Image
+                  src="/images/map.svg"
+                  alt="thumbs"
+                  width={50}
+                  height={50}
+                />
                 <h1
                   className={cn(
                     `${montserrat.className} font-[600] text-[15px] md:text-[18px] capitalize text-center mb-2`
@@ -161,7 +114,7 @@ export default function Home() {
                 >
                   Executive Car Hire.
                 </h1>
-                <p className="text-[14px]">
+                <p className="text-[14px] text-justify">
                   Rofad global services ltd executive car rentals are tailored
                   to exceed the expectations of our professionals and corporate
                   clients. Our{" "}
@@ -180,6 +133,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+
         <section
           id="how-it-works"
           className="w-full h-fit md:h-[500px] bg-how-it-works flex items-center bg-no-repeat bg-cover bg-center relative"

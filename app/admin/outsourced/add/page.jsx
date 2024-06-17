@@ -127,7 +127,7 @@ const AddOutsourcedDriver = () => {
 
   return (
     <>
-      <div className="h-screen w-full flex flex-col  overflow-y-scroll">
+      <div className="h-screen w-full flex flex-col  overflow-y-scroll ">
         <div className="w-full bg-white h-[60px] p-5 flex items-center border-[#eee] border-b-[1px]">
           <div className="w-fit flex  h-[60px]">
             <Link

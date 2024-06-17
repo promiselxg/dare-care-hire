@@ -7,9 +7,9 @@ import { CartProvider } from "@/context/cartContext";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
-  title: "Auto Listing | Rofad91 Global Services Limited",
+  title: "About Us  | Rofad91 Global Services Ltd.",
   description:
-    "At Rofad91 Logistics Services, we are committed to excellence in every aspect of our service. Our vehicles are regularly serviced and maintained to ensure reliability and comfort. We strive to exceed client expectations by providing personalized and professional transportation services.",
+    "Rofad91 Logistics Services is a premier car hire company in Nigeria, renowned for its commitment to delivering exceptional transportation solutions. Our extensive fleet includes luxury sedans, SUVs, and spacious buses, all meticulously maintained and equipped with modern amenities to meet diverse client needs.",
 };
 
 export default function RootLayout({ children }) {

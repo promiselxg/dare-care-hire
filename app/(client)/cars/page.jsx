@@ -1,5 +1,5 @@
 "use client";
-import { barlow, syne, raleway, montserrat } from "@/lib/fonts";
+import { barlow, raleway, open_sans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import {
   Breadcrumb,
@@ -10,13 +10,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { Loader2, ShieldCheck } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import Image from "next/image";
 import useFetch from "@/hooks/useFetch";
 import { truncateText } from "@/utils/trucateText";
 import Link from "next/link";
 import SkeletonLoader from "../_component/Loader";
-import { Helmet } from "react-helmet";
 
 const Page = () => {
   // const [open, setOpen] = useState(false);
@@ -24,10 +23,6 @@ const Page = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Auto Listing</title>
-        <meta name="description" content="Vhicle Listing" />
-      </Helmet>
       {loading ? (
         <div className="fixed top-0 bottom-0 w-full bg-[rgba(0,0,0,.8)] z-[999] h-screen overflow-hidden text-white flex items-center justify-center flex-col gap-y-2">
           <Loader2 className="animate-spin" size={50} />
@@ -35,9 +30,9 @@ const Page = () => {
         </div>
       ) : (
         <>
-          <section className="w-full flex bg-[url('/images/page-img.jpg')] bg-cover pt-[80px] pb-10 bg-fixed bg-right-top relative">
+          <section className="w-full flex bg-[url('/images/page-img.jpg')] bg-cover pt-[40px] md:pt-[80px] pb-10 bg-fixed bg-right-top relative">
             <span className="bg-[#20262f] absolute top-0 bottom-0 w-full inline-block h-full opacity-0 "></span>
-            <div className="container mx-auto flex text-white z-10 md:w-[80%]">
+            <div className="container mx-auto flex text-white z-10 md:w-[80%] w-full">
               <div className="text-left">
                 <h1
                   className={cn(
@@ -57,7 +52,9 @@ const Page = () => {
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                      <BreadcrumbPage>Auto Listing</BreadcrumbPage>
+                      <BreadcrumbPage className="text-white">
+                        Auto Listing
+                      </BreadcrumbPage>
                     </BreadcrumbItem>
                   </BreadcrumbList>
                 </Breadcrumb>
@@ -65,8 +62,8 @@ const Page = () => {
             </div>
           </section>
           <section className="flex w-full h-fit  py-10">
-            <div className="mx-auto md:w-[85%]  flex ">
-              <div className="p-10 w-full  flex flex-col gap-y-3">
+            <div className="mx-auto md:w-[85%]  flex w-full">
+              <div className="p-5 md:p-10 w-full  flex flex-col gap-y-3">
                 {" "}
                 {/* <div className="w-full flex items-center gap-5 mb-5">
                   <div
@@ -120,13 +117,13 @@ const Page = () => {
                             width={250}
                             height={100}
                             alt={car?.vehicle_name}
-                            className="object-cover w-full h-[150px] "
+                            className="object-cover w-full h-[200px] "
                           />
                           <div className="w-full p-3 bg-[whitesmoke] h-fit md:h-[300px] relative">
                             <div className="flex justify-center text-center flex-col">
                               <h1
                                 className={cn(
-                                  `${barlow.className} font-[600] text-[20px] capitalize`
+                                  `${barlow.className} font-[600] text-[16px] md:text-[20px] capitalize`
                                 )}
                               >
                                 {car?.vehicle_name}
@@ -140,7 +137,7 @@ const Page = () => {
                                       className="flex items-center mb-[4px] gap-1"
                                       key={i}
                                     >
-                                      <ShieldCheck size={20} />
+                                      <Check size={14} />
                                       <span className="capitalize">
                                         {truncateText(feature, 20)}
                                       </span>
@@ -151,13 +148,15 @@ const Page = () => {
                             <div className="w-full flex justify-between items-start mt-5 mb-2 flex-col space-y-3 md:absolute md:bottom-5">
                               <h1
                                 className={cn(
-                                  `${montserrat.className} font-[600] text-[18px]`
+                                  `${open_sans.className} font-[400] text-[14px] md:text-[14px]`
                                 )}
                               >
-                                &#8358;
-                                {new Intl.NumberFormat().format(car?.amount)}
+                                Starting from &#8358;
+                                <span className="font-[600]">
+                                  {new Intl.NumberFormat().format(car?.amount)}
+                                </span>
                               </h1>
-                              <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-fit">
+                              <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-[90%]">
                                 rent it
                               </Button>
                             </div>

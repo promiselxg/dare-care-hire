@@ -45,7 +45,7 @@ export function VehicleDataTable({ columns, data, loading }) {
   });
 
   return (
-    <div className="rounded-md border my-5 p-5 bg-white">
+    <div className="rounded-md border my-5 p-5 bg-white mb-20">
       <div className="flex items-center py-4 justify-between w-full">
         <Input
           placeholder="Search Table"

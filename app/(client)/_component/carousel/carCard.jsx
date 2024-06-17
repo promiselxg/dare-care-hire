@@ -9,7 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import { ShieldCheck } from "lucide-react";
+import { Check, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { barlow, montserrat, open_sans } from "@/lib/fonts";
 import { Button } from "@/components/ui/button";
@@ -60,7 +60,7 @@ export function CarCarousa() {
                           className="flex items-center mb-[4px] gap-1"
                           key={i}
                         >
-                          <ShieldCheck size={20} />
+                          <Check size={12} />
                           <span className="capitalize">
                             {truncateText(feature, 20)}
                           </span>
@@ -71,10 +71,10 @@ export function CarCarousa() {
                   <div className="w-full flex justify-between items-start mt-5 mb-2 flex-col space-y-3 md:absolute md:bottom-5">
                     <h1
                       className={cn(
-                        `${open_sans.className} font-[400] text-[16px] md:text-[18px]`
+                        `${open_sans.className} font-[400] text-[14px] md:text-[14px]`
                       )}
                     >
-                      starting from &#8358;
+                      Starting from &#8358;
                       <span className="font-[600]">
                         {new Intl.NumberFormat().format(car?.amount)}
                       </span>

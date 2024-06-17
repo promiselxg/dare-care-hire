@@ -14,7 +14,11 @@ const DriverProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${host.url}/driver`);
+        const response = await axios.get(`${host.url}/driver`, {
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        });
         setData(response.data);
       } catch (error) {
         console.log(error);
@@ -30,7 +34,12 @@ const DriverProvider = ({ children }) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${host.url}/driver?account_type=${account_type}&date=${formattedDate}`
+        `${host.url}/driver?account_type=${account_type}&date=${formattedDate}`,
+        {
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        }
       );
       setData(response?.data);
     } catch (error) {
@@ -43,7 +52,11 @@ const DriverProvider = ({ children }) => {
   const handleResetSort = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${host.url}/driver`);
+      const response = await axios.get(`${host.url}/driver`, {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      });
       setData(response?.data);
     } catch (error) {
       console.log(error);

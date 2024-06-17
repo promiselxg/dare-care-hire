@@ -12,7 +12,11 @@ const useFetch = (url) => {
       setLoading(true);
       try {
         const uniqueUrl = `${API_URL}${url}?_=${new Date().getTime()}`;
-        const res = await axios.get(uniqueUrl);
+        const res = await axios.get(uniqueUrl, {
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        });
         setData(res.data);
       } catch (err) {
         setError(err);

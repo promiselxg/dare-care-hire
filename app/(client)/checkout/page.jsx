@@ -107,10 +107,21 @@ const CheckoutPage = () => {
     try {
       __("submitBtn").innerHTML = "Please wait...";
       __("submitBtn").disabled = true;
+
       const response = await axios.post("/api/checkout", formData);
-      toast({ title: `${response?.data?.message}` });
-      localStorage.removeItem("cart");
-      window.location = `/checkout/${response?.data?.transaction_id}`;
+      if (response) {
+        const smsData = {
+          first_name: values.first_name,
+          phone: values.phone,
+          ID: response?.data?.transaction_id,
+        };
+        const sendSMS = await axios.post("/api/sms", smsData);
+        if (sendSMS) {
+          toast({ title: `${response?.data?.message}` });
+          localStorage.removeItem("cart");
+          window.location = `/checkout/${response?.data?.transaction_id}`;
+        }
+      }
     } catch (error) {
       toast({
         variant: "destructive",
@@ -177,12 +188,12 @@ const CheckoutPage = () => {
           <div className="w-full flex">
             <div className="w-full flex justify-between items-center border border-[#eee] ">
               <div className="border-r-[1px] border-[#eee] h-[90px] flex items-center px-10">
-                <Link href="/cart">
+                <Link href="https://rofad91globalservicesltd.com/cart">
                   <CornerDownLeft size={40} />
                 </Link>
               </div>
               <div className="border-l-[1px] border-[#eee] h-[90px] flex items-center px-10">
-                <Link href="/home">
+                <Link href="https://rofad91globalservicesltd.com/home">
                   <Home size={40} />
                 </Link>
               </div>
@@ -404,9 +415,6 @@ const CheckoutPage = () => {
                     </thead>
                     <tbody>
                       {subTotalWithExtraResource?.map((item) => {
-                        const showExtraResources =
-                          item?.extra_resource?.police_escort ||
-                          item?.extra_resource?.child_seat;
                         return (
                           <tr key={item.id}>
                             <td className="product_name w-[85%]">
@@ -446,38 +454,32 @@ const CheckoutPage = () => {
                                 </div>
                                 {item?.extra_resource && (
                                   <div className="w-full inline-block text-left my-5">
-                                    {showExtraResources ? (
-                                      <h1
-                                        key={item.id}
-                                        className={cn(
-                                          `${raleway.className} font-[600] text-sm`
-                                        )}
-                                      >
-                                        Extra Resources
-                                      </h1>
-                                    ) : null}
-                                    {item?.extra_resource?.police_escort && (
-                                      <div className="flex gap-3  text-[12px]  capitalize">
-                                        <span>Police Escort</span>-
-                                        <span className="font-bold">
-                                          &#8358;
-                                          {new Intl.NumberFormat().format(
-                                            item?.extra_resource?.police_escort
-                                          )}
-                                        </span>
-                                      </div>
-                                    )}
-
-                                    {item?.extra_resource?.child_seat && (
-                                      <div className="flex gap-3  text-[12px] capitalize">
-                                        <span>Child seat</span>-
-                                        <span className="font-bold">
-                                          &#8358;
-                                          {new Intl.NumberFormat().format(
-                                            item?.extra_resource?.child_seat
-                                          )}
-                                        </span>
-                                      </div>
+                                    <h1
+                                      key={item.id}
+                                      className={cn(
+                                        `${raleway.className} font-[600] text-sm`
+                                      )}
+                                    >
+                                      Extra Resources
+                                    </h1>
+                                    {Object.entries(item.extra_resource).map(
+                                      ([key, value]) => (
+                                        <div
+                                          key={key}
+                                          className="flex gap-3 text-[12px] capitalize"
+                                        >
+                                          <span className="uppercase">
+                                            {key.replace(/_/g, " ")}
+                                          </span>{" "}
+                                          -
+                                          <span className="font-bold">
+                                            &#8358;
+                                            {new Intl.NumberFormat().format(
+                                              value
+                                            )}
+                                          </span>
+                                        </div>
+                                      )
                                     )}
                                   </div>
                                 )}

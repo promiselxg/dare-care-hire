@@ -14,7 +14,11 @@ const TransactionSortProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${host.url}/transaction?limit=9`);
+        const response = await axios.get(`${host.url}/transaction?limit=9`, {
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        });
         setData(response.data);
       } catch (error) {
         console.log(error);
@@ -28,7 +32,11 @@ const TransactionSortProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${host.url}/transaction/analytics`);
+        const response = await axios.get(`${host.url}/transaction/analytics`, {
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        });
         setSortedData(response.data);
       } catch (error) {
         console.log(error);
@@ -43,8 +51,14 @@ const TransactionSortProvider = ({ children }) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${host.url}/transaction?transaction_id=${transactionID}`
+        `${host.url}/transaction?transaction_id=${transactionID}`,
+        {
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        }
       );
+
       setData(response?.data);
       setSortedData(response?.data);
     } catch (error) {
@@ -57,8 +71,16 @@ const TransactionSortProvider = ({ children }) => {
   const handleResetSort = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${host.url}/transaction`);
-      const res = await axios.get(`${host.url}/transaction/analytics`);
+      const response = await axios.get(`${host.url}/transaction`, {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      });
+      const res = await axios.get(`${host.url}/transaction/analytics`, {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      });
       setData(response?.data);
       setSortedData(res.data);
     } catch (error) {

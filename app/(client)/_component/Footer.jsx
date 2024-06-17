@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FiInstagram } from "react-icons/fi";
 import { SlSocialSpotify } from "react-icons/sl";
 import { PiTiktokLogoLight } from "react-icons/pi";
-import { Phone, Mail, MapPin, Youtube } from "lucide-react";
+import { Phone, Mail, MapPin, Youtube, Facebook } from "lucide-react";
 import Tawk from "@/utils/tawk";
 
 const Footer = () => {
@@ -29,19 +29,19 @@ const Footer = () => {
                     `${open_sans.className} font-[400] text-sm text-[--primary-text-color] leading-[1.7]`
                   )}
                 >
-                  Rofad91 Global Service Limited All rights reserved.
+                  Rofad91 Logistics Services All rights reserved.
                 </p>
               </div>
               <div className="flex items-center text-[--primary-text-color] mb-5 gap-4">
                 <a
-                  href="#"
+                  href="https://facebook.com/rofad91"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-all delay-75 hover:text-[--text-brown] cursor-pointer"
                 >
-                  <Youtube size={40} />
+                  <Facebook size={40} />
                 </a>
-                <a
+                {/* <a
                   href="#"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -56,7 +56,7 @@ const Footer = () => {
                   className="transition-all delay-75 hover:text-[--text-brown] cursor-pointer"
                 >
                   <FiInstagram size={40} />
-                </a>
+                </a> */}
               </div>
               <p
                 className={cn(

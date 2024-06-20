@@ -50,6 +50,7 @@ const Dashboard = () => {
               value={data?.length}
               bg="whitesmoke"
               loading={loading}
+              bgColor="darkblue"
             />
             <DashboardCard
               title="Pending Transactions"

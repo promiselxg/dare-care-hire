@@ -39,6 +39,9 @@ const SuccessfullOrderPage = ({ params }) => {
       const response = await axios.get(`/api/checkout/${params?.orderid}`, {
         headers: {
           "Cache-Control": "no-store",
+          "Access-Control-Allow-Origin": "*", // Allow all origins
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS", // Allow methods
+          "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
         },
       });
       setData(response.data);

@@ -14,9 +14,12 @@ const TransactionSortProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${host.url}/transaction?limit=9`, {
+        const response = await axios.get(`${host.url}/transaction`, {
           headers: {
             "Cache-Control": "no-store",
+            "Access-Control-Allow-Origin": "*", // Allow all origins
+            "Access-Control-Allow-Methods": "GET", // Allow methods
+            "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
           },
         });
         setData(response.data);
@@ -35,6 +38,9 @@ const TransactionSortProvider = ({ children }) => {
         const response = await axios.get(`${host.url}/transaction/analytics`, {
           headers: {
             "Cache-Control": "no-store",
+            "Access-Control-Allow-Origin": "*", // Allow all origins
+            "Access-Control-Allow-Methods": "GET", // Allow methods
+            "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
           },
         });
         setSortedData(response.data);
@@ -55,6 +61,9 @@ const TransactionSortProvider = ({ children }) => {
         {
           headers: {
             "Cache-Control": "no-store",
+            "Access-Control-Allow-Origin": "*", // Allow all origins
+            "Access-Control-Allow-Methods": "GET", // Allow methods
+            "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
           },
         }
       );
@@ -74,11 +83,17 @@ const TransactionSortProvider = ({ children }) => {
       const response = await axios.get(`${host.url}/transaction`, {
         headers: {
           "Cache-Control": "no-store",
+          "Access-Control-Allow-Origin": "*", // Allow all origins
+          "Access-Control-Allow-Methods": "GET", // Allow methods
+          "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
         },
       });
       const res = await axios.get(`${host.url}/transaction/analytics`, {
         headers: {
           "Cache-Control": "no-store",
+          "Access-Control-Allow-Origin": "*", // Allow all origins
+          "Access-Control-Allow-Methods": "GET", // Allow methods
+          "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
         },
       });
       setData(response?.data);

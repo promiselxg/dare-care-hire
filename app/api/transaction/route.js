@@ -37,29 +37,31 @@ export const PUT = async (req) => {
   const urlPath = req.headers.get("referer").split(host.host_url)[1];
   try {
     const body = await req.json();
+    console.log(body.value);
     // Update Transaction Status
     await prisma.reservationInfo.update({
       where: { id: body?.id },
       data: {
-        [body.field]: body?.value?.toUpperCase(),
+        [body.field]: body?.value,
       },
     });
-    logger(
-      userAgent,
-      urlPath,
-      "success",
-      "PUT",
-      `Updated ${body?.id} transaction status`
-    );
+    // logger(
+    //   userAgent,
+    //   urlPath,
+    //   "success",
+    //   "PUT",
+    //   `Updated ${body?.id} transaction status`
+    // );
     return successResponse("Success");
   } catch (error) {
-    logger(
-      userAgent,
-      urlPath,
-      "failed",
-      "PUT",
-      `Unable to updated ${body?.id} transaction status`
-    );
+    console.error(error);
+    // logger(
+    //   userAgent,
+    //   urlPath,
+    //   "failed",
+    //   "PUT",
+    //   `Unable to updated ${body?.id} transaction status`
+    // );
     return errorResponse("Error occurred", 500);
   }
 };

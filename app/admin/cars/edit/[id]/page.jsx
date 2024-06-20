@@ -47,7 +47,7 @@ const formSchema = z.object({
     message: "description must be at least 10 characters.",
   }),
   features: z.string().optional(),
-  amount: z.string().min(4, { message: "Please enter a valid amound." }),
+  amount: z.string().min(1, { message: "Please enter a valid amount." }),
   vehicle_type: z.string(),
   vehicle_model: z.string(),
 });
@@ -136,6 +136,7 @@ const EditCar = ({ params }) => {
     if (!value) return false;
     const fieldName = __(field);
     fieldName.innerHTML = "Updating...";
+    fieldName.disabled = true;
     try {
       const response = await axios.put("/api/car", {
         id: params?.id,
@@ -157,6 +158,7 @@ const EditCar = ({ params }) => {
       console.log(error);
     } finally {
       fieldName.innerHTML = "Update";
+      fieldName.disabled = false;
     }
   };
 

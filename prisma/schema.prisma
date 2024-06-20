@@ -25,7 +25,7 @@ model vehicleInfo {
   description  String
   features     String?
   model        String
-  amount       Int
+  amount       Int?
   imgUrl       String[]
   imageId      String[]
   imgThumbnail String?

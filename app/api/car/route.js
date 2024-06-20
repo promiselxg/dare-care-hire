@@ -45,7 +45,6 @@ const isValidRequestBody = (body) => {
   return (
     body.values.vehicle_name &&
     body.values.description &&
-    body.values.amount &&
     body.values.vehicle_type &&
     body.values.vehicle_model &&
     body.slug
@@ -59,7 +58,7 @@ const getVehicleDataFromRequestBody = (body) => {
     description: body.values.description,
     features: body.values.features,
     model: body.values.vehicle_model,
-    amount: parseInt(body.values.amount),
+    amount: parseInt(0),
     imgUrl: body.photos.map((url) => url.secure_url),
     imageId: body.photos.map((url) => url.public_id.split("/")[1]),
     imgThumbnail: body.photos[0].secure_url,

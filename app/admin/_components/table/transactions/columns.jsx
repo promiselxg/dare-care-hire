@@ -1,5 +1,6 @@
 "use client";
 
+import { UpdateAmount } from "@/app/admin/transactions/UpdatePrice";
 import { UpdateStatus } from "@/app/admin/transactions/UpdateStatusForm";
 import { Button } from "@/components/ui/button";
 import {
@@ -156,14 +157,19 @@ export const columns = [
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-white">
+          <DropdownMenuContent
+            align="end"
+            className="bg-white w-full md:w-[200px]"
+          >
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             {transaction_status?.toLowerCase() !== "completed" && (
               <div className="px-2 w-full">
                 <UpdateStatus transaction_id={transaction_id} id={id} />
               </div>
             )}
-
+            <div className="p-2 w-full">
+              <UpdateAmount transaction_id={transaction_id} id={id} />
+            </div>
             <DropdownMenuItem className="text-red-400 flex items-center gap-2 cursor-pointer">
               <Link
                 href={`${host.host_url}/checkout/${transaction_id}`}

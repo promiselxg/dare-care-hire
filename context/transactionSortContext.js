@@ -30,6 +30,7 @@ const TransactionSortProvider = ({ children }) => {
       }
     };
     fetchData();
+    handleResetSort();
   }, []);
 
   useEffect(() => {

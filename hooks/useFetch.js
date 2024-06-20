@@ -23,8 +23,9 @@ const useFetch = (url) => {
         setData(res.data);
       } catch (err) {
         setError(err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     fetchData();
   }, [url]);

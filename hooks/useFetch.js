@@ -11,10 +11,13 @@ const useFetch = (url) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const uniqueUrl = `${API_URL}${url}?_=${new Date().getTime()}`;
+        const uniqueUrl = `${API_URL}${url}`;
         const res = await axios.get(uniqueUrl, {
           headers: {
             "Cache-Control": "no-store",
+            "Access-Control-Allow-Origin": "*", // Allow all origins
+            "Access-Control-Allow-Methods": "GET", // Allow methods
+            "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
           },
         });
         setData(res.data);

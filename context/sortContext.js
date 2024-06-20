@@ -17,6 +17,9 @@ const DriverProvider = ({ children }) => {
         const response = await axios.get(`${host.url}/driver`, {
           headers: {
             "Cache-Control": "no-store",
+            "Access-Control-Allow-Origin": "*", // Allow all origins
+            "Access-Control-Allow-Methods": "GET", // Allow methods
+            "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
           },
         });
         setData(response.data);
@@ -38,6 +41,9 @@ const DriverProvider = ({ children }) => {
         {
           headers: {
             "Cache-Control": "no-store",
+            "Access-Control-Allow-Origin": "*", // Allow all origins
+            "Access-Control-Allow-Methods": "GET", // Allow methods
+            "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
           },
         }
       );
@@ -55,6 +61,9 @@ const DriverProvider = ({ children }) => {
       const response = await axios.get(`${host.url}/driver`, {
         headers: {
           "Cache-Control": "no-store",
+          "Access-Control-Allow-Origin": "*", // Allow all origins
+          "Access-Control-Allow-Methods": "GET", // Allow methods
+          "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
         },
       });
       setData(response?.data);

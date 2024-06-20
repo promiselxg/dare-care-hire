@@ -19,11 +19,10 @@ const CarsPage = () => {
         <div className="w-full">
           <div className="w-full grid md:grid-cols-4  grid-cols-1 gap-3">
             <DashboardCard
-              title="Total"
+              title="Total Number of Vehicles"
               icon={<User color="green" />}
               value={data?.length || "0"}
               bg="whitesmoke"
-              desc="+5.5% since last week"
               loading={loading}
             />
           </div>

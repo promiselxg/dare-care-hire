@@ -183,19 +183,18 @@ const AddCar = () => {
             title: "New Record created successfully.",
             description: `${values.vehicle_name} created successfully.`,
           });
-          window.location = "/admin/cars/";
+          window.location = `/admin/cars?q=${user?.token}`;
         }
       }
-      __("submitBtn").innerHTML = "Submit";
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
-      __("submitBtn").innerHTML = "Submit";
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description: "There was a problem with your request.",
       });
+    } finally {
+      __("submitBtn").innerHTML = "Submit";
+      setLoading(false);
     }
   }
 

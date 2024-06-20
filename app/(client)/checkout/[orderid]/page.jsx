@@ -131,8 +131,10 @@ const SuccessfullOrderPage = ({ params }) => {
                 >
                   <thead>
                     <tr>
-                      <th className="text-left font-semibold">PRODUCT</th>
-                      <th className="text-left font-semibold">TOTAL</th>
+                      <th className="text-left font-semibold">
+                        Pick-up/Drop-off Infomation.
+                      </th>
+                      {/* <th className="text-left font-semibold">TOTAL</th> */}
                     </tr>
                   </thead>
                   <tbody className="bg-[white]">
@@ -171,7 +173,8 @@ const SuccessfullOrderPage = ({ params }) => {
                                     {item?.dropoff_location}
                                   </span>
                                 </div>
-                                {item?.extra_resources && (
+                                <div className="w-full inline-block text-left my-5"></div>
+                                {/* {item?.extra_resources && (
                                   <div className="w-full inline-block text-left my-5">
                                     <h1
                                       key={item.id}
@@ -201,14 +204,14 @@ const SuccessfullOrderPage = ({ params }) => {
                                       </div>
                                     ))}
                                   </div>
-                                )}
+                                )} */}
                               </div>
                             </td>
-                            <td
+                            {/* <td
                               className={`${montserrat.className} w-[25%] text-[#da1c36] font-[600]`}
                             >
                               {formatCurrency(item?.transaction_amount)}
-                            </td>
+                            </td> */}
                           </tr>
                           {item?.order_note !== "" && (
                             <tr>
@@ -222,14 +225,14 @@ const SuccessfullOrderPage = ({ params }) => {
                       );
                     })}
 
-                    <tr>
+                    {/* <tr>
                       <th className="text-left flex uppercase bg-[#f6f6f6] font-bold">
                         total amount to pay
                       </th>
                       <td className={cn(`${open_sans.className} font-bold`)}>
                         {formatCurrency(subtotal)}
                       </td>
-                    </tr>
+                    </tr> */}
                   </tbody>
                 </table>
               </div>

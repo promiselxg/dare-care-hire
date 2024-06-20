@@ -116,10 +116,10 @@ const CartPage = () => {
                   <tr>
                     <th></th>
                     <th></th>
-                    <th>PRODUCT</th>
-                    <th>PRICE</th>
+                    <th className="flex text-left">
+                      Pick-up/Drop-off Infomation.
+                    </th>
                     <th>DAY(s)</th>
-                    <th>SUBTOTAL</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -173,8 +173,8 @@ const CartPage = () => {
                                   {item?.rideInfo?.dropoff_location}
                                 </span>
                               </div>
-
-                              {item?.extra_resource && (
+                              <div className="w-full inline-block text-left my-5"></div>
+                              {/* {item?.extra_resource && (
                                 <div className="w-full inline-block text-left my-5">
                                   <h1
                                     key={item.id}
@@ -204,18 +204,18 @@ const CartPage = () => {
                                     )
                                   )}
                                 </div>
-                              )}
+                              )} */}
                             </div>
                           </td>
-                          <td className="w-[15%] text-[#da1c36] font-[600]">
+                          {/* <td className="w-[15%] text-[#da1c36] font-[600]">
                             &#8358;
                             {new Intl.NumberFormat().format(item?.amount)}
-                          </td>
+                          </td> */}
                           <td className="w-[15%] ">{item?.days}&nbsp;day(s)</td>
-                          <td className="w-[15%] text-[#da1c36] font-[600]">
+                          {/* <td className="w-[15%] text-[#da1c36] font-[600]">
                             &#8358;
                             {new Intl.NumberFormat().format(item?.subtotal)}
-                          </td>
+                          </td> */}
                         </tr>
                       );
                     })}
@@ -238,7 +238,7 @@ const CartPage = () => {
               <div>
                 {cart?.length > 0 && (
                   <div className="w-full md:w-1/2 mb-[70px] border border-[#ebe9eb] float-right p-[30px]">
-                    <h1
+                    {/* <h1
                       className={cn(
                         `${raleway.className} mb-2 uppercase font-[600]`
                       )}
@@ -256,7 +256,7 @@ const CartPage = () => {
                       >
                         {formatCurrency(subtotal + extraResourcesTotal)}
                       </span>
-                    </div>
+                    </div> */}
                     <div className="w-full my-5">
                       <Link href="/checkout">
                         <Button

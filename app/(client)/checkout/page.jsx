@@ -371,7 +371,7 @@ const CheckoutPage = () => {
                                 </FormItem>
                                 <FormItem className="flex items-center space-x-3 space-y-0">
                                   <FormControl>
-                                    <RadioGroupItem value="online" readonly />
+                                    <RadioGroupItem value="online" readOnly />
                                   </FormControl>
                                   <FormLabel className="font-normal">
                                     Pay Online (10% Discount)
@@ -407,10 +407,10 @@ const CheckoutPage = () => {
                   >
                     <thead>
                       <tr>
-                        <th className="text-left flex">PRODUCT</th>
-                        <th>PRICE</th>
+                        <th className="text-left flex">
+                          Pick-up/Drop-off Infomation.
+                        </th>
                         <th>DAY(s)</th>
-                        <th>SUBTOTAL</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -452,7 +452,8 @@ const CheckoutPage = () => {
                                     {item?.rideInfo?.dropoff_location}
                                   </span>
                                 </div>
-                                {item?.extra_resource && (
+                                <div className="w-full inline-block text-left my-5"></div>
+                                {/* {item?.extra_resource && (
                                   <div className="w-full inline-block text-left my-5">
                                     <h1
                                       key={item.id}
@@ -482,17 +483,17 @@ const CheckoutPage = () => {
                                       )
                                     )}
                                   </div>
-                                )}
+                                )} */}
                               </div>
                             </td>
-                            <td className="w-[15%] text-[#da1c36] font-[600]">
+                            {/* <td className="w-[15%] text-[#da1c36] font-[600]">
                               &#8358;
                               {new Intl.NumberFormat().format(item?.amount)}
-                            </td>
+                            </td> */}
                             <td className="w-[15%] ">
                               {item?.days}&nbsp;day(s)
                             </td>
-                            <td className="w-[15%] text-[#da1c36] font-[600]">
+                            {/* <td className="w-[15%] text-[#da1c36] font-[600]">
                               <div className="flex items-center gap-2">
                                 <span>
                                   &#8358;
@@ -501,17 +502,17 @@ const CheckoutPage = () => {
                                   )}
                                 </span>
                               </div>
-                            </td>
+                            </td> */}
                           </tr>
                         );
                       })}
 
-                      <tr className="w-full">
+                      {/* <tr className="w-full">
                         <th className="text-left flex uppercase">Total</th>
                         <td className="font-[600]" colSpan={3}>
                           {formatCurrency(subtotal + extraResourcesTotal)}
                         </td>
-                      </tr>
+                      </tr> */}
                     </tbody>
                   </table>
                 </div>

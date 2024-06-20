@@ -119,7 +119,7 @@ const Page = () => {
                             alt={car?.vehicle_name}
                             className="object-cover w-full h-[200px] "
                           />
-                          <div className="w-full p-3 bg-[whitesmoke] h-fit md:h-[300px] relative">
+                          <div className="w-full p-3 bg-[whitesmoke] h-fit relative">
                             <div className="flex justify-center text-center flex-col">
                               <h1
                                 className={cn(
@@ -145,8 +145,8 @@ const Page = () => {
                                   ))}
                               </ul>
                             </div>
-                            <div className="w-full flex justify-between items-start mt-5 mb-2 flex-col space-y-3 md:absolute md:bottom-5">
-                              <h1
+                            <div className="w-full flex justify-between items-start mt-5 mb-2 flex-col space-y-3">
+                              {/* <h1
                                 className={cn(
                                   `${open_sans.className} font-[400] text-[14px] md:text-[14px]`
                                 )}
@@ -155,7 +155,7 @@ const Page = () => {
                                 <span className="font-[600]">
                                   {new Intl.NumberFormat().format(car?.amount)}
                                 </span>
-                              </h1>
+                              </h1> */}
                               <Button className="bg-transparent border border-[#000] uppercase text-sm w-full md:w-[90%]">
                                 rent it
                               </Button>

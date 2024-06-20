@@ -7,7 +7,7 @@ export const POST = async (req) => {
     const phone = `234${body?.phone.substring(1)}`;
     const data = {
       to: phone,
-      from: "devapi",
+      from: "Rofad91",
       sms: `Hi, ${body.first_name} your Vehicle Reservation ID is ${body.ID}`,
       type: "plain",
       api_key: process.env.TERMII_API_KEY,

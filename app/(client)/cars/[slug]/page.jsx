@@ -252,7 +252,8 @@ const CarDetails = ({ params }) => {
                       `${raleway.className} w-full p-5 bg-black text-white flex justify-center text-center font-[700] text-[20px]`
                     )}
                   >
-                    {formatCurrency(data?.amount)}
+                    {/* {formatCurrency(data?.amount)} */}
+                    {data?.vehicle_name}
                   </div>
                   <div className="w-full p-5 flex-col flex gap-y-1">
                     <div className="w-full flex flex-col my-2">
@@ -432,7 +433,7 @@ const CarDetails = ({ params }) => {
                         <span>&nbsp;</span>
                       </div>
                     </div>
-                    {featureData.length > 0 && (
+                    {/* {featureData.length > 0 && (
                       <div className="w-full flex flex-col my-2 gap-2">
                         <label
                           htmlFor="extra_resources"
@@ -473,7 +474,7 @@ const CarDetails = ({ params }) => {
                           );
                         })}
                       </div>
-                    )}
+                    )} */}
 
                     <div className="w-full bg-[#eeeeee] p-5 my-3">
                       <div className="py-3">

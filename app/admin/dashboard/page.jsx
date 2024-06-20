@@ -74,17 +74,18 @@ const Dashboard = () => {
               }
               bg="whitesmoke"
               bgColor="green"
-              desc="Completed count"
               loading={loading}
             />
           </div>
         </div>
-        <div className="w-full my-4">
-          <div className="flex justify-between gap-3 flex-col md:flex-row">
-            <SalesAnalytics data={salesAnalytics} label="Sales Analystics" />
-            <SalesReport data={salesReport} label="Sales Report" />
+        {data?.length > 0 && (
+          <div className="w-full my-4">
+            <div className="flex justify-between gap-3 flex-col md:flex-row">
+              <SalesAnalytics data={salesAnalytics} label="Sales Analystics" />
+              <SalesReport data={salesReport} label="Sales Report" />
+            </div>
           </div>
-        </div>
+        )}
         <div className="w-full">
           <div className="p-5 bg-white rounded-[12px]">
             <div className="flex items-center justify-between w-full ">

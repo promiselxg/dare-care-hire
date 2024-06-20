@@ -19,14 +19,14 @@ const SalesAnalytics = ({ label, data }) => {
           <h1 className={cn(`${raleway.className} capitalize font-[600]`)}>
             {label}
           </h1>
-          <Select>
+          {/* <Select>
             <SelectTrigger className="bg-[whitesmoke] border-none outline-none w-fit rounded-md py-5 flex gap-5">
               <SelectValue placeholder="Monthly" />
             </SelectTrigger>
             <SelectContent className="bg-white">
               <SelectItem value="monthly">Monthly</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
         </div>
         <div className="h-[250px] md:h-[350px] mt-5">
           <ResponsiveBar

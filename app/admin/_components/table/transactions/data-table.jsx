@@ -185,6 +185,24 @@ export function TransactionDataTable({ columns, data, loading }) {
           </TableBody>
         )}
       </Table>
+      <div className="space-x-2 py-4 float-right">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 }

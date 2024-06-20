@@ -9,24 +9,22 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { __ } from "@/utils/getElementById";
 import axios from "axios";
+import { Input } from "@/components/ui/input";
+import { acceptNumbersOnly } from "@/utils/regExpression";
 
 const FormSchema = z.object({
-  transaction_status: z.string(),
+  transaction_amount: z
+    .string()
+    .min(1, { message: "Please enter a valid amount." }),
 });
 
-export function UpdateStatus({ transaction_id, id }) {
+export function UpdateAmount({ transaction_id, id }) {
   const { toast } = useToast();
 
   const form = useForm({
@@ -70,29 +68,29 @@ export function UpdateStatus({ transaction_id, id }) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-1">
         <FormField
           control={form.control}
-          name="transaction_status"
+          name="db_amount"
           render={({ field }) => (
             <FormItem className="w-full">
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="COMPLETED">COMPLETED</SelectItem>
-                  <SelectItem value="CANCELLED">CANCELLED</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormLabel>Amount</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Amount"
+                  {...field}
+                  className="form-input"
+                  id="db_amount"
+                  defaultValue={field.value}
+                  onKeyUp={() => acceptNumbersOnly("db_amount")}
+                />
+              </FormControl>
               <Button
                 type="button"
                 disabled={!field.value}
-                id="transaction_status"
+                id="transaction_amount"
                 className="w-full mb-2"
                 onClick={() =>
                   handleFormUpdate(
-                    "transaction_status",
-                    field?.value,
+                    "transaction_amount",
+                    parseInt(field?.value, 10),
                     transaction_id,
                     id
                   )

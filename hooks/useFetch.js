@@ -11,7 +11,7 @@ const useFetch = (url) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const uniqueUrl = `${API_URL}${url}?_=${new Date().getTime()}`;
+        const uniqueUrl = `${API_URL}${url}`;
         const res = await axios.get(uniqueUrl, {
           headers: {
             "Cache-Control": "no-store",
@@ -20,8 +20,9 @@ const useFetch = (url) => {
         setData(res.data);
       } catch (err) {
         setError(err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     fetchData();
   }, [url]);

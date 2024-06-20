@@ -46,7 +46,7 @@ const formSchema = z.object({
     message: "description must be at least 10 characters.",
   }),
   features: z.string({ message: "this field is required" }),
-  amount: z.string().min(4, { message: "Please enter a valid amound." }),
+  amount: z.string().optional(),
   vehicle_type: z.string(),
   vehicle_model: z.string(),
 });
@@ -129,7 +129,6 @@ const AddCar = () => {
       !values.vehicle_name ||
       !values.description ||
       !slug ||
-      !values.amount ||
       !values.vehicle_type ||
       !values.vehicle_model ||
       !values.features ||

@@ -96,14 +96,14 @@ const SuccessfullOrderPage = ({ params }) => {
                     {formatDateWithoutTime(data[0]?.createdAt)}
                   </span>
                 </div>
-                <div className="flex gap-2 items-center leading-relaxed">
+                {/* <div className="flex gap-2 items-center leading-relaxed">
                   <span className={cn(`${raleway.className} uppercase`)}>
                     Total:
                   </span>
                   <span className={cn(`${open_sans.className} font-[600]`)}>
                     {formatCurrency(subtotal)}
                   </span>
-                </div>
+                </div> */}
                 <div className="flex gap-2 items-center leading-relaxed">
                   <span className={cn(`${raleway.className} uppercase`)}>
                     Payment method:

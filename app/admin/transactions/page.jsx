@@ -10,6 +10,8 @@ import { TransactionContext } from "@/context/transactionSortContext";
 import { columns } from "../_components/table/transactions/columns";
 import { formatCurrency } from "@/utils/formatCurrency";
 
+export const fetchCache = "force-no-store";
+
 const TransactionPage = () => {
   const { data, loading } = useContext(TransactionContext);
   return (

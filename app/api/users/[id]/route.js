@@ -1,6 +1,8 @@
 import prisma from "@/utils/dbConnect";
 import { errorResponse, successResponse } from "@/utils/errorMessage";
 
+export const fetchCache = "force-no-store";
+
 export const DELETE = async (req, { params }) => {
   if (!isIdValid(params)) {
     return errorResponse("Invalid Request ID", 200);

@@ -4,6 +4,8 @@ import host from "@/utils/host";
 import { logger } from "@/utils/logger";
 import { NextResponse } from "next/server";
 
+export const fetchCache = "force-no-store";
+
 export const GET = async (req) => {
   const { limit, transaction_id } = extractQueryParams(req.url);
 
@@ -37,7 +39,6 @@ export const PUT = async (req) => {
   const urlPath = req.headers.get("referer").split(host.host_url)[1];
   try {
     const body = await req.json();
-    console.log(body.value);
     // Update Transaction Status
     await prisma.reservationInfo.update({
       where: { id: body?.id },
@@ -45,23 +46,23 @@ export const PUT = async (req) => {
         [body.field]: body?.value,
       },
     });
-    // logger(
-    //   userAgent,
-    //   urlPath,
-    //   "success",
-    //   "PUT",
-    //   `Updated ${body?.id} transaction status`
-    // );
+    logger(
+      userAgent,
+      urlPath,
+      "success",
+      "PUT",
+      `Updated ${body?.id} transaction status`
+    );
     return successResponse("Success");
   } catch (error) {
     console.error(error);
-    // logger(
-    //   userAgent,
-    //   urlPath,
-    //   "failed",
-    //   "PUT",
-    //   `Unable to updated ${body?.id} transaction status`
-    // );
+    logger(
+      userAgent,
+      urlPath,
+      "failed",
+      "PUT",
+      `Unable to updated ${body?.id} transaction status`
+    );
     return errorResponse("Error occurred", 500);
   }
 };

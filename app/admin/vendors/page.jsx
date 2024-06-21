@@ -12,6 +12,8 @@ import useFetch from "@/hooks/useFetch";
 import { VendorsTable } from "../_components/table/vendors/data-table";
 import { formatCurrency } from "@/utils/formatCurrency";
 
+export const fetchCache = "force-no-store";
+
 const VendorsPage = () => {
   const { loading, data } = useFetch("/vendor");
   return (

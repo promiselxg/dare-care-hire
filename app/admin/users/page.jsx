@@ -7,6 +7,8 @@ import useFetch from "@/hooks/useFetch";
 import { UsersDataTable } from "../_components/table/users/data-table";
 import { UsersColumn } from "../_components/table/users/columns";
 
+export const dynamic = "force-dynamic";
+
 const SettingsPage = () => {
   const { loading, data } = useFetch("/users");
 

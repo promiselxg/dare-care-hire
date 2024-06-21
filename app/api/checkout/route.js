@@ -25,7 +25,7 @@ export const POST = async (req) => {
           trip_purpose: data.trip_purpose,
           trip_type: data.trip_type,
           transaction_status: data.transaction_status,
-          transaction_amount: data.transaction_amount,
+          transaction_amount: parseInt(0),
           payment_method: data.payment_method,
           pickup_date: data.pickup_date,
           dropoff_date: data.dropoff_date,

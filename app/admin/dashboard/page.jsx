@@ -16,6 +16,8 @@ import {
   countTransactionStatus,
 } from "@/utils/categorizeTransactions";
 
+export const dynamic = "force-dynamic";
+
 const Dashboard = () => {
   const { sortedData, data, loading } = useContext(TransactionContext);
   const salesAnalytics = categorizeTransactionsByMonth(sortedData);

@@ -16,7 +16,7 @@ import {
   countTransactionStatus,
 } from "@/utils/categorizeTransactions";
 
-export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 const Dashboard = () => {
   const { sortedData, data, loading } = useContext(TransactionContext);

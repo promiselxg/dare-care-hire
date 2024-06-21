@@ -15,6 +15,8 @@ export const metadata = {
   description: "Rofad91 logistic services ltd",
 };
 
+export const fetchCache = "force-no-store";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

@@ -1,6 +1,8 @@
 import prisma from "@/utils/dbConnect";
 import { NextResponse } from "next/server";
 
+export const fetchCache = "force-no-store";
+
 export const GET = async (req) => {
   try {
     const response = await prisma.registeredUser.findMany({

@@ -15,12 +15,8 @@ const TransactionSortProvider = ({ children }) => {
       setLoading(true); // Ensure loading state is set to true before starting the fetch
       try {
         const response = await fetch(`${host.url}/transaction`, {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-store",
-          },
+          cache: "no-store",
         });
-
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -42,10 +38,7 @@ const TransactionSortProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${host.url}/transaction/analytics`, {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-store",
-          },
+          cache: "no-store",
         });
 
         if (!response.ok) {
@@ -70,12 +63,7 @@ const TransactionSortProvider = ({ children }) => {
 
       const response = await fetch(
         `${host.url}/transaction?transaction_id=${transactionID}`,
-        {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-store",
-          },
-        }
+        { cache: "no-store" }
       );
 
       if (!response.ok) {
@@ -100,18 +88,12 @@ const TransactionSortProvider = ({ children }) => {
 
         // First fetch request
         const responsePromise = fetch(`${host.url}/transaction`, {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-store",
-          },
+          cache: "no-store",
         });
 
         // Second fetch request
         const resPromise = fetch(`${host.url}/transaction/analytics`, {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-store",
-          },
+          cache: "no-store",
         });
 
         // Wait for both requests to complete

@@ -25,7 +25,15 @@ export const GET = async (req) => {
   }
   try {
     const response = await prisma.reservationInfo.findMany(query);
-    return new NextResponse(JSON.stringify(response), { status: 200 });
+    const jsonResponse = JSON.stringify(response);
+    const headers = {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
+    };
+    return new NextResponse(jsonResponse, {
+      status: 200,
+      headers,
+    });
   } catch (err) {
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }),

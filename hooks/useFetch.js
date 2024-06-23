@@ -10,13 +10,7 @@ const useFetch = (url) => {
       setLoading(true);
       try {
         const uniqueUrl = `${API_URL}${url}`;
-        const response = await fetch(uniqueUrl, {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-store",
-          },
-        });
-
+        const response = await fetch(uniqueUrl, { cache: "no-store" });
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

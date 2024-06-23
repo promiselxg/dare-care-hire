@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-
 const useFetch = (url) => {
   const API_URL = "/api";
   const [data, setData] = useState([]);
@@ -12,21 +10,26 @@ const useFetch = (url) => {
       setLoading(true);
       try {
         const uniqueUrl = `${API_URL}${url}`;
-        const res = await axios.get(uniqueUrl, {
+        const response = await fetch(uniqueUrl, {
+          method: "GET",
           headers: {
             "Cache-Control": "no-store",
-            "Access-Control-Allow-Origin": "*", // Allow all origins
-            "Access-Control-Allow-Methods": "GET", // Allow methods
-            "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
           },
         });
-        setData(res.data);
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        setData(data);
       } catch (err) {
         setError(err);
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
   }, [url]);
 

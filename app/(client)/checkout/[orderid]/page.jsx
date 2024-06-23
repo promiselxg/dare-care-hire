@@ -36,16 +36,24 @@ const SuccessfullOrderPage = ({ params }) => {
   useEffect(() => {
     const getTransaction = async () => {
       setLoading(true);
-      const response = await axios.get(`/api/checkout/${params?.orderid}`, {
-        headers: {
-          "Cache-Control": "no-store",
-          "Access-Control-Allow-Origin": "*", // Allow all origins
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS", // Allow methods
-          "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
-        },
-      });
-      setData(response.data);
-      setLoading(false);
+      try {
+        const response = await fetch(`/api/checkout/${params?.orderid}`, {
+          method: "GET",
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
+      }
     };
     getTransaction();
   }, [params?.orderid]);
@@ -57,6 +65,8 @@ const SuccessfullOrderPage = ({ params }) => {
       behavior: "smooth",
     });
   }, []);
+
+  console.log(data);
   return (
     <>
       {loading ? (
@@ -83,6 +93,26 @@ const SuccessfullOrderPage = ({ params }) => {
           <section className="w-full flex h-fit overflow-x-scroll md:overflow-x-hidden">
             <div className="md:container w-full md:w-[80%] flex mx-auto pt-10 px-5 md:px-0 flex-col ">
               <div className="flex flex-col gap-y-3">
+                <div className="flex gap-2 items-center leading-relaxed">
+                  <span className={cn(`${raleway.className} uppercase`)}>
+                    Customer Name:
+                  </span>
+                  <span
+                    className={cn(
+                      `${open_sans.className} font-[600] underline`
+                    )}
+                  >
+                    {data[0]?.customer_name}
+                  </span>
+                </div>
+                <div className="flex gap-2 items-center leading-relaxed">
+                  <span className={cn(`${raleway.className} uppercase`)}>
+                    Phone number:
+                  </span>
+                  <span className={cn(`${open_sans.className} font-[600]`)}>
+                    {data[0]?.customer_phone}
+                  </span>
+                </div>
                 <div className="flex gap-2 items-center leading-relaxed">
                   <span className={cn(`${raleway.className} uppercase`)}>
                     order number:

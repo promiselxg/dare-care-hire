@@ -1,8 +1,5 @@
 import prisma from "@/utils/dbConnect";
 import { NextResponse } from "next/server";
-
-export const fetchCache = "force-no-store";
-
 export const GET = async (req) => {
   try {
     const response = await prisma.registeredUser.findMany({
@@ -16,11 +13,30 @@ export const GET = async (req) => {
         createdAt: "desc",
       },
     });
-    return new NextResponse(JSON.stringify(response, { status: 200 }));
+
+    const jsonResponse = JSON.stringify(response);
+
+    const headers = {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
+    };
+
+    return new NextResponse(jsonResponse, {
+      status: 200,
+      headers,
+    });
   } catch (err) {
-    return new NextResponse(
-      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
-    );
+    const errorResponse = JSON.stringify({ message: "Something went wrong!" });
+
+    const headers = {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
+    };
+
+    return new NextResponse(errorResponse, {
+      status: 500,
+      headers,
+    });
   }
 };
 

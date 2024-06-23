@@ -62,10 +62,10 @@ export function UsersDataTable({ columns, data, loading }) {
     try {
       __("submitBtn").innerHTML = "Generating...";
       __("submitBtn").disabled = true;
-      const { data } = await axios.post("/api/auth/register", formRecord);
+      const responseData = await postData("/api/auth/register", formRecord);
       Swal.fire({
         title: "New user created",
-        html: `Username = <b>${data?.user?.username}</b> and Password = <b>12345</b>`,
+        html: `Username = <b>${responseData?.user?.username}</b> and Password = <b>12345</b>`,
         showCancelButton: false,
         confirmButtonText: "close this, I have taken note of this.",
         allowOutsideClick: () => false,
@@ -81,6 +81,29 @@ export function UsersDataTable({ columns, data, loading }) {
       __("submitBtn").disabled = false;
     }
   };
+
+  const postData = async (url, formData) => {
+    try {
+      const response = await fetch(url, {
+        method: "POST", // Specify the HTTP method
+        headers: {
+          "Content-Type": "application/json", // Set content type
+          "Cache-Control": "no-store", // Prevent caching
+        },
+        body: JSON.stringify(formData), // Convert form data to JSON string
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Fetch error:", error);
+      throw error;
+    }
+  };
+
   return (
     <div className="rounded-md border my-5 p-5 bg-white">
       <div className="flex items-center py-4 justify-between w-full gap-5 flex-col md:flex-row">

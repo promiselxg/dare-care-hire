@@ -1,27 +1,33 @@
 import prisma from "@/utils/dbConnect";
 import { errorResponse, successResponse } from "@/utils/errorMessage";
 
-export const fetchCache = "force-no-store";
-
 export const DELETE = async (req, { params }) => {
   if (!isIdValid(params)) {
     return errorResponse("Invalid Request ID", 200);
   }
+
   try {
-    await prisma.registeredUser.findUnique({
+    const dbResponse = await prisma.registeredUser.findUnique({
       where: { id: params.id },
     });
-    const deleteItem = await prisma.registeredUser.delete({
-      where: { id: params.id },
-    });
-    if (deleteItem) {
-      return successResponse("Record deleted successfully", 200);
+
+    if (!dbResponse) {
+      return errorResponse("Record not found", 404);
     }
+
+    await prisma.registeredUser.delete({
+      where: { id: params.id },
+    });
+
+    return successResponse("Record deleted successfully", 200);
   } catch (error) {
+    console.error(error);
     return errorResponse(
       "An error occurred while trying to delete this item.",
-      200
+      500
     );
+  } finally {
+    await prisma.$disconnect();
   }
 };
 

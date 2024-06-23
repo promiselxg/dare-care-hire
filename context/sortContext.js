@@ -2,7 +2,6 @@
 
 import { formatDateWithoutTime } from "@/utils/getDateDifference";
 import host from "@/utils/host";
-import axios from "axios";
 import { createContext, useState, useEffect } from "react";
 
 const DriverContext = createContext();
@@ -14,21 +13,28 @@ const DriverProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${host.url}/driver`, {
+        setLoading(true);
+
+        const response = await fetch(`${host.url}/driver`, {
+          method: "GET",
           headers: {
             "Cache-Control": "no-store",
-            "Access-Control-Allow-Origin": "*", // Allow all origins
-            "Access-Control-Allow-Methods": "GET", // Allow methods
-            "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
           },
         });
-        setData(response.data);
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        setData(data);
       } catch (error) {
-        console.log(error);
+        console.error("Fetch error:", error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
@@ -36,18 +42,22 @@ const DriverProvider = ({ children }) => {
     const formattedDate = formatDateWithoutTime(date);
     try {
       setLoading(true);
-      const response = await axios.get(
+      const response = await fetch(
         `${host.url}/driver?account_type=${account_type}&date=${formattedDate}`,
         {
+          method: "GET",
           headers: {
             "Cache-Control": "no-store",
-            "Access-Control-Allow-Origin": "*", // Allow all origins
-            "Access-Control-Allow-Methods": "GET", // Allow methods
-            "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
           },
         }
       );
-      setData(response?.data);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      setData(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -58,15 +68,19 @@ const DriverProvider = ({ children }) => {
   const handleResetSort = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${host.url}/driver`, {
+      const response = await fetch(`${host.url}/driver`, {
+        method: "GET",
         headers: {
           "Cache-Control": "no-store",
-          "Access-Control-Allow-Origin": "*", // Allow all origins
-          "Access-Control-Allow-Methods": "GET", // Allow methods
-          "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow headers
         },
       });
-      setData(response?.data);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      setData(data);
     } catch (error) {
       console.log(error);
     } finally {

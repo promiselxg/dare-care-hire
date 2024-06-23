@@ -97,7 +97,7 @@ export function TransactionDataTable({ columns, data, loading }) {
                         id="transaction_id"
                         onChange={(e) => {
                           field.onChange(e);
-                          setTransactionID(e.target.value);
+                          setTransactionID(e?.target?.value?.toUpperCase());
                         }}
                       />
                     </FormControl>

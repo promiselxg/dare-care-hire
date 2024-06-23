@@ -16,10 +16,7 @@ const DriverProvider = ({ children }) => {
         setLoading(true);
 
         const response = await fetch(`${host.url}/driver`, {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-store",
-          },
+          cache: "no-store",
         });
 
         if (!response.ok) {
@@ -45,10 +42,7 @@ const DriverProvider = ({ children }) => {
       const response = await fetch(
         `${host.url}/driver?account_type=${account_type}&date=${formattedDate}`,
         {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-store",
-          },
+          cache: "no-store",
         }
       );
 

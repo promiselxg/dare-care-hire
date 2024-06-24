@@ -25,6 +25,37 @@ const nextConfig = {
       },
     ];
   },
+  async headers() {
+    return [
+      {
+        source: "/admin/users",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "s-maxage=1, stale-while-revalidate=59",
+          },
+        ],
+      },
+      {
+        source: "/admin/transactions",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "s-maxage=1, stale-while-revalidate=59",
+          },
+        ],
+      },
+      {
+        source: "/admin/transactions/analytics",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "s-maxage=1, stale-while-revalidate=59",
+          },
+        ],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

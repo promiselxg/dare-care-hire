@@ -246,7 +246,7 @@ const SideNav = () => {
                 >
                   <span className="w-[1px] h-8 rounded-r-[5px] border-r-4 border-transparent"></span>
                   <Plus size={18} />
-                  Vehicle Type
+                  Vehicle Make
                 </Link>
               </li>
               <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
@@ -275,7 +275,7 @@ const SideNav = () => {
                   Vehicle Features
                 </Link>
               </li>
-              <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
+              {/* <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <Link
                   href={`/admin/setting/banner?q=${user?.token}`}
                   className={`${
@@ -287,7 +287,7 @@ const SideNav = () => {
                   <Plus size={18} />
                   Manage Site Banner
                 </Link>
-              </li>
+              </li> */}
               <li className="my-[2px] h-10 hover:text-[--text-brown] transition-all delay-75">
                 <AuthModal />
               </li>

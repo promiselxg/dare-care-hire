@@ -152,5 +152,5 @@ enum Status {
 type vehicleDetail {
   vehicle_id String
   vehicle_name String
-  vehicle_img_url String
+  vehicle_img_url String?
 }

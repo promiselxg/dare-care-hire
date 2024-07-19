@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import useFetch from "@/hooks/useFetch";
 import SkeletonLoader from "../../_component/Loader";
-import { formatCurrency } from "@/utils/formatCurrency";
+
 import { Loader2, ShieldCheck } from "lucide-react";
 import { redirect, useRouter } from "next/navigation";
 import { useCart } from "@/context/cartContext";
@@ -126,7 +126,6 @@ const CarDetails = ({ params }) => {
     redirect("/cars");
   }
 
-  console.log(data);
   return (
     <>
       {loading ? (

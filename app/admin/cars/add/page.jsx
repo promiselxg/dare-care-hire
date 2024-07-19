@@ -122,70 +122,153 @@ const AddCar = () => {
     setSlug(generateSlug(text));
   };
 
+  // async function onSubmit(values) {
+  //   setLoading(true);
+  //   const timestamp = Math.round(new Date().getTime() / 1000);
+  //   if (
+  //     !values.vehicle_name ||
+  //     !values.description ||
+  //     !slug ||
+  //     !values.vehicle_type ||
+  //     !values.vehicle_model ||
+  //     !values.features
+  //   ) {
+  //     setLoading(false);
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Please fill out the rquired fields.",
+  //       description: "There was a problem with your request.",
+  //     });
+  //   }
+  //   try {
+  //     setLoading(true);
+  //     if(selectedImages.length > 0){
+  //       const list = await Promise.all(
+  //         Object.values(files).map(async (file) => {
+  //           const formData = new FormData();
+  //           formData.append("file", file);
+  //           formData.append("upload_preset", "dareCarHire");
+  //           formData.append("timestamp", timestamp);
+  //           formData.append(
+  //             "api_key",
+  //             process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY
+  //           );
+  //           __("submitBtn").innerHTML = "Uploading Image...";
+  //           const uploadRes = await axios.post(
+  //             `https://api.cloudinary.com/v1_1/promiselxg/image/upload`,
+  //             formData
+  //           );
+
+  //           const { data } = uploadRes;
+  //           return data;
+  //         })
+  //       );
+  //     }else{
+  //       __("submitBtn").innerHTML = "Submiting data...";
+  //       const data = {
+  //         values,
+  //         slug,
+  //         photos: list,
+  //       };
+  //       const response = await axios.post("/api/car", data);
+  //       if (response?.data?.message !== "success") {
+  //         toast({
+  //           variant: "destructive",
+  //           title: "There was a problem with your request.",
+  //           description: `${response.data.message}`,
+  //         });
+  //       }
+  //       if (response?.data.message === "success") {
+  //         toast({
+  //           title: "New Record created successfully.",
+  //           description: `${values.vehicle_name} created successfully.`,
+  //         });
+  //         window.location = `/admin/cars?q=${user?.token}`;
+  //       }
+  //     }
+
+  //   } catch (error) {
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Uh oh! Something went wrong.",
+  //       description: "There was a problem with your request.",
+  //     });
+  //   } finally {
+  //     __("submitBtn").innerHTML = "Submit";
+  //     setLoading(false);
+  //   }
+  // }
   async function onSubmit(values) {
     setLoading(true);
     const timestamp = Math.round(new Date().getTime() / 1000);
-    if (
-      !values.vehicle_name ||
-      !values.description ||
-      !slug ||
-      !values.vehicle_type ||
-      !values.vehicle_model ||
-      !values.features ||
-      selectedImages.length < 1
-    ) {
+
+    const requiredFields = [
+      values.vehicle_name,
+      values.description,
+      slug,
+      values.vehicle_type,
+      values.vehicle_model,
+      values.features,
+    ];
+
+    if (requiredFields.some((field) => !field)) {
       setLoading(false);
       toast({
         variant: "destructive",
-        title: "Please fill out the rquired fields.",
+        title: "Please fill out the required fields.",
         description: "There was a problem with your request.",
       });
+      return;
     }
+
     try {
       setLoading(true);
-      const list = await Promise.all(
-        Object.values(files).map(async (file) => {
-          const formData = new FormData();
-          formData.append("file", file);
-          formData.append("upload_preset", "dareCarHire");
-          formData.append("timestamp", timestamp);
-          formData.append(
-            "api_key",
-            process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY
-          );
-          __("submitBtn").innerHTML = "Uploading Image...";
-          const uploadRes = await axios.post(
-            `https://api.cloudinary.com/v1_1/promiselxg/image/upload`,
-            formData
-          );
+      let photos = [];
 
-          const { data } = uploadRes;
-          return data;
-        })
-      );
-      if (list) {
-        __("submitBtn").innerHTML = "Submiting data...";
-        const data = {
-          values,
-          slug,
-          photos: list,
-        };
-        const response = await axios.post("/api/car", data);
-        if (response?.data?.message !== "success") {
-          toast({
-            variant: "destructive",
-            title: "There was a problem with your request.",
-            description: `${response.data.message}`,
-          });
-        }
-        if (response?.data.message === "success") {
-          toast({
-            title: "New Record created successfully.",
-            description: `${values.vehicle_name} created successfully.`,
-          });
-          window.location = `/admin/cars?q=${user?.token}`;
-        }
+      if (selectedImages.length > 0) {
+        photos = await Promise.all(
+          Object.values(files).map(async (file) => {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", "dareCarHire");
+            formData.append("timestamp", timestamp);
+            formData.append(
+              "api_key",
+              process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY
+            );
+            __("submitBtn").innerHTML = "Uploading Image...";
+            const { data } = await axios.post(
+              `https://api.cloudinary.com/v1_1/promiselxg/image/upload`,
+              formData
+            );
+            return data;
+          })
+        );
       }
+
+      __("submitBtn").innerHTML = "Submitting data...";
+      const data = {
+        values,
+        slug,
+        photos,
+      };
+
+      const response = await axios.post("/api/car", data);
+
+      if (response?.data?.message !== "success") {
+        toast({
+          variant: "destructive",
+          title: "There was a problem with your request.",
+          description: `${response.data.message}`,
+        });
+        return;
+      }
+
+      toast({
+        title: "New Record created successfully.",
+        description: `${values.vehicle_name} created successfully.`,
+      });
+      window.location = `/admin/cars?q=${user?.token}`;
     } catch (error) {
       toast({
         variant: "destructive",
@@ -436,7 +519,7 @@ const AddCar = () => {
                   type="submit"
                   id="submitBtn"
                   className="w-full md:w-fit"
-                  disabled={loading || !slug || selectedImages.length < 1}
+                  disabled={loading || !slug}
                 >
                   Submit
                 </Button>

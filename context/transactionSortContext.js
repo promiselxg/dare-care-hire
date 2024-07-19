@@ -12,7 +12,7 @@ const TransactionSortProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true); // Ensure loading state is set to true before starting the fetch
+      setLoading(true);
       try {
         const response = await fetch(`${host.url}/transaction`, {
           cache: "no-store",
@@ -20,9 +20,10 @@ const TransactionSortProvider = ({ children }) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-
-        const data = await response.json();
-        setData(data);
+        const res = await response.json();
+        console.log(res);
+        setData(res);
+        console.log(data);
       } catch (error) {
         console.error("Fetch error:", error);
       } finally {
@@ -60,18 +61,15 @@ const TransactionSortProvider = ({ children }) => {
   const handleSortTransactionTable = async (transactionID) => {
     try {
       setLoading(true);
-
       const response = await fetch(
         `${host.url}/transaction?transaction_id=${transactionID}`,
         { cache: "no-store" }
       );
-
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
       const data = await response.json();
-
+      console.log(data);
       setData(data);
       setSortedData(data);
     } catch (error) {

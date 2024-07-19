@@ -9,9 +9,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import { Check, ShieldCheck } from "lucide-react";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { barlow, montserrat, open_sans } from "@/lib/fonts";
+import { barlow } from "@/lib/fonts";
 import { Button } from "@/components/ui/button";
 import useFetch from "@/hooks/useFetch";
 import { truncateText } from "@/utils/trucateText";
@@ -38,7 +38,7 @@ export function CarCarousa() {
             >
               <div className="bg-white flex flex-col w-[300px] justify-center text-center items-center">
                 <Image
-                  src={car?.imgThumbnail}
+                  src={car?.imgThumbnail || "/images/default.webp"}
                   width={250}
                   height={100}
                   alt={car?.vehicle_name}

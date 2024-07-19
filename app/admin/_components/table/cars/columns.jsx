@@ -65,28 +65,6 @@ export const columns = [
       );
     },
   },
-
-  {
-    id: "image",
-    header: "Image",
-    cell: ({ row }) => {
-      const { vehicle_name, imgThumbnail } = row.original;
-      return (
-        <>
-          <div className="w-full">
-            <Image
-              src={imgThumbnail}
-              width={100}
-              height={50}
-              alt={vehicle_name}
-              className="w-[80px] object-contain h-[40px]"
-            />
-          </div>
-        </>
-      );
-    },
-  },
-
   {
     accessorKey: "vehicle_type",
     header: "Car Make",
@@ -101,6 +79,21 @@ export const columns = [
       );
     },
   },
+  {
+    accessorKey: "model",
+    header: "Car Model",
+    cell: ({ row }) => {
+      const { model } = row.original;
+      return (
+        <>
+          <div className="w-1/2">
+            <p className="uppercase">{model}</p>
+          </div>
+        </>
+      );
+    },
+  },
+
   {
     accessorKey: "amount",
     header: "Amount",

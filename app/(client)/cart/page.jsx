@@ -139,7 +139,7 @@ const CartPage = () => {
                               className="cursor-pointer"
                             >
                               <Image
-                                src={item?.imgUrl}
+                                src={item?.imgUrl || "/images/default.webp"}
                                 width={200}
                                 height={50}
                                 alt="img"

@@ -113,7 +113,7 @@ const Page = () => {
                       <Link href={`/cars/${car?.id}`} key={car?.id}>
                         <div className="bg-white flex flex-col w-full md:w-[280px] justify-center text-center items-center  carousel-item">
                           <Image
-                            src={car?.imgThumbnail}
+                            src={car?.imgThumbnail || "/images/default.webp"}
                             width={250}
                             height={100}
                             alt={car?.vehicle_name}

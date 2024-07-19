@@ -59,10 +59,10 @@ const getVehicleDataFromRequestBody = (body) => {
     features: body.values.features,
     model: body.values.vehicle_model,
     amount: parseInt(0),
-    imgUrl: body.photos.map((url) => url.secure_url),
-    imageId: body.photos.map((url) => url.public_id.split("/")[1]),
-    imgThumbnail: body.photos[0].secure_url,
-    vehicle_type: body.values.vehicle_type,
+    imgUrl: body?.photos.map((url) => url?.secure_url),
+    imageId: body?.photos.map((url) => url?.public_id?.split("/")[1]),
+    imgThumbnail: body?.photos[0]?.secure_url,
+    vehicle_type: body?.values?.vehicle_type,
   };
 };
 
@@ -77,6 +77,7 @@ export const GET = async (req) => {
         description: true,
         imgThumbnail: true,
         vehicle_type: true,
+        model: true,
         amount: true,
         slug: true,
         features: true,

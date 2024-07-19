@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { barlow } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
+import { handleDeleteBtn } from "@/utils/deleteItemFromDb";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { formatDateTime } from "@/utils/getDateDifference";
 import host from "@/utils/host";
@@ -178,6 +179,14 @@ export const columns = [
               >
                 <Eye size={16} /> View Transaction
               </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-red-400 flex items-center gap-2 cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => handleDeleteBtn(id, "transaction")}
+                className="text-red-400 flex items-center gap-1 cursor-pointer"
+              >
+                <FiTrash2 /> Delete Transaction
+              </DropdownMenuItem>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

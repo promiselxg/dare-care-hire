@@ -367,10 +367,6 @@ const AddVendor = () => {
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
-                              disabled={(date) =>
-                                date <=
-                                new Date(new Date().getTime() - 86400000)
-                              }
                               initialFocus
                             />
                           </PopoverContent>
@@ -409,10 +405,6 @@ const AddVendor = () => {
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
-                              disabled={(date) =>
-                                date <=
-                                new Date(new Date().getTime() - 86400000)
-                              }
                               initialFocus
                             />
                           </PopoverContent>

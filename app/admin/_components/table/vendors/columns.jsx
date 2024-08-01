@@ -11,7 +11,6 @@ import {
 import { barlow, open_sans, raleway } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/utils/formatCurrency";
-import { formatDateTime } from "@/utils/getDateDifference";
 
 import { ArrowUpDown, Edit2, Eye, MoreHorizontal } from "lucide-react";
 import { FiTrash2 } from "react-icons/fi";
@@ -86,10 +85,10 @@ export const columns = [
     },
   },
   {
-    accessorKey: "createdAt",
-    header: "Transaction Date",
+    accessorKey: "pickup_date",
+    header: "Pickup Date",
     cell: ({ row }) => {
-      const { createdAt } = row.original;
+      const { pickup_date } = row.original;
       return (
         <>
           <div>
@@ -98,7 +97,27 @@ export const columns = [
                 `${raleway.className} text-[--text-hover] font-[600]`
               )}
             >
-              {formatDateTime(createdAt)?.split(" at ")[0]}
+              {pickup_date?.split(" at ")[0]}
+            </h1>
+          </div>
+        </>
+      );
+    },
+  },
+  {
+    accessorKey: "dropoff_date",
+    header: "Drop-off Date",
+    cell: ({ row }) => {
+      const { dropoff_date } = row.original;
+      return (
+        <>
+          <div>
+            <h1
+              className={cn(
+                `${raleway.className} text-[--text-hover] font-[600]`
+              )}
+            >
+              {dropoff_date?.split(" at ")[0]}
             </h1>
           </div>
         </>
@@ -194,7 +213,7 @@ export const columns = [
                       </div>
                       <div className=" justify-start items-start border p-5 w-full ">
                         <div className={cn(`${raleway.className} font-bold`)}>
-                          {pickup_date}
+                          {pickup_date?.split(" at ")[0]}
                         </div>
                       </div>
                       <div className=" items-start border p-5 w-full bg-[whitesmoke]">
@@ -204,7 +223,7 @@ export const columns = [
                       </div>
                       <div className=" justify-start items-start border p-5 w-full ">
                         <div className={cn(`${raleway.className} font-bold`)}>
-                          {dropoff_date}
+                          {dropoff_date?.split(" at ")[0]}
                         </div>
                       </div>
                       <div className=" items-start border p-5 w-full bg-[whitesmoke]">
@@ -254,14 +273,7 @@ export const columns = [
                       </div>
                       <div className=" justify-start items-start border p-5 w-full ">
                         <p className={cn(`${open_sans.className} text-[12px]`)}>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Error laudantium fuga asperiores soluta, esse
-                          blanditiis officia modi provident, dolore corrupti
-                          rerum itaque. At earum vel velit modi dicta natus
-                          soluta laudantium minima ad maiores ex, veritatis sit
-                          maxime numquam, aspernatur officia perferendis.
-                          Reiciendis ipsam vitae itaque cupiditate quos omnis
-                          libero.
+                          {row?.original?.job_description}
                         </p>
                       </div>
                       {row?.original.additional_note && (
